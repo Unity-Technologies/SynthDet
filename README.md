@@ -1,2 +1,21 @@
-# SimViz-Solution-Alpha
-Thank you for participating in the Unity Synthetic Detection Alpha program. The purpose of this repo is to provide you with everything that you need to get started in the evaluation process.
+<img src="docs/images/unity-wide.png" align="middle" width="3000"/>
+
+<img src="docs/images/dataset.png" align="middle" width="3000"/>
+
+# Unity ML - Synthetic Data 
+
+## Features
+* SynthDet Unity project that includes all the code and assets for reproducing the synthetic dataset for this paper at scale in Unity Simulation
+* AR Example App to is a standalone desktop application that takes a model trained by Thea and runs it on a webcam input, showing boxes of detected objects
+* Using Unity Simulation to run and reproduce a synthetic dataset
+* Annotated real-world dataset that contains a set of >1000 photos alongside labeled bounding box annotations in the form of the COCO dataset
+* Thea is python based toolset that code for model training, testing, and dataset insights.
+
+## Release & Documentation
+Link to getting started md
+Link to dataset deep dive md
+
+## Additional Resources 
+
+## License
+Link to the license
