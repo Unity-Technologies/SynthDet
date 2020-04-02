@@ -2,7 +2,7 @@
 
 <img src="docs/images/dataset.png" align="middle" width="3000"/>
 
-# Unity ML - Synthetic Data 
+# Unity Synthetic Data 
 
 ## Features
 * SynthDet Unity project that includes all the code and assets for reproducing the synthetic dataset for this paper at scale in Unity Simulation
@@ -12,10 +12,10 @@
 * Thea is python based toolset that code for model training, testing, and dataset insights.
 
 ## Release & Documentation
-Link to getting started md
-Link to dataset deep dive md
-
+* [Getting Started Guide](docs/GettingStarted.md)
+* [Annotation Dataset]()
+ 
 ## Additional Resources 
 
 ## License
-Link to the license
+* Link to the license
