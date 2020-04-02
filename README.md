@@ -2,7 +2,7 @@
 
 <img src="docs/images/dataset.png" align="middle" width="3000"/>
 
-# Unity Synthetic Data 
+# Unity Synthetic Detection 
 In this current deliverable, the primary elements that we are including are the Perception SDK, annotation data,using Thea for creating trained data models, and execution of simulations on the local machine or Unity Simulation platform.
 
 ## Features
