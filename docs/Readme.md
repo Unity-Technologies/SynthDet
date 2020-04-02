@@ -1,5 +1,5 @@
 # Unity SynthDet Documentation
-## Installatiom & Setup
+## Installation & Setup
 * [Installation](InstallSteps.md)
 	* [Background: Unity](Background.md)
 	* [Unity Simulation Start Guide](USimStart.md)
