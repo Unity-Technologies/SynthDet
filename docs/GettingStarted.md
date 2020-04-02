@@ -58,23 +58,23 @@ You may optionally prepare your own assets for use , including any of the free a
 2. In the scenes open the SampleScene 
 3. Press play and observe the different products quickly being generated in the game view
 
-<img src="docs/images/dataset.png" align="middle"/>
+<img src="images/dataset.png" align="middle"/>
 
 ### Step 2: Connect to Cloud Services 
 1. In order to run USim from the project you need to connect to cloud services and create a new Unity Project ID. Please follow the steps:
   1. In the top right corner of the editor click the cloud button
     1. This will open the “Services” tab
 
-<img src="docs/images/OpenCloudServices.png" align="middle"/>
+<img src="images/OpenCloudServices.png" align="middle"/>
 
 2. Make sure you are logged into your unity Account as well
 3. Create a new Unity Project ID 
 
-<img src="docs/images/CreateNewUnityProjectID.png" align="middle"/>
+<img src="images/CreateNewUnityProjectID.png" align="middle"/>
 
 4. When creating your project ID make sure select the desired organization for the project
 
-<img src="docs/images/UnityProjectIdOrg.png" align="middle"/>
+<img src="images/UnityProjectIdOrg.png" align="middle"/>
 
 5. Here is a [unity link](https://docs.unity3d.com/Manual/SettingUpProjectServices.html) for the services creation in case further information is needed
 
@@ -83,7 +83,7 @@ You may optionally prepare your own assets for use , including any of the free a
 1. Open up the Build Settings under the File or by using the ctrl + B shortcut
 2. Switch the Target platform to Linux 
 
-<img src="docs/images/targetingLinuxPlatform.png" align="middle"/>
+<img src="images/targetingLinuxPlatform.png" align="middle"/>
 
 3. Create a Linux build of the project with Click build
 
@@ -93,19 +93,19 @@ You may optionally prepare your own assets for use , including any of the free a
   2. You can do this by selecting all the files in the Linux build directory and then right clicking <PlayerBuild>.x86_64 and send to a Zip folder
   3. If the build contains a folder with the build files inside of that folder the build will fail in USim
 
-<img src="docs/images/exampleLinuxZipBuild.png" align="middle"/>
+<img src="images/exampleLinuxZipBuild.png" align="middle"/>
 
 5. Start a run in USim using the USim run window 
   1. Under Window click Run in USim…
   2. Fill out the Run name  
   3. Fill out the path to player build.zip you created in step 4
 
-<img src="docs/images/USimRunWindow.png" align="middle"/>
+<img src="images/USimRunWindow.png" align="middle"/>
 
 6. Click “Execute in Unity Simulation”
 7. Take note and copy down the run-execution id from the Console window
 
-<img src="docs/images/NoteExecutionID.png" align="middle"/>
+<img src="images/NoteExecutionID.png" align="middle"/>
 
 ### Step 4: Download manifest from USim
 1. First we want to check the current summary of the execution run in the console window for USim
@@ -113,7 +113,7 @@ You may optionally prepare your own assets for use , including any of the free a
   2. In the cmd window run summarize run-execution <execution id>
   3. You may need to run this a few times because you don’t want to continue until the run is completed 
 
-<img src="docs/images/usimSumExecution.png" align="middle"/>
+<img src="images/usimSumExecution.png" align="middle"/>
 
 2. Next we need to download the data manifest from the run and check the data 
   1. Run the cmd “usim download manifest <execution id>
