@@ -2,7 +2,7 @@
 
 <img src="docs/images/dataset.png" align="middle" width="3000"/>
 
-# Unity Synthetic Data 
+# Unity Synthetic Detection 
 
 ## Features
 * SynthDet Unity project that includes all the code and assets for reproducing the synthetic dataset for this paper at scale in Unity Simulation
