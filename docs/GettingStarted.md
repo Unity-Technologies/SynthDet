@@ -2,8 +2,6 @@
 
 The purpose of this document is to provide you with everything that you need to get started in using the sample project. 
 
-## Table of Contents
-
 ## What is included with this release?
 The deliverable of the SynthDet alpha includes the following components:
 
@@ -173,7 +171,11 @@ You may optionally prepare your own assets for use , including any of the free a
 2. Linux 
 3. Mac
 
-## Issues with Docker
+## Docker
+When setting up docker to push to a gcloud project you might run into an issue where you can’t push because of an authentication issue. If this happens it is most likely an issue where docker has not been configured with gcloud. You can fix this by running gcloud auth configure-docker in a cmd window going through the prompts.
+
+[Google advanced authentication](https://cloud.google.com/container-registry/docs/advanced-authentication) for further documentation using docker with google services.
+
 If you are running on a Windows platform you might run into an issue where Docker is unable to start because vmcompute can’t start. It seems there is a bug in Docker ver 2.2.0.3 on Windows OS 1909 that is causing issues with docker
 
 Example of the error:
@@ -213,12 +215,6 @@ usim summarize run-execution Ojbm1n0
 {"message":"Could not find project=595c36c6-a73d-4dfd-bd8e-d68f1f5f3084, executionId=Ojbm1n0"}
 
 Follow the steps for activate [Unity Project](https://github.com/Unity-Technologies/Unity-Simulation-Docs/blob/master/doc/quickstart.md#activate-unity-project) in this link to help activate the correct project 
-
-
-## Docker 
-When setting up docker to push to a gcloud project you might run into an issue where you can’t push because of an authentication issue. If this happens it is most likely an issue where docker has not been configured with gcloud. You can fix this by running gcloud auth configure-docker in a cmd window going through the prompts.
-
-[Google advanced authentication](https://cloud.google.com/container-registry/docs/advanced-authentication) for further documentation using docker with google services.
 
 ## Modifying the AR app example 
 If you would like to change the clases or models that the app detects you can do so by modifying object_detector/class_labels.py script
