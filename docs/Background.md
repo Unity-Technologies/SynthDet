@@ -18,4 +18,4 @@ with the SynthDet:
   (e.g. FixedUpdate, Update)
 * [Prefabs](https://docs.unity3d.com/Manual/Prefabs.html)
 * [Unity Simulation](https://unity.com/products/simulation) for running simulations
-* A Unity [Package](https://docs.unity3d.com/Manual/Packages.html) is the means by which we are delivering the alpha software.
+* A Unity [Package](https://docs.unity3d.com/Manual/Packages.html)
