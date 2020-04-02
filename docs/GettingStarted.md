@@ -133,7 +133,7 @@ You may optionally prepare your own assets for use , including any of the free a
     6. docker tag thea:$TAG gcr.io/$GCP_PROJECT_ID/thea:$TAG 
     7. docker push gcr.io/$GCP_PROJECT_ID/thea:$TAG 
 
-####Submit CloudML Jobs
+#### Submit CloudML Jobs
 1. In the cmd window we need to submit a job to the ML cloud 
 2. In a Cmd console of your choice follow the steps below:
     1. Index for docker cmd examples
