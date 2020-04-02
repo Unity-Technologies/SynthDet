@@ -39,12 +39,12 @@ Tools for installation and configuration:
 3. A GitHub account. The SynthDet github repository will be a public repository for users to download and use as needed 
 5. The Sample project, downloaded from the GitHub Repository.
 6. A Unity Simulation Account 
-  1. In order to run on Unity Simulation, you need an account in the Unity Simulation Beta program. Please see this [sign-up](https://unity.com/products/simulation) page to get started on Unity Simulation Beta. Simulations can be run on the local machine without Unity Simulation but will execute at much higher scale on Unity Simulation.
+    1. In order to run on Unity Simulation, you need an account in the Unity Simulation Beta program. Please see this [sign-up](https://unity.com/products/simulation) page to get started on Unity Simulation Beta. Simulations can be run on the local machine without Unity Simulation but will execute at much higher scale on Unity Simulation.
 7. USim CLI installed with CLI tool 
 8. Claim the credit for workflow costs on USim
 9. Docker Installed
 10. Google Cloud CLI and a GCP account 
-  1. You will need to create a gcloud project to use for Thea
+    1. You will need to create a gcloud project to use for Thea
 11. Python 3.7
 
 Hardware needed for the project:
@@ -62,19 +62,19 @@ You may optionally prepare your own assets for use , including any of the free a
 
 ### Step 2: Connect to Cloud Services 
 1. In order to run USim from the project you need to connect to cloud services and create a new Unity Project ID. Please follow the steps:
-  1. In the top right corner of the editor click the cloud button
-    1. This will open the “Services” tab
+    1. In the top right corner of the editor click the cloud button
+        1. This will open the “Services” tab
 
 <img src="images/OpenCloudServices.png" align="middle"/>
 
 2. Make sure you are logged into your unity Account as well
 3. Create a new Unity Project ID 
 
-<img src="images/CreateNewUnityProjectID.png" align="middle"/>
+<img src="images/CreateNewUnityProjectID.PNG" align="middle"/>
 
 4. When creating your project ID make sure select the desired organization for the project
 
-<img src="images/UnityProjectIdOrg.png" align="middle"/>
+<img src="images/UnityProjectIdOrg.PNG" align="middle"/>
 
 5. Here is a [unity link](https://docs.unity3d.com/Manual/SettingUpProjectServices.html) for the services creation in case further information is needed
 
@@ -83,78 +83,78 @@ You may optionally prepare your own assets for use , including any of the free a
 1. Open up the Build Settings under the File or by using the ctrl + B shortcut
 2. Switch the Target platform to Linux 
 
-<img src="images/targetingLinuxPlatform.png" align="middle"/>
+<img src="images/targetingLinuxPlatform.PNG" align="middle"/>
 
 3. Create a Linux build of the project with Click build
 
 #### Preparing the USim Build
 1. Once the Linux build is complete, navigate to <Project>\Build\LinuxBuild and use a utility to zip the build
-  1. It is important to zip the build so the root folder contains the files for the build and not contain a extra folder in the path
-  2. You can do this by selecting all the files in the Linux build directory and then right clicking <PlayerBuild>.x86_64 and send to a Zip folder
-  3. If the build contains a folder with the build files inside of that folder the build will fail in USim
+    1. It is important to zip the build so the root folder contains the files for the build and not contain a extra folder in the path
+    2. You can do this by selecting all the files in the Linux build directory and then right clicking <PlayerBuild>.x86_64 and send to a Zip folder
+    3. If the build contains a folder with the build files inside of that folder the build will fail in USim
 
-<img src="images/exampleLinuxZipBuild.png" align="middle"/>
+<img src="images/exampleLinuxZipBuild.PNG" align="middle"/>
 
 5. Start a run in USim using the USim run window 
-  1. Under Window click Run in USim…
-  2. Fill out the Run name  
-  3. Fill out the path to player build.zip you created in step 4
+    1. Under Window click Run in USim…
+    2. Fill out the Run name  
+    3. Fill out the path to player build.zip you created in step 4
 
-<img src="images/USimRunWindow.png" align="middle"/>
+<img src="images/USimRunWindow.PNG" align="middle"/>
 
 6. Click “Execute in Unity Simulation”
 7. Take note and copy down the run-execution id from the Console window
 
-<img src="images/NoteExecutionID.png" align="middle"/>
+<img src="images/NoteExecutionID.PNG" align="middle"/>
 
 ### Step 4: Download manifest from USim
 1. First we want to check the current summary of the execution run in the console window for USim
-  1. Open a cmd line and navigate to the USim CLI for your platform 
-  2. In the cmd window run summarize run-execution <execution id>
-  3. You may need to run this a few times because you don’t want to continue until the run is completed 
+    1. Open a cmd line and navigate to the USim CLI for your platform 
+    2. In the cmd window run summarize run-execution <execution id>
+    3. You may need to run this a few times because you don’t want to continue until the run is completed 
 
-<img src="images/usimSumExecution.png" align="middle"/>
+<img src="images/usimSumExecution.PNG" align="middle"/>
 
 2. Next we need to download the data manifest from the run and check the data 
-  1. Run the cmd “usim download manifest <execution id>
-  2. This will download a csv file that will contain links to the generated data
-  3. Verify some of the data looks good before continuing
+    1. Run the cmd “usim download manifest <execution id>
+    2. This will download a csv file that will contain links to the generated data
+    3. Verify some of the data looks good before continuing
 
 ### Step 5: Creating the trained model using Thea
 #### Docker Setup
 1. Make sure to clone the github repo for Thea to access to the docker image
 2. Build and push Docker image to use for GCP platform 
 3. In <Thea Repo File Path>\thea\configs open up the file faster_rcnn_synthetic.yaml
-  1. Modify the run_execution_id: to execution id from Step 4 when you created the executed the USim build
+    1. Modify the run_execution_id: to execution id from Step 4 when you created the executed the USim build
 4. In a Cmd console of your choice follow the steps below:
-  1. Index for docker cmd examples
-  2. TAG = name you want to tag your image with 
-  3. GCP_PROJECT_ID - glcoud project id that you set up 
-  4. glcoud config project set <GCP_PROJECT_ID>  
-  5. docker build -t thea:$TAG <file path to the target docker image>
-  6. docker tag thea:$TAG gcr.io/$GCP_PROJECT_ID/thea:$TAG 
-  7. docker push gcr.io/$GCP_PROJECT_ID/thea:$TAG 
+    1. Index for docker cmd examples
+    2. TAG = name you want to tag your image with 
+    3. GCP_PROJECT_ID - glcoud project id that you set up 
+    4. glcoud config project set <GCP_PROJECT_ID>  
+    5. docker build -t thea:$TAG <file path to the target docker image>
+    6. docker tag thea:$TAG gcr.io/$GCP_PROJECT_ID/thea:$TAG 
+    7. docker push gcr.io/$GCP_PROJECT_ID/thea:$TAG 
 
 ####Submit CloudML Jobs
 1. In the cmd window we need to submit a job to the ML cloud 
 2. In a Cmd console of your choice follow the steps below:
-  1. Index for docker cmd examples
-  2. JOB_NAME = deeplabv3_$(date +%Y%m%d_%H%M%S)
-  3. gcloud ai-platform jobs submit training $JOB_NAME \
-  --region us-central1 \
-  --master-image-uri gcr.io/$GCP_PROJECT_ID/thea:$TAG \
-  --scale-tier custom \
-  --master-machine-type standard_v100 \
-  -- \
-  1 train \
-  --config=thea/configs/deeplabv3.yaml \
-  --logdir=gs://thea-dev/runs/$JOB_NAME \
-  --val-interval=1 \
-  train.epochs 100
+    1. Index for docker cmd examples
+    2. JOB_NAME = deeplabv3_$(date +%Y%m%d_%H%M%S)
+    3. gcloud ai-platform jobs submit training $JOB_NAME \
+        --region us-central1 \
+        --master-image-uri gcr.io/$GCP_PROJECT_ID/thea:$TAG \
+        --scale-tier custom \
+        --master-machine-type standard_v100 \
+        -- \
+        1 train \
+        --config=thea/configs/deeplabv3.yaml \
+        --logdir=gs://thea-dev/runs/$JOB_NAME \
+        --val-interval=1 \
+        train.epochs 100
 
 ### Step 6: AR Example application
 1. In the SynthDet repo from the GitHub you cloned in Step 1 there where will be a folder names Model Demo
-  1. Take note of the file path 
+    1. Take note of the file path 
 2. Inside of a python environment run the cmd python run_demo.py
 3. After a short delay, you should see a window open up with your webcam stream 
 4. Hold up a cereal box or any other grocery item to your webcam and you should see boxes draw around any detected objects in the stream.
@@ -162,7 +162,7 @@ You may optionally prepare your own assets for use , including any of the free a
 # Appendix: 
 ## File structure 
 1. Images/
-  1. 123.PNG
+    1. 123.PNG
 2. annotations.json
 3. train.txt
 4. val.txt
