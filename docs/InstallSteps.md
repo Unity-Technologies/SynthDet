@@ -9,4 +9,3 @@ Tools for installation and configuration:
 5. A [Unity Simulation Account](docs/USimStart.md) 
 7. [Docker Installed](https://www.docker.com/products/docker-desktop)
 8. [Google Cloud CLI and a GCP account](docs/gcp.md) 
-
