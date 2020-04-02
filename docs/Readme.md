@@ -1,18 +1,18 @@
 # Unity SynthDet Documentation
 ## Installatiom & Setup
-* [Installation](docs/InstallSteps.md)
-	* [Background: Unity](docs/Background.md)
-	* [Unity Simulation Start Guide](docs/USimStart.md)
+* [Installation](InstallSteps.md)
+	* [Background: Unity](Background.md)
+	* [Unity Simulation Start Guide](USimStart.md)
 
 ## Getting Started 
-* [Getting Started with SynthDet](docs/GettingStarted.md)
-* [SynthDet Information](docs/SynthDetinfo.md)
+* [Getting Started with SynthDet](GettingStarted.md)
+* [SynthDet Information](SynthDetinfo.md)
 
 ## Tools
-* [Using the AR App](docs/ArApp.md)
-* [Google Cloud](docs/gcp.md)
+* [Using the AR App](ArApp.md)
+* [Google Cloud](gcp.md)
 
 ## Help
-* [Docker Help](docs/Docker.md)
-* [USim Help](docs/USim.md)
+* [Docker Help](Docker.md)
+* [USim Help](USim.md)
 
