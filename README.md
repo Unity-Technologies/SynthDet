@@ -22,6 +22,8 @@ Version|Release Date |Source
 xxxx   |April X, 2020|[source](https://github.com/Unity-Technologies/SynthDet/tree/wesley-doc-work)
 
 ## Citation
+Here are some additional, relevant articles:
+* [Using Fully Synthetic Training for Object Instance Detection](https://arxiv.org/pdf/1902.09967.pdf)
 
 ## Additional Resources 
 
