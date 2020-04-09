@@ -2,7 +2,7 @@
 
 <img src="docs/images/banner.PNG" align="middle"/>
 
-# Unity Synthetic Detection 
+# Unity SynthDet 
 In this current deliverable, the primary elements that we are including are the Perception SDK, annotation data,using Thea for creating trained data models, and execution of simulations on the local machine or Unity Simulation platform.
 
 ## Features
@@ -16,10 +16,11 @@ In this current deliverable, the primary elements that we are including are the 
 
 ## Release & Documentation
 #### Click [here](docs/Readme.md) to get the started with SynthDet
+We have a public annotated dataset that is currently being hosted in [gcs]() for users to download.
 
 Version|Release Date |Source
 -------|-------------|------
-xxxx   |April X, 2020|[source](https://github.com/Unity-Technologies/SynthDet/tree/wesley-doc-work)
+xxxx   |April X, 2020|[source](https://github.com/Unity-Technologies/SynthDet)
 
 ## Citation
 Here are some additional, relevant articles:
