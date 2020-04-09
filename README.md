@@ -16,7 +16,6 @@ In this current deliverable, the primary elements that we are including are the 
 
 ## Release & Documentation
 #### Click [here](docs/Readme.md) to get the started with SynthDet
-We have a public annotated dataset that is currently being hosted in [gcs]() for users to download.
 
 Version|Release Date |Source
 -------|-------------|------
@@ -27,6 +26,7 @@ Here are some additional, relevant articles:
 * [Using Fully Synthetic Training for Object Instance Detection](https://arxiv.org/pdf/1902.09967.pdf)
 
 ## Additional Resources 
+Public annotated dataset [gcs](https://storage.cloud.google.com/thea-dev/data/groceries/v1.zip?authuser=0)
 
 ## License
 * [License]()

@@ -6,6 +6,7 @@ Getting started with [Unity Simulation](https://forum.unity.com/threads/getting-
 		* Have a supported editor installed 
 		* Install and setup the Unity Simulation prerequisites 
 		* USim CLI installed with CLI tool 
+		* Authenticate your account in CLI
 		* Claim the credit for workflow costs on USim
 
 
