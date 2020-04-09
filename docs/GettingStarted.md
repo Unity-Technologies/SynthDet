@@ -60,8 +60,9 @@ The purpose of this document is to provide you with everything that you need to 
 ### Step 4: Download manifest from USim
 1. First we want to check the current summary of the execution run in the console window for USim
     1. Open a cmd line and navigate to the USim CLI for your platform 
-    2. In the cmd window run summarize run-execution <execution id>
-    3. You may need to run this a few times because you don’t want to continue until the run is completed 
+    2. Run the cmd usim login auth, this will log you in
+    3. In the cmd window run summarize run-execution <execution id>
+    4. You may need to run this a few times because you don’t want to continue until the run is completed 
 
 <img src="images/usimSumExecution.PNG" align="middle"/>
 
