@@ -5,7 +5,7 @@ The purpose of this document is to provide you with everything that you need to 
 ## Workflow (Step-by-step)
 ### Step 1: Open the SynthDet Sample project
 1. Git clone the SynthDet repo from the [GitHub](https://github.com/Unity-Technologies/SynthDet) repo
-2. In the scenes open the SampleScene 
+2. In the scenes open the MainScene 
 3. Press play and observe the different products quickly being generated in the game view
 
 <img src="images/dataset.png" align="middle"/>
@@ -36,12 +36,15 @@ The purpose of this document is to provide you with everything that you need to 
 <img src="images/targetingLinuxPlatform.PNG" align="middle"/>
 
 3. Create a Linux build of the project with Click build
+    1. Create a new folder for the build in the root of the project
+    2. For example in this sample we created a folder structure <Project Path>/Build/LinuxBuild 
 
 #### Preparing the USim Build
-1. Once the Linux build is complete, navigate to <Project>\Build\LinuxBuild and use a utility to zip the build
-    1. It is important to zip the build so the root folder contains the files for the build and not contain a extra folder in the path
-    2. You can do this by selecting all the files in the Linux build directory and then right clicking <PlayerBuild>.x86_64 and send to a Zip folder
-    3. If the build contains a folder with the build files inside of that folder the build will fail in USim
+1. Once the Linux build is complete navigate to your Build folder, i.e. we used <Project>\Build\LinuxBuild and use a utility to zip the build
+    1. It is important to zip the build so the root folder contains the files for the build and doesn't contain a extra folder in the path
+    2. You can do this by selecting all the files in the Linux build directory and then right clicking <PlayerBuild>.x86_64 and send to a zip folder
+    3. Verify that the zip contains only the files from the build
+        1. If you open the zip and you see a folder that contains the build files inside that folder the build will fail in Unity Simulation
 
 <img src="images/exampleLinuxZipBuild.PNG" align="middle"/>
 
@@ -53,6 +56,7 @@ The purpose of this document is to provide you with everything that you need to 
 <img src="images/USimRunWindow.PNG" align="middle"/>
 
 6. Click “Execute in Unity Simulation”
+    1. This will take some time for the runs to complete
 7. Take note and copy down the run-execution id from the Console window
 
 <img src="images/NoteExecutionID.PNG" align="middle"/>
