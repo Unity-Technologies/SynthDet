@@ -19,7 +19,7 @@ In this current deliverable, the primary elements that we are including are the 
 
 Version|Release Date |Source
 -------|-------------|------
-xxxx   |April X, 2020|[source](https://github.com/Unity-Technologies/SynthDet)
+   V0  |April X, 2020|[source](https://github.com/Unity-Technologies/SynthDet)
 
 ## Citation
 Here are some additional, relevant articles:
