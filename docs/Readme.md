@@ -6,7 +6,7 @@
 
 ## Getting Started 
 * [Getting Started with SynthDet](GettingStarted.md)
-* [SynthDet Information](SynthDetinfo.md)
+* [SynthDet Information](SynthDetInfo.md)
 
 ## Addtional Documenation 
 * [Labeling](Labeling.md)
