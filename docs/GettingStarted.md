@@ -77,32 +77,5 @@ The purpose of this document is to provide you with everything that you need to 
 
 ### Step 5: Creating the trained model using Thea
 #### Docker Setup
-1. Make sure to clone the github repo for Thea to access to the docker image
-2. Build and push Docker image to use for GCP platform 
-3. In <Thea Repo File Path>\thea\configs open up the file faster_rcnn_synthetic.yaml
-    1. Modify the run_execution_id: to execution id from Step 4 when you created the executed the USim build
-4. In a Cmd console of your choice follow the steps below:
-    1. Index for docker cmd examples
-    2. TAG = name you want to tag your image with 
-    3. GCP_PROJECT_ID - glcoud project id that you set up 
-    4. glcoud config project set <GCP_PROJECT_ID>  
-    5. docker build -t thea:$TAG <file path to the target docker image>
-    6. docker tag thea:$TAG gcr.io/$GCP_PROJECT_ID/thea:$TAG 
-    7. docker push gcr.io/$GCP_PROJECT_ID/thea:$TAG 
-
-#### Submit CloudML Jobs
-1. In the cmd window we need to submit a job to the ML cloud 
-2. In a Cmd console of your choice follow the steps below:
-    1. Index for docker cmd examples
-    2. JOB_NAME = deeplabv3_$(date +%Y%m%d_%H%M%S)
-    3. gcloud ai-platform jobs submit training $JOB_NAME \
-        --region us-central1 \
-        --master-image-uri gcr.io/$GCP_PROJECT_ID/thea:$TAG \
-        --scale-tier custom \
-        --master-machine-type standard_v100 \
-        -- \
-        1 train \
-        --config=thea/configs/deeplabv3.yaml \
-        --logdir=gs://thea-dev/runs/$JOB_NAME \
-        --val-interval=1 \
-        train.epochs 100
+1. In the SynthDet repo make sure you have the Docker Image for Thea 
+Need Steps from You-Cyaun  
