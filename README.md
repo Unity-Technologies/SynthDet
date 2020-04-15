@@ -5,13 +5,13 @@
 # Unity SynthDet 
 In this current deliverable, the primary elements that we are including are the Perception SDK, annotation data,using Thea for creating trained data models, and execution of simulations on the local machine or Unity Simulation platform.
 
+This release will help with walking through the steps of creating synthetic datasets using an example project. 
+
 ## Features
-* Unity SynthDet project that includes all the code and assets for reproducing the synthetic dataset for this paper at scale in Unity Simulation
-* AR Example App to is a standalone desktop application that takes a model trained by Thea and runs it on a webcam input, showing boxes of detected objects
+* Unity SynthDet project that includes all the code and assets for reproducing the synthetic dataset at scale in Unity Simulation
 * Using Unity Simulation to run and reproduce a synthetic dataset
-* Annotated real-world dataset that contains a set of >1000 photos alongside labeled bounding box annotations in the form of the COCO dataset
-* Thea is python based toolset that code for model training, testing, and dataset insights.
-* Perception SDK
+* Dokcer image containing the tool called Thea which is python based toolset for creating dataset insight models 
+* Perception SDK 
 
 
 ## Release & Documentation

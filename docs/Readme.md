@@ -13,7 +13,6 @@
 * [AnnotatedData](AnnotatedData.md) 
 
 ## Tools
-* [Using the AR App](ArApp.md)
 * [Google Cloud](gcp.md)
 
 ## Help
