@@ -1,0 +1,7 @@
+{
+	"name": "com.unity.ai.simulation",
+	"displayName":"Simulation",
+	"version": "1.0.0-preview.1",
+	"unity": "2018.3",
+  	"description": "Simulation SDK. Contains functionality to capture screen shots and data logs from the simulation and write it down to the file system."
+}

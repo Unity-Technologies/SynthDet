@@ -1,0 +1,133 @@
+test_editors:
+  - version: 2019.3.0f1
+  # Trunk disabled because HDRP 7.1.2 does not compile on trunk. see https://unity.slack.com/archives/C6Y79CZM0/p1571936554247900
+  #- version: trunk
+test_platforms:
+  - name: win
+    type: Unity::VM
+    image: package-ci/win10:stable
+    flavor: b1.large
+    extra-args: --force-d3d11
+    standalone-platform: StandaloneWindows64
+  - name: mac
+    type: Unity::VM::osx
+    image: buildfarm/mac:stable
+    flavor: m1.mac
+    extra-args: --force-metal
+    standalone-platform: StandaloneOSX
+  - name: ubuntu
+    type: Unity::VM
+    image: package-ci/ubuntu:latest
+    flavor: b1.large
+
+suites:
+  - name: standalone
+    display_name: (flakey) standalone
+    args: --suite=playmode --platform=
+  - name: editmode
+    display_name: editmode
+    args: --suite=playmode --suite=editor --platform=editmode
+
+package_variants:
+  - name: SimViz
+---
+{% for variant in package_variants %}
+pack_{{ variant.name }}:
+  name: Pack {{variant.name}} package
+  agent:
+    type: Unity::VM
+    image: package-ci/win10:stable
+    flavor: b1.large
+  commands:
+     - git submodule update --init --recursive
+     - npm install upm-ci-utils -g --registry https://api.bintray.com/npm/unity/unity-npm
+     - upm-ci package pack --package-path ./com.unity.simviz/ 
+  artifacts:
+    packages:
+      paths:
+        - "upm-ci~/packages/**/*"
+{% endfor %}
+
+{% for variant in package_variants %}
+{% for editor in test_editors %}
+{% for platform in test_platforms %}
+pkg_test_{{variant.name}}_{{ platform.name }}_{{ editor.version }}:
+  name : Package tests ({{variant.name}} pkg, {{ editor.version }}, {{ platform.name }})
+  agent:
+    type: {{ platform.type }}
+    image: {{ platform.image }}
+    flavor: {{ platform.flavor}}
+  commands:
+    - npm install upm-ci-utils -g --registry https://api.bintray.com/npm/unity/unity-npm
+    - upm-ci package test -u {{ editor.version }} --package-path ./com.unity.simviz --type vetting-tests
+  artifacts:
+    logs:
+      paths:
+        - "upm-ci~/test-results/**/*"
+  dependencies:
+    - .yamato/upm-ci-full.yml#pack_{{ variant.name }}
+{% endfor %}
+{% endfor %} 
+{% endfor %} 
+
+test_trigger:
+  name: All Tests
+  agent:
+    type: Unity::VM
+    image: package-ci/win10:stable
+    flavor: b1.small
+  commands:
+    - dir
+  triggers:
+    branches:
+      only:
+        - "/.*/"
+  artifacts:
+    logs:
+      paths:
+        - "upm-ci~/test-results/**/*"
+    packages:
+      paths:
+        - "upm-ci~/packages/**/*"
+  dependencies:
+    {% for variant in package_variants %}
+    {% for editor in test_editors %}
+    {% for platform in test_platforms %}
+    - .yamato/upm-ci-full.yml#pkg_test_{{variant.name}}_{{platform.name}}_{{editor.version}}
+    {% endfor %}
+    {% endfor %}
+    {% endfor %}
+
+    # Disabling trigger of standalone tests which aren't working at the moment
+    {% for editor in test_editors %}
+    # - .yamato/upm-ci-simviztest.yml#simviztest_windows_standalone_{{editor.version}}
+    # - .yamato/upm-ci-simviztest.yml#simviztest_linux_standalone_{{editor.version}}
+    - .yamato/upm-ci-simviztest.yml#simviztest_windows_editmode_{{editor.version}}
+    # Compute shaders are not working in the linux playmode tests. Need to resolve once linux editor compilation errors are fixed. See https://unity.slack.com/archives/C20E70CAC/p1572886311010800
+    # - .yamato/upm-ci-simviztest.yml#simviztest_linux_editmode_{{editor.version}}
+    {% endfor %}
+
+publish:
+  name: Publish SimViz package to internal registry
+  agent:
+    type: Unity::VM
+    image: package-ci/win10:stable
+    flavor: b1.large
+  commands:
+    - npm install upm-ci-utils@stable -g --registry https://api.bintray.com/npm/unity/unity-npm
+    - upm-ci package publish --package-path com.unity.simviz
+  triggers:
+    tags:
+      only:
+        - /^(r|R)(c|C)-\d+\.\d+\.\d+(-preview(\.\d+)?)?$/
+  artifacts:
+    artifacts:
+      paths:
+        - "upm-ci~/packages/*.tgz"
+  dependencies:
+    - .yamato/upm-ci-full.yml#pack_simviz
+    {% for editor in test_editors %}
+    {% for platform in test_platforms %}
+    - .yamato/upm-ci-full.yml#test_simviz_{{ platform.name }}_{{ editor.version }}
+    {% endfor %}
+    {% endfor %}

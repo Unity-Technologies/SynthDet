@@ -1,0 +1,24 @@
+{
+    "name": "UnityEngine.SimViz.Content.Editor",
+    "references": [
+        "GUID:26c2f31c55a3f8a4eacf7bbef73e8f68",
+        "GUID:d8b63aba1907145bea998dd612889d6b",
+        "GUID:734d92eba21c94caba915361bd5ac177",
+        "GUID:0485da6747c5c2540a16cbd66f5ab375",
+        "GUID:e0cd26848372d4e5c891c569017e11f1",
+        "GUID:92ee438f32d811247a22ca14bf2a3fe0",
+        "GUID:626070ea3273cb844a310aa4f53b31fa",
+        "GUID:a3867139fb5f48e43972bdbc58ef9b3c"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,143 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bad10bec3eccd8e49a9d725b2c30f74c, type: 3}
+  m_Name: LabelingConfiguration
+  m_EditorClassIdentifier: 
+  LabelingConfigurations:
+  - label: 
+    value: 0
+  - label: book_dorkdiaries_aladdin
+    value: 1
+  - label: candy_minipralines_lindt
+    value: 1
+  - label: candy_raffaello_confetteria
+    value: 1
+  - label: cereal_capn_crunch
+    value: 1
+  - label: cereal_cheerios_honeynut
+    value: 1
+  - label: cereal_corn_flakes
+    value: 1
+  - label: cereal_cracklinoatbran_kelloggs
+    value: 1
+  - label: cereal_oatmealsquares_quaker
+    value: 1
+  - label: cereal_puffins_barbaras
+    value: 1
+  - label: cereal_raisin_bran
+    value: 1
+  - label: cereal_rice_krispies
+    value: 1
+  - label: chips_gardensalsa_sunchips
+    value: 1
+  - label: chips_sourcream_lays
+    value: 1
+  - label: cleaning_freegentle_tide
+    value: 1
+  - label: cleaning_snuggle_henkel
+    value: 1
+  - label: cracker_honeymaid_nabisco
+    value: 1
+  - label: cracker_lightrye_wasa
+    value: 1
+  - label: cracker_triscuit_avocado
+    value: 1
+  - label: cracker_zwieback_brandt
+    value: 1
+  - label: craft_yarn_caron
+    value: 1
+  - label: drink_adrenaline_shock
+    value: 1
+  - label: drink_coffeebeans_kickinghorse
+    value: 1
+  - label: drink_greentea_itoen
+    value: 1
+  - label: drink_orangejuice_minutemaid
+    value: 1
+  - label: drink_whippingcream_lucerne
+    value: 1
+  - label: footware_slippers_disney
+    value: 1
+  - label: hygiene_poise_pads
+    value: 1
+  - label: lotion_essentially_nivea
+    value: 1
+  - label: lotion_vanilla_nivea
+    value: 1
+  - label: pasta_lasagne_barilla
+    value: 1
+  - label: pest_antbaits_terro
+    value: 1
+  - label: porridge_grits_quaker
+    value: 1
+  - label: seasoning_canesugar_candh
+    value: 1
+  - label: snack_breadsticks_nutella
+    value: 1
+  - label: snack_chips_pringles
+    value: 1
+  - label: snack_coffeecakes_hostess
+    value: 1
+  - label: snack_cookie_famousamos
+    value: 1
+  - label: snack_biscotti_ghiott
+    value: 1
+  - label: snack_cookie_petitecolier
+    value: 1
+  - label: snack_cookie_quadratini
+    value: 1
+  - label: snack_cookie_waffeletten
+    value: 1
+  - label: snack_cookie_walkers
+    value: 1
+  - label: snack_cookies_fourre
+    value: 1
+  - label: snack_granolabar_kashi
+    value: 1
+  - label: snack_granolabar_kind
+    value: 1
+  - label: snack_granolabar_naturevalley
+    value: 1
+  - label: snack_granolabar_quaker
+    value: 1
+  - label: snack_salame_hillshire
+    value: 1
+  - label: soup_chickenenchilada_progresso
+    value: 1
+  - label: soup_tomato_pacific
+    value: 1
+  - label: storage_ziploc_sandwich
+    value: 1
+  - label: toiletry_tissue_softly
+    value: 1
+  - label: toiletry_toothpaste_colgate
+    value: 1
+  - label: toy_cat_melissa
+    value: 1
+  - label: utensil_candle_decorators
+    value: 1
+  - label: utensil_coffee_filters
+    value: 1
+  - label: utensil_cottonovals_signaturecare
+    value: 1
+  - label: utensil_papertowels_valuecorner
+    value: 1
+  - label: utensil_toiletpaper_scott
+    value: 1
+  - label: utensil_trashbag_valuecorner
+    value: 1
+  - label: vitamin_centrumsilver_adults
+    value: 1
+  - label: vitamin_centrumsilver_men
+    value: 1
+  - label: vitamin_centrumsilver_woman
+    value: 1

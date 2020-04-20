@@ -1,0 +1,27 @@
+<?xml version="1.0" standalone="yes"?>
+<OpenDRIVE>
+    <road name="mock_road_1" length="2.0" id="500" junction="2">
+        <link>
+            <predecessor elementType="road" elementId="501" contactPoint="end" />
+            <successor elementType="road" elementId="501" contactPoint="start" />
+        </link>
+        <planView>
+            <geometry s="0.0000000000000000e+00" x="-5.0" y="7.0" hdg="5.5" length="0.5">
+                <line/>
+            </geometry>
+        </planView>
+        <lanes/>
+    </road>
+    <road name="mock_road_2" length="5.0" id="501" junction="2">
+        <link>
+            <predecessor elementType="road" elementId="500" contactPoint="end" />
+            <successor elementType="road" elementId="500" contactPoint="start" />
+        </link>
+        <lanes/>
+        <planView>
+            <geometry s="0.0000000000000000e+00" x="-5.0" y="7.0" hdg="5.5" length="0.5">
+                <line/>
+            </geometry>
+        </planView>
+    </road>
+</OpenDRIVE>

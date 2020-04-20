@@ -1,0 +1,10 @@
+﻿#pragma kernel CSMain
+
+RWStructuredBuffer<float> inputBuffer;
+RWStructuredBuffer<float> outputBuffer;
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    outputBuffer[id.x] = 1 + inputBuffer[id.x];
+}

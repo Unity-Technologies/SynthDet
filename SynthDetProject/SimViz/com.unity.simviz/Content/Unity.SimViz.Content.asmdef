@@ -1,0 +1,25 @@
+{
+    "name": "Unity.SimViz.Content",
+    "references": [
+        "GUID:61a84675236737a458fd230c0631ace0",
+        "GUID:734d92eba21c94caba915361bd5ac177",
+        "GUID:e0cd26848372d4e5c891c569017e11f1",
+        "GUID:d8b63aba1907145bea998dd612889d6b",
+        "GUID:2665a8d13d1b3f18800f46e256720795",
+        "GUID:626070ea3273cb844a310aa4f53b31fa",
+        "GUID:e35a45ac11d444d7db30cc91d9e833b8"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Newtonsoft.Json.dll",
+        "QuickGraph.dll",
+        "QuickGraph.Data.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

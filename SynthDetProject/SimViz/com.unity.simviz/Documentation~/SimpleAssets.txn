@@ -1,0 +1,21 @@
+{
+  "placements": [
+    {
+      "type": "Buildings",
+      "path": ["Assets/SimpleAssets/Prefabs/Buildings"]
+    },
+    {
+      "type": "RoadSigns",
+      "path": ["Assets/SimpleAssets/Prefabs/RoadSigns"]
+    },
+    {
+      "type": "StreetLights",
+      "path": ["Assets/SimpleAssets/Prefabs/StreetLights"]
+    },
+    {
+      "type": "Trees",
+      "path": ["Assets/SimpleAssets/Prefabs/Trees"]
+    }
+  ],
+  "labels": []
+}

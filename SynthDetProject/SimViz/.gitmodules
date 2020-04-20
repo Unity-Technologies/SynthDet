@@ -1,0 +1,3 @@
+[submodule "com.unity.simviz/Content/Path-Creator"]
+	path = com.unity.simviz/Content/Path-Creator
+	url = git@github.com:mrpropellers/Path-Creator.git

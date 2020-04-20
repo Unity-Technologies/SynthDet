@@ -1,0 +1,7 @@
+{
+	"name": "com.unity.simulation.client",
+	"displayName":"Unity Simulation Client",
+	"version": "0.0.10-preview.1",
+	"unity": "2019.3",
+  	"description": "Contains functionality to use the Unity Simulation service from scripts."
+}

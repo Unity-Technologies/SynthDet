@@ -1,0 +1,30 @@
+{
+    "name": "Unity.SimViz.Content.Runtime.Tests",
+    "references": [
+        "UnityEngine.TestRunner",
+        "Unity.SimViz.Content",
+        "UnityEngine.SimViz.Content.Editor",
+        "Poly2Tri",
+        "Unity.Mathematics",
+        "Unity.Collections",
+        "Unity.Burst",
+        "Unity.Entities",
+        "Untiy.SimViz.Tests.Scripts"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "WindowsStandalone64"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
