@@ -40,6 +40,7 @@ The purpose of this document is to provide you with everything that you need to 
     2. For example in this sample we created a folder structure <Project Path>/Build/LinuxBuild 
 
 #### Preparing the USim Build
+If you run into issues please check [USim Help and Information](USim.md) 
 1. Once the Linux build is complete navigate to your Build folder, i.e. we used <Project>\Build\LinuxBuild and use a utility to zip the build
     1. It is important to zip the build so the root folder contains the files for the build and doesn't contain a extra folder in the path
     2. You can do this by selecting all the files in the Linux build directory and then right clicking <PlayerBuild>.x86_64 and send to a zip folder
@@ -66,6 +67,7 @@ The purpose of this document is to provide you with everything that you need to 
     1. Open a cmd line and navigate to the USim CLI for your platform 
     2. Run the cmd usim login auth, this will log you in
     3. In the cmd window run summarize run-execution <execution id>
+        1. If you receive  an error about the active project please go to [USim Help](USim.md)
     4. You may need to run this a few times because you don’t want to continue until the run is completed 
 
 <img src="images/usimSumExecution.PNG" align="middle"/>

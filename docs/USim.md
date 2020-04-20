@@ -1,4 +1,4 @@
-# USim Help
+# USim Help and Information 
 Guide for navigating issues in USim that can block work flow in using the SynthDet Sample Project.
 
 ## USim can’t find my project
