@@ -1,9 +1,0 @@
-<road name="mock_road" length="2.0" id="500" junction="2">
-    <planView>
-        <geometry s="0.0000000000000000e+00" x="1.5" y="-2.0" hdg="5.5" length="0.5">
-            <line/>
-        </geometry>
-    </planView>
-    <link/>
-    <lanes/>
-</road>

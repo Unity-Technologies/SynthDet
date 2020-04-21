@@ -1,7 +1,0 @@
-{
-	"name": "com.unity.ai.dxcore",
-	"displayName":"Data Exchange Core",
-	"version": "1.0.0-preview.1",
-	"unity": "2018.3",
-  	"description": "DXCore for simulations. Contains core functionality of AsyncRequests, Data Exchange Manager requried by simulations."
-}

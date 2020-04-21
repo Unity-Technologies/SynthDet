@@ -1,9 +1,0 @@
-<junction name="mrjunction" id="1">
-    <connection id="0" incomingRoad="502" connectingRoad="500" contactPoint="start">
-        <laneLink from="1" to="-1"/>
-        <laneLink from="2" to="-2"/>
-    </connection>
-    <connection id="1" incomingRoad="502" connectingRoad="510" contactPoint="end">
-        <laneLink from="1" to="-1"/>
-    </connection>
-</junction>
