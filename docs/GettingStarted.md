@@ -53,6 +53,7 @@ If you run into issues please check [USim Help and Information](USim.md)
     1. Under Window click Run in USim…
     2. Fill out the Run name  
     3. Fill out the path to player build.zip you created in step 4
+    4. If you are curious about the parameters in this window check out the [USim information guide](USim.md)
 
 <img src="images/USimRunWindow.PNG" align="middle"/>
 
