@@ -28,7 +28,7 @@ The project when you press play will generate a local dataset to your local data
 Once the data is generated locally you can use the created dataset to run a local docker image to train a model based on the dataset.
 
 1. This command mounted directory $home/data in your local filesystem to /data inside the container. If you have saved your data to a different location, change the local directory path to match the directory where the synthetic data is stored
-    1. docker run -p 8888:8888 -v <Synthetic Data File Path/data>:/data -t gcr.io/unity-ai-thea-test/thea:latest
+    1. docker run -p 8888:8888 -v <Synthetic Data File Path/data>:/data -t unitytechnologies/datasetinsights:0.0.1
 
 ## Opening the docker image locally
 1. There are two options for opening the docker image locally  
@@ -50,6 +50,6 @@ Once the data is generated locally you can use the created dataset to run a loca
 3. Open the SynthDet_Statistics.ipynb notebook
 
 4. Click Cell->Run All at the top of the notebook, this will run through the notebook sections
-<img src="images/RunAll.PNG.PNG" align="middle"/>
+<img src="images/RunAll.PNG" align="middle"/>
 
 5. The notebook will start generating graphs to organize the metrics for the model
