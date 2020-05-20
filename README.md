@@ -21,12 +21,16 @@ This project is geared towards ML practitioners and enthusiasts who are actively
 
 Version|Release Date |Source
 -------|-------------|------
-   V0.1  |May 26, 2020|[source](https://github.cds.internal.unity3d.com/unity/google-dr-paper)
+   V0.1  |May 26, 2020|[source](https://github.com/Unity-Technologies/SynthDet)
 
 ## Citation
 SynthDet was inspired by the following research paper from Google Cloud AI:  
 
 Hinterstoisser, S., Pauly, O., Heibel, H., Marek, M., & Bokeloh, M. (2019). [*An Annotation Saved is an Annotation Earned: Using Fully Synthetic Training for Object Instance Detection.* ](https://arxiv.org/pdf/1902.09967.pdf)
+
+## Support 
+For general questions or concerns please contact the Perception team at the email address perception@unity3d.com
+For feedback, bugs, or other issues please file a github issue and the Perception team will investigate the issue as soon as possible.
 
 <!--## Additional Resources 
 ---Annotated real dataset---
