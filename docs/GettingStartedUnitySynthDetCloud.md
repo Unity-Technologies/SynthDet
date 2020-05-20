@@ -100,7 +100,7 @@ Once the Unity Simulation run has been executed, the run needs to be verified th
 This section will be a guide for creating a personal notebook based off a particular git commit in order to run Thea. Thea is a python tool used to create trained models based off of the dataset created in Unity Simulations. By the end of the section you will be able to use a notebook to create a trained model based off of a dataset.
 
 1. This command mounted directory $home/data in your local filesystem to /data inside the container. If you have saved your data to a different location, change the local directory path to match the directory where the synthetic data is stored
-    1. docker run -p 8888:8888 -v <Synthetic Data File Path/data>:/data -t gcr.io/unity-ai-thea-test/thea:latest
+    1. docker run -p 8888:8888 -v <Synthetic Data File Path/data>:/data -t unitytechnologies/datasetinsights:0.0.1
 
 ## Opening the docker image locally
 1. There are two options for opening the docker image locally  
@@ -126,6 +126,6 @@ This section will be a guide for creating a personal notebook based off a partic
         1. You can get auth_token by following: [Unity Simulation Quickstart](https://github.com/Unity-Technologies/Unity-Simulation-Docs/blob/master/doc/quickstart.md)
 
 4. Click Cell->Run All at the top of the notebook, this will run through the notebook sections
-<img src="images/RunAll.PNG.PNG" align="middle"/>
+<img src="images/RunAll.PNG" align="middle"/>
 
 5. The notebook will start generating graphs to organize the metrics for the model
