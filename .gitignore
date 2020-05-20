@@ -1,30 +1,3 @@
-artifacts/**
-build/**
-**/.vs/**
-.build_script/**
-node_modules/**
-**/Temp/**/*
-**/obj/**/*
-**/Library/**/*
-**/*Results/**
-**/Logs/**
-**/.vscode/**
-**/.idea/**
-.DS_Store
-.npmrc
-!Documentation~
-!.Documentation
-npm-debug.log
-build.sh.meta
-build.bat.meta
-.idea/
-.Editor/*
-upm-ci~/*
-
-*.csproj
-*.sln
-
-*.lib*
-*.pdb*
-**/.Editor
-/upm-ci~
+version https://git-lfs.github.com/spec/v1
+oid sha256:ea793c30aba0fdb730341f060404ef80f81c9cc77acbf0f69063cd1062dfee3f
+size 14484

@@ -1,0 +1,30 @@
+{
+    "name": "Scripts",
+    "references": [
+        "GUID:d8b63aba1907145bea998dd612889d6b",
+        "GUID:734d92eba21c94caba915361bd5ac177",
+        "GUID:e04e6c86a9f3947eb95fded39f9e60cc",
+        "GUID:64dd21a71f05646a89405b0ade11289b",
+        "GUID:a3867139fb5f48e43972bdbc58ef9b3c",
+        "GUID:26c2f31c55a3f8a4eacf7bbef73e8f68",
+        "GUID:e0cd26848372d4e5c891c569017e11f1",
+        "GUID:a35efad8797223d499f8c68b1f545dbc",
+        "GUID:d60799ab2a985554ea1a39cd38695018",
+        "GUID:2665a8d13d1b3f18800f46e256720795",
+        "GUID:e35a45ac11d444d7db30cc91d9e833b8",
+        "GUID:c29904cf588a14db08f7961207e4347e",
+        "GUID:15fc0a57446b3144c949da3e2b9737a9",
+        "GUID:df380645f10b7bc4b97d4f5eb6303d95"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Newtonsoft.Json.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
