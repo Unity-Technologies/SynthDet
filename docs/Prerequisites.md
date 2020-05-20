@@ -7,6 +7,5 @@ Tools for installation and configuration:
 3. Clone down the [SynthDet](https://github.cds.internal.unity3d.com/unity/google-dr-paper) github repository 
 4. [Install Python 3.7](https://www.python.org/downloads/release/python-370/) 
 5. [Install Docker](https://www.docker.com/products/docker-desktop)
-
-<!--4. A [Unity Simulation Account](GettingStartedUnitySimulation.md)
-	1. Please ensure that the $100 credit is applied to your account before proceeding with instructions-->
+6. A [Unity Simulation Account](https://unity.com/products/simulation)
+	1. Please ensure that the $100 credit is applied to your account before proceeding with instructions
