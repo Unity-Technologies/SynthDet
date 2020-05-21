@@ -7,7 +7,7 @@ The goal of the workflow steps is to provide you with everything that you need t
 ### Step 1: Open the SynthDet Sample project
 Verify you can open the project and the example scene runs and generates data locally on your machine.
 
-1. In the SynthDet [repository you cloned](https://github.cds.internal.unity3d.com/unity/google-dr-paper/tree/master)
+1. In the SynthDet [repository you cloned](https://github.com/Unity-Technologies/SynthDet)
     1. In a command prompt navigate to the root folder and run the command **git submodule update --init --recursive**
     2. Open the example project in the root called SynthDet 
 2. In the Scenes folder open the MainScene 
