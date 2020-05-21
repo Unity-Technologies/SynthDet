@@ -28,17 +28,13 @@ The project when you press play will generate a local dataset to your local data
 Once the data is generated locally you can use the created dataset to run a local docker image to train a model based on the dataset.
 
 1. This command mounted directory $home/data in your local filesystem to /data inside the container. If you have saved your data to a different location, change the local directory path to match the directory where the synthetic data is stored
-    1. docker run -p 8888:8888 -v <Synthetic Data File Path/data>:/data -t unitytechnologies/datasetinsights:0.0.1
+    1. docker run -p 8888:8888 -v <path/to/synthetic/dataset>:/data -t unitytechnologies/datasetinsights:0.0.1
 
 ## Opening the docker image locally
 1. There are two options for opening the docker image locally  
     1. In a internet browser go to http://localhost:8888 in a web browser to open the notebook
     
     <img src="images/LocalWebpageThea.jpg" align="middle"/>
-    
-    2. Open the Docker Dashboard and select the image that was created using thea, then select open in browser in the top right ribbon 
-
-    <img src="images/DockerDashboard.PNG" align="middle"/>
 
 ### Running the Notebook
 1. Make sure that the local webpage for the image is open
