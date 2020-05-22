@@ -29,7 +29,7 @@ public class RandomizedPostProcessingFeature : ScriptableRendererFeature
     Material m_BlurMaterial;
     Material m_NoiseMaterial;
     Random m_Rand = new Random(1);
-    bool m_IsEnabled = true;
+    bool m_ShadersWereFound;
     
     MetricDefinition m_PostProcessValuesMetric;
     static readonly Guid k_PostProcessValuesMetricId = Guid.Parse("A0B7FD8C-7011-4675-A9BA-D1C5C2A22A2C");
@@ -39,21 +39,6 @@ public class RandomizedPostProcessingFeature : ScriptableRendererFeature
 
     public override void Create()
     {
-        m_IsEnabled = true;
-        m_BlurMaterial = new Material(Shader.Find(k_BlurShader));
-        m_NoiseMaterial = new Material(Shader.Find(k_NoiseShader));
-        if (m_BlurMaterial == null)
-        {
-            Debug.LogError($"Unable to find blur shader {k_BlurShader}.");
-            m_IsEnabled = false;
-        }
-
-        if (m_NoiseMaterial == null)
-        {
-            Debug.LogError($"Unable to find noise shader {k_NoiseShader}");
-            m_IsEnabled = false;
-        }
-
         m_RenderPass = new RandomizedPostProcessingPass();
         if (Application.isPlaying)
         {
@@ -62,24 +47,16 @@ public class RandomizedPostProcessingFeature : ScriptableRendererFeature
                 description: "Some post-processing parameters are randomized each frame. These are the per-frame values used.",
                 id: k_PostProcessValuesMetricId);
         }
-
-        if (!m_IsEnabled)
-        {
-            Debug.LogWarning($"{nameof(RandomizedPostProcessingFeature)} is not enabled and will not affect rendering.");
-        }
     }
 
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
     {
-        if (!m_IsEnabled)
-            return;
-
         #if UNITY_EDITOR
         if (!RenderInEditor && !EditorApplication.isPlaying)
             return;
         #endif
 
-        // Try to find game object here because scene may not be initialized on Create()
+        // Initialize here because scene is not guaranteed to be initialized when Create is called
         if (m_InitParams == null)
         {
             m_InitParams = GameObject.Find("Management")?.GetComponentInChildren<ProjectInitialization>();
@@ -89,6 +66,38 @@ public class RandomizedPostProcessingFeature : ScriptableRendererFeature
                     "(You can disable this feature in Assets/RenderFeatures/ForwardRenderer/RandomizedPostProcessing");
                 return;
             }
+
+            m_ShadersWereFound = true;
+            var blurShader = Shader.Find(k_BlurShader);
+            if (blurShader != null)
+            {
+                m_BlurMaterial = new Material(blurShader);
+            }
+            else
+            {
+                m_ShadersWereFound = false;
+            }
+
+            var noiseShader = Shader.Find(k_NoiseShader);
+            if (noiseShader != null)
+            {
+                m_NoiseMaterial = new Material(noiseShader);
+            }
+            else
+            {
+                m_ShadersWereFound = false;
+            }
+
+            if (!m_ShadersWereFound)
+            {
+                Debug.LogError(
+                    $"{nameof(RandomizedPostProcessingFeature)} couldn't find its shaders and will not render.");
+            }
+        }
+        
+        if (!m_ShadersWereFound)
+        {
+            return;
         }
 
         var p = m_InitParams.AppParameters;

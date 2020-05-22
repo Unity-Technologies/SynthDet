@@ -1,13 +1,12 @@
 # SynthDet Documentation
 ## Installation & Setup
 * [Prerequisites](Prerequisites.md)
-	* [Unity Simulation Start Guide](GettingStartedUnitySimulation.md)
 
 ## Getting Started 
-* [Getting Started with SynthDet locally](GettingStartedUnitySynthDetLocal.md)
-* [Getting Started with SynthDet using Cloud Services](GettingStartedUnitySynthDetCloud.md)
+* [Getting Started with SynthDet](GettingStartedSynthDet.md)
+* [Running SynthDet in Unity Simulation](RunningSynthDetCloud.md)
 
-## Addtional Documenation 
+## Additional Documentation 
 * [AnnotatedData](AnnotatedDataset.md)
 * [Background: Unity](BackgroundUnity.md)
 

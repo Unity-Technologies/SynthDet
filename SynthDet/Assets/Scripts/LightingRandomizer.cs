@@ -13,9 +13,7 @@ public class LightingRandomizerSystem : JobComponentSystem
     bool m_IsInitialized;
     MetricDefinition m_LightingInfoDefinition;
     
-    ProjectInitialization m_initParams;
-    float m_LightColor;
-    float m_LightRotation;
+    ProjectInitialization m_InitParams;
 
     protected override void OnCreate()
     {
@@ -36,18 +34,15 @@ public class LightingRandomizerSystem : JobComponentSystem
         
         
         // Try to find game object here because scene may not be initialized on Create()
-        if (m_initParams == null)
+        if (m_InitParams == null)
         {
-            m_initParams = GameObject.Find("Management")?.GetComponentInChildren<ProjectInitialization>();
-            if (m_initParams == null)
+            m_InitParams = GameObject.Find("Management")?.GetComponentInChildren<ProjectInitialization>();
+            if (m_InitParams == null)
             {
                 Debug.LogWarning("Unable to find Management object. Will not randomize lighting.");
                 return;
             }
         }
-        
-        m_LightColor = m_Rand.NextFloat(0, m_initParams.AppParameters.LightColorMin);
-        m_LightRotation = m_Rand.NextFloat(0, m_initParams.AppParameters.LightRotationMax);
     }
 
     public struct LightInfo
@@ -69,9 +64,9 @@ public class LightingRandomizerSystem : JobComponentSystem
             return inputDeps;
 
         m_Light.color = new Color(
-            m_Rand.NextFloat(m_LightColor, 1f), m_Rand.NextFloat(m_LightColor, 1f), m_Rand.NextFloat(m_LightColor, 1f));
-        var xRotation = m_Rand.NextFloat(-m_LightRotation, m_LightRotation);
-        var yRotation = m_Rand.NextFloat(-m_LightRotation, m_LightRotation);
+            m_Rand.NextFloat(m_InitParams.AppParameters.LightColorMin, 1f), m_Rand.NextFloat(m_InitParams.AppParameters.LightColorMin, 1f), m_Rand.NextFloat(m_InitParams.AppParameters.LightColorMin, 1f));
+        var xRotation = m_Rand.NextFloat(-m_InitParams.AppParameters.LightRotationMax, m_InitParams.AppParameters.LightRotationMax);
+        var yRotation = m_Rand.NextFloat(-m_InitParams.AppParameters.LightRotationMax, m_InitParams.AppParameters.LightRotationMax);
         m_Light.transform.rotation = Quaternion.Euler(
             xRotation,
             yRotation,
