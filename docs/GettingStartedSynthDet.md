@@ -37,11 +37,11 @@ Replace `<Synthetic Data File Path>` with the path the local datasets (listed ab
 
 2. Open jupyter by navigating to http://localhost:8888 in a web browser.
     
-    <img src="images/LocalWebpageThea.jpg" align="middle"/>
+    <img src="images/jupyterFolder.PNG" align="middle"/>
 
 3. Navigate to `datasetinsights/notebooks` in jupyter 
 4. Open the SynthDet_Statistics.ipynb notebook
 
-    <img src="images/jupyterFolder.PNG" align="middle"/>
+    <img src="images/theaNotebook.PNG" align="middle"/>
 
 5. Follow the instructions in the notebook to compute dataset statistics
