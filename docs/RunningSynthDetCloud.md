@@ -7,10 +7,10 @@ If you would like to use Unity Simulation please sign up for the [Unity Simulati
 ## Workflow (Step-by-step)
 
 ### Step 1: Set up additional prerequisites
-See the "Additional requirements for running in Unity Simulation" section in [Prerequisites](Prerequisites.md)
+See the "Additional requirements for running in Unity Simulation" section in [Prerequisites](GettingStartedSynthDet.md)
 
 ### Step 2: Open the SynthDet Sample project
-Please follow the Steps 1 & 2 in the [Getting Started with SynthDet](GettingStartedSynthDet.md) 
+Please follow the Steps 1 & 2 in the [Getting Started with SynthDet](RunningSynthLocally) 
 
 ### Step 3: Connect to Cloud Services 
 The project will need to be connected to cloud services and a org id in order to access Unity Simulations in the cloud services 
