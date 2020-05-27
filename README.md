@@ -14,7 +14,7 @@ This project is geared towards ML practitioners and enthusiasts who are actively
 * SynthDet - Unity Perception sample project
 * 3D Assets - High quality models of 64 commonly found grocery products
 * Unity Perception package
-* Python package for model training, testing, and dataset insights
+* Unity Dataset Insights Python package
 
 ## Release & Documentation
 #### [Getting started with SynthDet](docs/Readme.md)

@@ -133,14 +133,7 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
 
         return inputDeps;
     }
-
-    struct ObjectState
-    {
-        [UsedImplicitly]
-        public int labelId;
-        [UsedImplicitly]
-        public Vector3 rotation;
-    }
+    
     void ReportObjectStats(NativeList<PlacedObject> placedObjectBoundingBoxes, GameObject cameraObject)
     {
         var perceptionCamera = cameraObject.GetComponent<PerceptionCamera>();

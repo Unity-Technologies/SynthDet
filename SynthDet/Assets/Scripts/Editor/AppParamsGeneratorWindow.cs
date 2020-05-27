@@ -12,7 +12,6 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using System.IO;
 using UnityEditor.Build.Reporting;
-using System;
 using ZipUtility;
 public class AppParamsGeneratorWindow : EditorWindow
 {
