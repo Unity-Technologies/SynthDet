@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: slippers
+    second: {fileID: 2100000, guid: 1dd3e103f5b1d4e41a54f683a58e53b4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: texture
     second: {fileID: 2100000, guid: 1dd3e103f5b1d4e41a54f683a58e53b4, type: 2}
   materials:

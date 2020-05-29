@@ -2,12 +2,20 @@ fileFormatVersion: 2
 guid: 1e41302626beed24f9359aeaee1c39aa
 ModelImporter:
   serializedVersion: 19300
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: 1827226128182048838
+    second: Take 001
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: texture
+    second: {fileID: 2100000, guid: b5bafeac922432247b9acf6a5a91b471, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: yarn
     second: {fileID: 2100000, guid: b5bafeac922432247b9acf6a5a91b471, type: 2}
   materials:
     materialImportMode: 1
