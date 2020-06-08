@@ -27,6 +27,7 @@ public class ProjectInitialization : MonoBehaviour
         LightRotationMax = 90f,
         BackgroundHueMaxOffset = 180,
         OccludingHueMaxOffset = 180f,
+        BackgroundObjectInForegroundChance = .2f,
         NoiseStrengthMax = 0.02f,
         BlurKernelSizeMax = 0.01f,
         BlurStandardDeviationMax = 0.5f
@@ -85,6 +86,7 @@ public class ProjectInitialization : MonoBehaviour
             AppParameters.ScalingMin, 
             AppParameters.ScalingSize, 
             AppParameters.OccludingHueMaxOffset, 
+            AppParameters.BackgroundObjectInForegroundChance,
             foregroundObjects, 
             backgroundObjects, 
             backgroundImages,

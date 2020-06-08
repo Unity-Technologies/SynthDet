@@ -42,6 +42,7 @@ public class AppParamsGeneratorWindow : EditorWindow
     FloatField m_LightRotationMaxField;
     FloatField m_BackgroundHueMaxOffsetField;
     FloatField m_OccludingHueMaxOffsetField;
+    FloatField m_BackgroundInForegroundChanceField;
 
     FloatField m_NoiseStrengthMaxField;
     FloatField m_BlurKernelSizeMaxField;
@@ -186,6 +187,12 @@ public class AppParamsGeneratorWindow : EditorWindow
             viewDataKey = "Occluding hue maximum offset"
         };
         rootVisualElement.Add(m_OccludingHueMaxOffsetField);
+        m_BackgroundInForegroundChanceField = new FloatField("Background In Foreground Chance")
+        {
+            viewDataKey = "Background In Foreground Chance"
+        };
+        m_BackgroundInForegroundChanceField.RegisterValueChangedCallback(a => UpdateEstimate());
+        rootVisualElement.Add(m_BackgroundInForegroundChanceField);
         m_NoiseStrengthMaxField = new FloatField("White Noise Maximum Strength")
         {
             viewDataKey = "White noise maximum strength",
@@ -256,6 +263,7 @@ public class AppParamsGeneratorWindow : EditorWindow
         m_LightRotationMaxField.value = defaults.LightRotationMax;
         m_BackgroundHueMaxOffsetField.value = defaults.BackgroundHueMaxOffset;
         m_OccludingHueMaxOffsetField.value = defaults.OccludingHueMaxOffset;
+        m_BackgroundInForegroundChanceField.value = defaults.BackgroundObjectInForegroundChance;
         m_NoiseStrengthMaxField.value = defaults.NoiseStrengthMax;
         m_BlurKernelSizeMaxField.value = defaults.BlurKernelSizeMax;
         m_BlurStandardDeviationMaxField.value = defaults.BlurStandardDeviationMax;
@@ -288,7 +296,8 @@ public class AppParamsGeneratorWindow : EditorWindow
         var outOfPlaneRotations = ObjectPlacementUtilities.GenerateOutOfPlaneRotationCurriculum(Allocator.Temp);
 
         var framesPerScaleFactorMaxObjects = inPlaneRotations.Length * outOfPlaneRotations.Length * 64 / maxForegroundObjectsPerFrame;
-        var framesPerScaleFactorAtOneScale = k_EstimatedFramesPerCurriculumStepAtOneScale * inPlaneRotations.Length * outOfPlaneRotations.Length;
+        var scaleAccountingForBackgroundInForeground = 1/(1-m_BackgroundInForegroundChanceField.value);
+        var framesPerScaleFactorAtOneScale = k_EstimatedFramesPerCurriculumStepAtOneScale * scaleAccountingForBackgroundInForeground * inPlaneRotations.Length * outOfPlaneRotations.Length;
 
         inPlaneRotations.Dispose();
         outOfPlaneRotations.Dispose();
@@ -335,6 +344,7 @@ public class AppParamsGeneratorWindow : EditorWindow
             LightRotationMax = m_LightRotationMaxField.value,
             BackgroundHueMaxOffset = m_BackgroundHueMaxOffsetField.value,
             OccludingHueMaxOffset = m_OccludingHueMaxOffsetField.value,
+            BackgroundObjectInForegroundChance = m_BackgroundInForegroundChanceField.value,
             NoiseStrengthMax = m_NoiseStrengthMaxField.value,
             BlurKernelSizeMax = m_BlurKernelSizeMaxField.value,
             BlurStandardDeviationMax = m_BlurStandardDeviationMaxField.value

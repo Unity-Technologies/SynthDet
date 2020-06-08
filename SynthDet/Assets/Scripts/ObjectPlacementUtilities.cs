@@ -21,6 +21,7 @@ public class PlacementStatics : Component
     public readonly float ScalingMin;
     public readonly float ScalingSize;
     public readonly float OccludingHueMaxOffset;
+    public readonly float BackgroundObjectInForegroundChance;
     public readonly int MaxForegroundObjectsPerFrame;
     public readonly GameObject[] ForegroundPrefabs;
     public readonly GameObject[] BackgroundPrefabs;
@@ -29,7 +30,7 @@ public class PlacementStatics : Component
     public readonly NativeArray<Quaternion> OutOfPlaneRotations;
     public readonly NativeArray<float> ScaleFactors;
 
-    public PlacementStatics(int maxFrames, int maxForegroundObjectsPerFrame, float scalingMin, float scalingSize, float occludingHueMaxOffset, GameObject[] foreground, GameObject[] backgroundPrefabs, Texture2D[] backgroundImages, NativeArray<Quaternion> inPlaneRot, NativeArray<Quaternion> outPlaneRot, NativeArray<float> scaleFactors)
+    public PlacementStatics(int maxFrames, int maxForegroundObjectsPerFrame, float scalingMin, float scalingSize, float occludingHueMaxOffset, float backgroundObjectInForegroundChance, GameObject[] foreground, GameObject[] backgroundPrefabs, Texture2D[] backgroundImages, NativeArray<Quaternion> inPlaneRot, NativeArray<Quaternion> outPlaneRot, NativeArray<float> scaleFactors)
     {
         MaxFrames = maxFrames;
         ForegroundPrefabs = foreground;
@@ -40,6 +41,7 @@ public class PlacementStatics : Component
         ScalingMin = scalingMin;
         ScalingSize = scalingSize;
         OccludingHueMaxOffset = occludingHueMaxOffset;
+        BackgroundObjectInForegroundChance = backgroundObjectInForegroundChance;
         MaxForegroundObjectsPerFrame = maxForegroundObjectsPerFrame;
         BackgroundImages = backgroundImages;
     }
