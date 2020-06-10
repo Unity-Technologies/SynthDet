@@ -269,7 +269,7 @@ public class AppParamsGeneratorWindow : EditorWindow
     }
 
     // A hand-tuned value that approximately corresponds to the frames per scale factor per orientation with 64 foreground objects.
-    const float k_EstimatedFramesPerCurriculumStepAtOneScale = 4.9f;
+    const float k_EstimatedFramesPerCurriculumStepAtOneScale = 4.2f;
     
     int EstimateTotalFrames()
     {
