@@ -9,6 +9,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: texture
     second: {fileID: 2100000, guid: 353ba1d9a4d581a4bbf1e38a904c088d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: utensil_coffee_filters
+    second: {fileID: 2100000, guid: 353ba1d9a4d581a4bbf1e38a904c088d, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

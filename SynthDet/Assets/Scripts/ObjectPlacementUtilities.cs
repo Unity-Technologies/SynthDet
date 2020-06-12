@@ -119,8 +119,8 @@ public static class ObjectPlacementUtilities
             position, rotation, meshBounds, scale, 6, ref zMin, ref closestIdx);
         projectedVertices[7] = ProjectBoundsVertex(transformer, new Vector3(1, 1, 1),    
             position, rotation, meshBounds, scale, 7, ref zMin, ref closestIdx);
-        
-        Assert.AreNotEqual(-1, closestIdx);
+        if(closestIdx == -1)
+            Assert.AreNotEqual(-1, closestIdx);
 
         var neighborMap = stackalloc int[]
         {
@@ -310,6 +310,14 @@ public static class ObjectPlacementUtilities
         var meshFilter = gameObject.GetComponent<MeshFilter>();
         if (meshFilter != null)
             aabb = meshFilter.sharedMesh.bounds.ToAABB();
+        else
+        {
+            var skinnedMesh = gameObject.GetComponent<SkinnedMeshRenderer>();
+            if ( skinnedMesh != null)
+            {
+                aabb = skinnedMesh.sharedMesh.bounds.ToAABB();
+            }
+        }
 
         var transform = gameObject.transform;
         for (int i = 0; i < transform.childCount; i++)
