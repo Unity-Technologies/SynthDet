@@ -22,8 +22,11 @@ public class AppParamsGeneratorWindow : EditorWindow
         window.titleContent = new GUIContent("Run in Unity Simulation");
         window.Show();
     }
+
+    Toggle m_UseExistingBuildToggle;
+    //PopupField<string> m_ExistingBuildPopup;
+    TextField m_ExistingBuildId;
     TextField m_NameField;
-    TextField m_BuildZipPathField;
 
     PopupField<SysParamOption> m_SysParamPopup;
     IntegerField m_StepsField;
@@ -42,6 +45,7 @@ public class AppParamsGeneratorWindow : EditorWindow
     FloatField m_LightRotationMaxField;
     FloatField m_BackgroundHueMaxOffsetField;
     FloatField m_OccludingHueMaxOffsetField;
+    FloatField m_BackgroundInForegroundChanceField;
 
     FloatField m_NoiseStrengthMaxField;
     FloatField m_BlurKernelSizeMaxField;
@@ -94,17 +98,30 @@ public class AppParamsGeneratorWindow : EditorWindow
             return;
         }
 
-
         m_NameField = new TextField("Run Name")
         {
             viewDataKey = "Run name",
         };
         rootVisualElement.Add(m_NameField);
-        
-        m_BuildZipPathField = new TextField("Path To Player Build .zip")
+
+        m_UseExistingBuildToggle = new Toggle("Use existing build")
         {
-                viewDataKey = "Path to .zip"
+            viewDataKey = "Use existing build"
         };
+        m_UseExistingBuildToggle.RegisterValueChangedCallback(e =>
+        {
+            m_ExistingBuildId.style.display = e.newValue ? DisplayStyle.Flex : DisplayStyle.None;
+        });
+        rootVisualElement.Add(m_UseExistingBuildToggle);
+
+        //m_ExistingBuildPopup = new PopupField<string>("Build ID", Unity.Simulation.Client.API.);
+        m_ExistingBuildId = new TextField("Build ID")
+        {
+            viewDataKey = "Build ID"
+        };
+        m_ExistingBuildId.style.display = DisplayStyle.None;
+        rootVisualElement.Add(m_ExistingBuildId);
+        
         m_ScaleFactorCurve = new CurveField("Scale Factor Range")
         {
             viewDataKey = "Scale factor range",
@@ -186,6 +203,12 @@ public class AppParamsGeneratorWindow : EditorWindow
             viewDataKey = "Occluding hue maximum offset"
         };
         rootVisualElement.Add(m_OccludingHueMaxOffsetField);
+        m_BackgroundInForegroundChanceField = new FloatField("Background In Foreground Chance")
+        {
+            viewDataKey = "Background In Foreground Chance"
+        };
+        m_BackgroundInForegroundChanceField.RegisterValueChangedCallback(a => UpdateEstimate());
+        rootVisualElement.Add(m_BackgroundInForegroundChanceField);
         m_NoiseStrengthMaxField = new FloatField("White Noise Maximum Strength")
         {
             viewDataKey = "White noise maximum strength",
@@ -256,6 +279,7 @@ public class AppParamsGeneratorWindow : EditorWindow
         m_LightRotationMaxField.value = defaults.LightRotationMax;
         m_BackgroundHueMaxOffsetField.value = defaults.BackgroundHueMaxOffset;
         m_OccludingHueMaxOffsetField.value = defaults.OccludingHueMaxOffset;
+        m_BackgroundInForegroundChanceField.value = defaults.BackgroundObjectInForegroundChance;
         m_NoiseStrengthMaxField.value = defaults.NoiseStrengthMax;
         m_BlurKernelSizeMaxField.value = defaults.BlurKernelSizeMax;
         m_BlurStandardDeviationMaxField.value = defaults.BlurStandardDeviationMax;
@@ -274,7 +298,6 @@ public class AppParamsGeneratorWindow : EditorWindow
     
     int EstimateTotalFrames()
     {
-        
         var scaleFactorRange = m_ScaleFactorCurve.value;
         var steps = m_StepsField.value;
         var stepsPerJob = m_StepsPerJobField.value;
@@ -288,7 +311,8 @@ public class AppParamsGeneratorWindow : EditorWindow
         var outOfPlaneRotations = ObjectPlacementUtilities.GenerateOutOfPlaneRotationCurriculum(Allocator.Temp);
 
         var framesPerScaleFactorMaxObjects = inPlaneRotations.Length * outOfPlaneRotations.Length * 64 / maxForegroundObjectsPerFrame;
-        var framesPerScaleFactorAtOneScale = k_EstimatedFramesPerCurriculumStepAtOneScale * inPlaneRotations.Length * outOfPlaneRotations.Length;
+        var scaleAccountingForBackgroundInForeground = 1/(1-m_BackgroundInForegroundChanceField.value);
+        var framesPerScaleFactorAtOneScale = k_EstimatedFramesPerCurriculumStepAtOneScale * scaleAccountingForBackgroundInForeground * inPlaneRotations.Length * outOfPlaneRotations.Length;
 
         inPlaneRotations.Dispose();
         outOfPlaneRotations.Dispose();
@@ -335,35 +359,57 @@ public class AppParamsGeneratorWindow : EditorWindow
             LightRotationMax = m_LightRotationMaxField.value,
             BackgroundHueMaxOffset = m_BackgroundHueMaxOffsetField.value,
             OccludingHueMaxOffset = m_OccludingHueMaxOffsetField.value,
+            BackgroundObjectInForegroundChance = m_BackgroundInForegroundChanceField.value,
             NoiseStrengthMax = m_NoiseStrengthMaxField.value,
             BlurKernelSizeMax = m_BlurKernelSizeMaxField.value,
             BlurStandardDeviationMax = m_BlurStandardDeviationMaxField.value
         };
 
         // Build and zip
-        bool buildSuccess;
         if (m_NameField.value == null)
             m_NameField.value = "SynthDet";
-        
-        buildSuccess = CreateLinuxBuildAndZip(m_NameField.value);
 
-        if (buildSuccess && m_BuildZipPathField.value != null)
-        { 
-            var runTask = StartUSimRun(
+        Task<Run> runTask;
+        
+        UpdateProgress(0f, "");
+        m_CancellationTokenSource = new CancellationTokenSource();
+
+        if (m_UseExistingBuildToggle.value)
+        {
+            if (string.IsNullOrWhiteSpace(m_ExistingBuildId.value))
+            {
+                Debug.LogError("Build ID is not valid");
+                return;
+            }
+            runTask = new Task<Run>(() =>
+                ExecuteRun(m_NameField.value,
+                    m_SysParamPopup.value.id,
+                    scaleFactorRange,
+                    steps,
+                    stepsPerJob,
+                    appParams,
+                    m_CancellationTokenSource.Token,
+                    m_ExistingBuildId.value,
+                    0f));
+            runTask.Start();
+        }
+        else
+        {
+            runTask = BuildAndStartUSimRun(
                 m_NameField.value, 
-                m_SysParamPopup.value.id, 
-                m_BuildZipPathField.value, 
+                m_SysParamPopup.value.id,
                 scaleFactorRange, 
                 steps, 
                 stepsPerJob, 
                 appParams);
-            runTask?.ContinueWith(task => Debug.Log("USim run started. Execution ID " + task.Result.executionId));
-            m_ExecuteTask = runTask;
         }
+        
+        runTask?.ContinueWith(task => Debug.Log("USim run started. Execution ID " + task.Result.executionId));
+        m_ExecuteTask = runTask;
     }
     
     
-    bool CreateLinuxBuildAndZip(string buildName)
+    bool CreateLinuxBuildAndZip(string buildName, out string zipPath)
     {
         string pathToZip;
         var pathToProjectBuild = Application.dataPath + "/../" + "Build/";
@@ -402,14 +448,17 @@ public class AppParamsGeneratorWindow : EditorWindow
             if (st.Length != 0)
                 pathToZip = Path.GetFullPath(st[0]);
             else
+            {
+                zipPath = null;
                 return false;
+            }
         }
         else
         {
-            m_BuildZipPathField.value = null;
+            zipPath = null;
             return false;
         }
-        m_BuildZipPathField.value = pathToZip;
+        zipPath = pathToZip;
         
         return true;
     }
@@ -438,19 +487,20 @@ public class AppParamsGeneratorWindow : EditorWindow
     const string s_ProgressHeader = "Run in Unity Simulation";
     const float k_UploadProgressPercentage = .9f;
 
-    public Task<Run> StartUSimRun(
+    public Task<Run> BuildAndStartUSimRun(
         string runName, 
         string sysParamId, 
-        string buildZipPath, 
         AnimationCurve scaleFactorRange, 
         int steps, 
         int stepsPerJob, 
         AppParams appParams)
     {
-        UpdateProgress(0f, "");
-        m_CancellationTokenSource = new CancellationTokenSource();
         var token = m_CancellationTokenSource.Token;
-
+        
+        var buildSuccess = CreateLinuxBuildAndZip(m_NameField.value, out string buildZipPath);
+        if (!buildSuccess)
+            return null;
+            
         var taskRun = API.UploadBuildAsync(runName, buildZipPath, cancellationTokenSource: m_CancellationTokenSource, 
             progress: (progress) =>
             {
@@ -470,24 +520,32 @@ public class AppParamsGeneratorWindow : EditorWindow
             
             Debug.Log($"Upload complete: build id {finishedTask.Result}");
             
-            var appParamList = GenerateAppParamIds(runName, scaleFactorRange, steps, stepsPerJob, appParams, token);
-            if (token.IsCancellationRequested)
-                return null;
-        
-            UpdateProgress(1f, "Starting run execution");
-            var runDefinitionId = API.UploadRunDefinition(new RunDefinition
-            {
-                app_params = appParamList.ToArray(),
-                name = runName,
-                sys_param_id = sysParamId,
-                build_id = finishedTask.Result
-            });
-            var run = Run.CreateFromDefinitionId(runDefinitionId);
-            run.Execute();
-            m_CancellationTokenSource.Dispose();
-            return run;
+            return ExecuteRun(runName, sysParamId, scaleFactorRange, steps, stepsPerJob, appParams, token, finishedTask.Result, k_UploadProgressPercentage);
         }, token);
         return runTask;
+    }
+
+    Run ExecuteRun(string runName, string sysParamId, AnimationCurve scaleFactorRange, int steps, int stepsPerJob, AppParams appParams, CancellationToken token, string buildId, float progressThusFar)
+    {
+        var appParamList = GenerateAppParamIds(runName, scaleFactorRange, steps, stepsPerJob, appParams, token, progressThusFar);
+        if (appParamList == null || token.IsCancellationRequested)
+        {
+            Debug.Log($"Operation canceled");
+            return null;
+        }
+
+        UpdateProgress(1f, "Starting run execution");
+        var runDefinitionId = API.UploadRunDefinition(new RunDefinition
+        {
+            app_params = appParamList.ToArray(),
+            name = runName,
+            sys_param_id = sysParamId,
+            build_id = buildId
+        });
+        var run = Run.CreateFromDefinitionId(runDefinitionId);
+        run.Execute();
+        m_CancellationTokenSource.Dispose();
+        return run;
     }
 
     void UpdateProgress(float progress, string runStatus)
@@ -497,7 +555,7 @@ public class AppParamsGeneratorWindow : EditorWindow
         m_Progress = progress;
     }
 
-    List<AppParam> GenerateAppParamIds(string runName, AnimationCurve scaleFactorRange, int steps, int stepsPerJob, AppParams appParams, CancellationToken token)
+    List<AppParam> GenerateAppParamIds(string runName, AnimationCurve scaleFactorRange, int steps, int stepsPerJob, AppParams appParams, CancellationToken token, float progressThusFar)
     {
         float stepSize = 1f / (steps + 1);
         float time = 0f;
@@ -515,7 +573,7 @@ public class AppParamsGeneratorWindow : EditorWindow
                 stepsThisJob = 0;
                 var appParamName = $"{runName}_{jobIndex}";
                 
-                UpdateProgress(k_UploadProgressPercentage + (1 - k_UploadProgressPercentage) * jobIndex / steps, $"Uploading app param {appParamName}");
+                UpdateProgress(progressThusFar + (1 - progressThusFar) * jobIndex / steps, $"Uploading app param {appParamName}");
                 if (token.IsCancellationRequested)
                     return null;
                 

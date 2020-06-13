@@ -41,11 +41,13 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
     int m_ForegroundLayer;
     GameObject m_ParentForeground;
     GameObject m_ParentOccluding;
+    GameObject m_ParentBackgroundInForeground;
     int m_OccludingLayer;
     EntityQuery m_CurriculumQuery;
     EntityQuery m_ResourceDirectoriesQuery;
     
     GameObjectOneWayCache m_OccludingObjectCache;
+    GameObjectOneWayCache m_BackgroundInForegroundObjectCache;
     MetricDefinition m_ForegroundPlacementInfoDefinition;
 
     // Initialize your operator here
@@ -54,6 +56,7 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         m_Rand = new Random(1);
         m_ForegroundLayer = LayerMask.NameToLayer("Foreground");
         m_ParentForeground = new GameObject("ForegroundContainer");
+        m_ParentBackgroundInForeground = new GameObject("BackgroundInForegroundContainer");
         m_OccludingLayer = LayerMask.NameToLayer("Occluding");
         m_ParentOccluding = new GameObject("OccludingContainer");
 
@@ -84,6 +87,8 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
                 return inputDeps;
             var tfCamera = m_CameraContainer.transform;
             m_ParentForeground.transform.SetPositionAndRotation(
+                tfCamera.position + tfCamera.forward * k_ForegroundLayerDistance, Quaternion.identity);
+            m_ParentBackgroundInForeground.transform.SetPositionAndRotation(
                 tfCamera.position + tfCamera.forward * k_ForegroundLayerDistance, Quaternion.identity);
             m_ParentOccluding.transform.SetPositionAndRotation(
                 tfCamera.position + tfCamera.forward * k_OccludingLayerDistance, Quaternion.identity);
@@ -119,14 +124,27 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
 
         var camera = m_CameraContainer.GetComponent<Camera>();
         NativeList<PlacedObject> placedObjectBoundingBoxes;
+        var occludingObjects = statics.BackgroundPrefabs;
+        var occludingObjectBounds = ComputeObjectBounds(occludingObjects);
+        
+        if (m_OccludingObjectCache == null)
+            m_OccludingObjectCache = new GameObjectOneWayCache(m_ParentOccluding.transform, occludingObjects);
+        if (m_BackgroundInForegroundObjectCache == null)
+            m_BackgroundInForegroundObjectCache = new GameObjectOneWayCache(m_ParentBackgroundInForeground.transform, occludingObjects);
+
+        m_OccludingObjectCache.ResetAllObjects();
+        m_BackgroundInForegroundObjectCache.ResetAllObjects();
+        
         using (s_PlaceObjects.Auto())
-            placedObjectBoundingBoxes = PlaceObjects(camera, statics, ref curriculumState);
+            placedObjectBoundingBoxes = PlaceObjects(camera, statics, occludingObjectBounds, ref curriculumState);
 
         ReportObjectStats(placedObjectBoundingBoxes, m_CameraContainer);
         
-        var occludingObjects = statics.BackgroundPrefabs;
         using (s_PlaceOccludingObjects.Auto())
-            PlaceOccludingObjects(occludingObjects, camera, statics, placedObjectBoundingBoxes);
+        {
+            PlaceOccludingObjects(occludingObjects, occludingObjectBounds, camera, statics, placedObjectBoundingBoxes);
+        }
+
         EntityManager.SetComponentData(singletonEntity, curriculumState);
 
         placedObjectBoundingBoxes.Dispose();
@@ -165,10 +183,11 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         public Rect BoundingBox;
         public Quaternion Rotation;
         public float ProjectedArea;
+        public bool IsOccluding;
 
         public bool Equals(PlacedObject other)
         {
-            return PrefabIndex == other.PrefabIndex && Scale.Equals(other.Scale) && Position.Equals(other.Position) && BoundingBox.Equals(other.BoundingBox) && Rotation.Equals(other.Rotation) && ProjectedArea.Equals(other.ProjectedArea);
+            return PrefabIndex == other.PrefabIndex && Scale.Equals(other.Scale) && Position.Equals(other.Position) && BoundingBox.Equals(other.BoundingBox) && Rotation.Equals(other.Rotation) && ProjectedArea.Equals(other.ProjectedArea) && IsOccluding == other.IsOccluding;
         }
 
         public override bool Equals(object obj)
@@ -180,14 +199,13 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         {
             unchecked
             {
-                // ReSharper disable NonReadonlyMemberInGetHashCode
                 var hashCode = PrefabIndex;
                 hashCode = (hashCode * 397) ^ Scale.GetHashCode();
                 hashCode = (hashCode * 397) ^ Position.GetHashCode();
                 hashCode = (hashCode * 397) ^ BoundingBox.GetHashCode();
                 hashCode = (hashCode * 397) ^ Rotation.GetHashCode();
                 hashCode = (hashCode * 397) ^ ProjectedArea.GetHashCode();
-                // ReSharper restore NonReadonlyMemberInGetHashCode
+                hashCode = (hashCode * 397) ^ IsOccluding.GetHashCode();
                 return hashCode;
             }
         }
@@ -200,6 +218,7 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         public NativeArray<Quaternion> InPlaneRotations;
         public NativeArray<Quaternion> OutOfPlaneRotations;
         public NativeArray<float> ScaleFactors;
+        public float BackgroundObjectInForegroundChance;
     }
 
     [BurstCompile]
@@ -213,6 +232,8 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         public NativePlacementStatics NativePlacementStatics;
         [ReadOnly]
         public NativeArray<Bounds> ObjectBounds;
+        [ReadOnly]
+        public NativeArray<Bounds> OccludingObjectBounds;
         [NativeDisableContainerSafetyRestriction]
         public NativeList<PlacedObject> PlaceObjects;
 
@@ -224,7 +245,21 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
             do
             {
                 var curriculumState = *CurriculumStatePtr;
-                var bounds = ObjectBounds[curriculumState.PrefabIndex];
+                var placeOccluding = RandomPtr->NextFloat() < NativePlacementStatics.BackgroundObjectInForegroundChance;
+                
+                Bounds bounds;
+                int prefabIndex;
+                if (placeOccluding)
+                {
+                    prefabIndex = RandomPtr->NextInt(0, OccludingObjectBounds.Length - 1);
+                    bounds = OccludingObjectBounds[prefabIndex];
+                }
+                else
+                {
+                    prefabIndex = curriculumState.PrefabIndex;
+                    bounds = ObjectBounds[prefabIndex];
+                }
+
                 var scale =
                     ObjectPlacementUtilities.ComputeForegroundScaling(bounds, NativePlacementStatics.ScaleFactors[curriculumState.ScaleIndex]);
                 var rotation = ObjectPlacementUtilities.ComposeForegroundRotation(curriculumState,
@@ -233,7 +268,8 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
                 {
                     Scale = scale,
                     Rotation = rotation,
-                    PrefabIndex = curriculumState.PrefabIndex,
+                    PrefabIndex = prefabIndex,
+                    IsOccluding = placeOccluding
                 };
                 placedSuccessfully = false;
                 for (var i = 0; i < 100; i++)
@@ -250,7 +286,8 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
                     {
                         placedSuccessfully = true;
                         PlaceObjects.Add(placedObject);
-                        *CurriculumStatePtr = NextCurriculumState(curriculumState, NativePlacementStatics);
+                        if (!placeOccluding)
+                            *CurriculumStatePtr = NextCurriculumState(curriculumState, NativePlacementStatics);
 
                         break;
                     }
@@ -263,7 +300,7 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         }
     }
     
-    NativeList<PlacedObject> PlaceObjects(Camera camera, PlacementStatics statics, ref CurriculumState curriculumState)
+    NativeList<PlacedObject> PlaceObjects(Camera camera, PlacementStatics statics, NativeArray<Bounds> occludingObjectBounds, ref CurriculumState curriculumState)
     {
         var placedObjectBoundingBoxes = new NativeList<PlacedObject>(500, Allocator.TempJob);
         var objectBounds = ComputeObjectBounds(statics.ForegroundPrefabs);
@@ -282,6 +319,7 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
                 Transformer = new WorldToScreenTransformer(camera),
                 ImageCoordinates = placementRegion,
                 ObjectBounds = objectBounds,
+                OccludingObjectBounds = occludingObjectBounds,
                 PlaceObjects = placedObjectBoundingBoxes,
                 RandomPtr = randomPtr,
                 NativePlacementStatics = new NativePlacementStatics
@@ -290,7 +328,8 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
                     MaxForegroundObjects = statics.MaxForegroundObjectsPerFrame,
                     InPlaneRotations = statics.InPlaneRotations,
                     OutOfPlaneRotations = statics.OutOfPlaneRotations,
-                    ScaleFactors = statics.ScaleFactors
+                    ScaleFactors = statics.ScaleFactors,
+                    BackgroundObjectInForegroundChance = statics.BackgroundObjectInForegroundChance,
                 }
             };
             computePlacementsJob.Run();
@@ -300,23 +339,35 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
 
         using (s_SetupObjects.Auto())
         {
+            var materialPropertyBlock = new MaterialPropertyBlock();
             int objectGroupIndex = 0;
             foreach (var placedObject in placedObjectBoundingBoxes)
             {
-                EnsureObjectGroupsExist(statics, objectGroupIndex);
-                var gameObject = m_ParentForeground.transform.GetChild(placedObject.PrefabIndex + objectGroupIndex * statics.ForegroundPrefabs.Length).gameObject;
+                GameObject gameObject;
+                if (placedObject.IsOccluding)
+                {
+                    gameObject = m_BackgroundInForegroundObjectCache.GetOrInstantiate(statics.BackgroundPrefabs[placedObject.PrefabIndex]);
+                    
+                    var meshRenderer = gameObject.GetComponentInChildren<MeshRenderer>();
+                    meshRenderer.GetPropertyBlock(materialPropertyBlock);
+                    ObjectPlacementUtilities.CreateRandomizedHue(materialPropertyBlock, statics.OccludingHueMaxOffset, ref m_Rand);
+                    materialPropertyBlock.SetTexture("_BaseMap", statics.BackgroundImages[m_Rand.NextInt(statics.BackgroundImages.Length)]);
+                    meshRenderer.SetPropertyBlock(materialPropertyBlock);
+                }
+                else
+                {
+                    EnsureObjectGroupsExist(statics, objectGroupIndex);
+                    gameObject = m_ParentForeground.transform.GetChild(placedObject.PrefabIndex + objectGroupIndex * statics.ForegroundPrefabs.Length).gameObject;
+                }
 
                 gameObject.transform.localRotation = placedObject.Rotation;
-
-                gameObject.transform.localScale =
-                    Vector3.one * placedObject.Scale;
+                gameObject.transform.localScale = Vector3.one * placedObject.Scale;
                 gameObject.transform.localPosition = placedObject.Position;
 
                 ObjectPlacementUtilities.SetMeshRenderersEnabledRecursive(gameObject, true);
 
                 if (placedObject.PrefabIndex == statics.ForegroundPrefabs.Length - 1)
                     objectGroupIndex++;
-
             }
         }
 
@@ -432,14 +483,9 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
     }
 
     void PlaceOccludingObjects(
-        GameObject[] objectsToPlace, Camera camera, PlacementStatics statics, NativeList<PlacedObject> placedObjects)
+        GameObject[] objectsToPlace, NativeArray<Bounds> objectBounds, Camera camera, PlacementStatics statics, NativeList<PlacedObject> placedObjects)
     {
         var textures = statics.BackgroundImages;
-        if (m_OccludingObjectCache == null)
-            m_OccludingObjectCache = new GameObjectOneWayCache(m_ParentOccluding.transform, objectsToPlace);
-
-        m_OccludingObjectCache.ResetAllObjects();
-        var occludingObjectBounds = ComputeObjectBounds(objectsToPlace);
 
         var materialPropertyBlock = new MaterialPropertyBlock();
         var placedOccludingObjects = new NativeArray<PlacedObject>(placedObjects.Length, Allocator.TempJob);
@@ -449,7 +495,7 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         {
             var job = new ComputeOccludingObjectPlacements()
             {
-                OccludingObjectBounds = occludingObjectBounds,
+                OccludingObjectBounds = objectBounds,
                 ImageCoordinates = placementRegion,
                 Transformer = new WorldToScreenTransformer(camera),
                 PlacedForegroundObjects = placedObjects,
@@ -484,7 +530,7 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
             }
         }
         placedOccludingObjects.Dispose();
-        occludingObjectBounds.Dispose();
+        objectBounds.Dispose();
     }
 
     [BurstCompile]
@@ -543,4 +589,6 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
             }
         }
     }
+
+    public PlacementStatics Parameters { get; set; }
 }
