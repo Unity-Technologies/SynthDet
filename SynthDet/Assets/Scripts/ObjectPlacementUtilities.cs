@@ -71,12 +71,6 @@ public static class ObjectPlacementUtilities
     /// </summary>
     public const uint LargePrimeNumber = 0x9F6ABC1;
 
-    public static void GetMeshAndMaterial(GameObject objectToRender, out Material material, out Mesh meshToDraw)
-    {
-        material = objectToRender.GetComponentInChildren<MeshRenderer>().sharedMaterial;
-        meshToDraw = objectToRender.GetComponentInChildren<MeshFilter>().sharedMesh;
-    }
-
     public static float ComputeAreaOfTriangle(Vector2 a, Vector2 b, Vector2 c)
     {
         return math.abs((a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y)) / 2);
@@ -282,6 +276,9 @@ public static class ObjectPlacementUtilities
     {
         if (gameObject.TryGetComponent<MeshRenderer>(out var meshRenderer))
             meshRenderer.enabled = enabled;
+        
+        if (gameObject.TryGetComponent<SkinnedMeshRenderer>(out var skinnedMeshRenderer))
+            skinnedMeshRenderer.enabled = enabled;
 
         for (var i = 0; i < gameObject.transform.childCount; i++)
             SetMeshRenderersEnabledRecursive(gameObject.transform.GetChild(i).gameObject, enabled);

@@ -157,7 +157,8 @@ public class BackgroundGenerator : JobComponentSystem
         for (int i = 0; i < statics.BackgroundPrefabs.Length; i++)
         {
             // ReSharper disable once UnusedVariable
-            ObjectPlacementUtilities.GetMeshAndMaterial(statics.BackgroundPrefabs[i], out var material, out var meshToDraw);
+            GameObject objectToRender = statics.BackgroundPrefabs[i];
+            var meshToDraw = objectToRender.GetComponentInChildren<MeshFilter>().sharedMesh;
             meshInfos[i] = new MeshInfo()
             {
                 Bounds = meshToDraw.bounds
