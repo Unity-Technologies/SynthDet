@@ -24,7 +24,6 @@ public class AppParamsGeneratorWindow : EditorWindow
     }
 
     Toggle m_UseExistingBuildToggle;
-    //PopupField<string> m_ExistingBuildPopup;
     TextField m_ExistingBuildId;
     TextField m_NameField;
 
@@ -114,7 +113,6 @@ public class AppParamsGeneratorWindow : EditorWindow
         });
         rootVisualElement.Add(m_UseExistingBuildToggle);
 
-        //m_ExistingBuildPopup = new PopupField<string>("Build ID", Unity.Simulation.Client.API.);
         m_ExistingBuildId = new TextField("Build ID")
         {
             viewDataKey = "Build ID"
