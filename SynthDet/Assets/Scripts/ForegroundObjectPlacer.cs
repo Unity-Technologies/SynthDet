@@ -259,7 +259,7 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
                 // If it can’t be placed within the scene due to violations of the cropping or overlap
                 // constraints we stop processing the current foreground scene
                 // and start with the next one.
-            } while (placedSuccessfully && PlaceObjects.Length < NativePlacementStatics.MaxForegroundObjects);
+            } while (placedSuccessfully && PlaceObjects.Length < NativePlacementStatics.MaxForegroundObjects && CurriculumStatePtr->ScaleIndex < NativePlacementStatics.ScaleFactors.Length);
         }
     }
     
