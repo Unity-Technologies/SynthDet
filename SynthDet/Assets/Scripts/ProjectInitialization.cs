@@ -120,7 +120,7 @@ public class ProjectInitialization : MonoBehaviour
 #endif
         Manager.Instance.ShutdownNotification += CleanupState;
         
-        PerceptionCamera.renderedObjectInfosCalculated += OnRenderedObjectInfosCalculated;
+        //PerceptionCamera.renderedObjectInfosCalculated += OnRenderedObjectInfosCalculated;
     }
 
     static bool TryGetAppParamPathFromCommandLine(out string appParamPath)
