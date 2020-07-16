@@ -42,7 +42,7 @@ public class RandomizedPostProcessingFeature : ScriptableRendererFeature
         m_RenderPass = new RandomizedPostProcessingPass();
         if (Application.isPlaying)
         {
-            m_PostProcessValuesMetric = SimulationManager.RegisterMetricDefinition(
+            m_PostProcessValuesMetric = DatasetCapture.RegisterMetricDefinition(
                 "random post processing", 
                 description: "Some post-processing parameters are randomized each frame. These are the per-frame values used.",
                 id: k_PostProcessValuesMetricId);
@@ -114,7 +114,7 @@ public class RandomizedPostProcessingFeature : ScriptableRendererFeature
                 blur_std_dev_uv = stdDev,
                 noise_strength = noiseStrength
             };
-            SimulationManager.ReportMetric(m_PostProcessValuesMetric, new[] { metric });
+            DatasetCapture.ReportMetric(m_PostProcessValuesMetric, new[] { metric });
         }
 
         m_RenderPass.Update(m_BlurMaterial, m_NoiseMaterial, RenderEvent,
