@@ -121,7 +121,7 @@ public class BackgroundGenerator : JobComponentSystem
         backgroundHueMaxOffset = init.AppParameters.BackgroundHueMaxOffset;
         initialized = true;
 
-        m_ScaleRangeMetric = SimulationManager.RegisterMetricDefinition("background scale range", "The range of scale factors used to place background objects each frame", k_BackgroundScaleMetricId);
+        m_ScaleRangeMetric = DatasetCapture.RegisterMetricDefinition("background scale range", "The range of scale factors used to place background objects each frame", k_BackgroundScaleMetricId);
     }
 
     protected override void OnCreate()
@@ -194,7 +194,7 @@ public class BackgroundGenerator : JobComponentSystem
         var placementOrigin = new Vector3(placementRegion.x, placementRegion.y, 
             k_PlacementDistance + cameraTf.position.z);
         
-        SimulationManager.ReportMetric(m_ScaleRangeMetric, $@"[ {{ ""scaleMin"": {scaleMin}, ""scaleMax"": {scaleMax} }}]");
+        DatasetCapture.ReportMetric(m_ScaleRangeMetric, $@"[ {{ ""scaleMin"": {scaleMin}, ""scaleMax"": {scaleMax} }}]");
 
         var meshesToDraw = new NativeArray<MeshDrawInfo>(numCellsHorizontal * numCellsVertical * numFillPasses, Allocator.TempJob);
         using (s_PlaceBackgroundObjects.Auto())
