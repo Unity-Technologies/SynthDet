@@ -103,9 +103,9 @@ public class AppParamsGeneratorWindow : EditorWindow
         };
         rootVisualElement.Add(m_NameField);
 
-        m_UseExistingBuildToggle = new Toggle("Use existing build")
+        m_UseExistingBuildToggle = new Toggle("Use Existing Build")
         {
-            viewDataKey = "Use existing build"
+            viewDataKey = "Use Existing Build"
         };
         m_UseExistingBuildToggle.RegisterValueChangedCallback(e =>
         {
