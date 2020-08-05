@@ -23,6 +23,8 @@ public struct AppParams
     public float LightRotationMax;
     public float BackgroundHueMaxOffset;
     public float OccludingHueMaxOffset;
+    [Range(0f, .8f)]
+    public float BackgroundObjectInForegroundChance;
     [Header("Post Processing Randomization")]
     // Maximum for how much a white noise value gets blended into its corresponding pixel
     [Range(0f, 1f)] 
