@@ -56,6 +56,14 @@ public class RandomizedPostProcessingFeature : ScriptableRendererFeature
             return;
         #endif
 
+        // When SynthDet is being ran in visualization mode, a second camera is created to display the scene. The first
+        // camera (which contains the perception camera) renders the scene to a render texture, and a second camera 
+        // displays the render texture along with all visualization components. We do not one the custom passes applied
+        // to the visualized contents, only the contents that are used by the perception camera. In a scene without
+        // visualization only one camera (the perception camera) is available and so that case will bypass this check
+        if (renderingData.cameraData.camera.GetComponent<PerceptionCamera>() == null)
+            return;
+        
         // Initialize here because scene is not guaranteed to be initialized when Create is called
         if (m_InitParams == null)
         {
