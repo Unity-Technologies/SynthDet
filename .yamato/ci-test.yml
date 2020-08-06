@@ -68,7 +68,7 @@ linux_{{suite.name}}_{{editor.version}}:
   commands:
     - git submodule update --init --recursive
     - sudo -H pip install --upgrade pip
-    - sudo -H pip install unity-downloader-cli --extra-index-url https://artifactory.internal.unity3d.com/api/pypi/common-python/simple
+    - sudo -H pip install unity-downloader-cli --index-url https://artifactory.prd.it.unity3d.com/artifactory/api/pypi/pypi/simple --upgrade --user
     - git clone git@github.cds.internal.unity3d.com:unity/utr.git utr
     - sudo unity-downloader-cli -u {{ editor.version }} -c editor -c StandaloneSupport-IL2CPP -c Linux --wait --published
     {% if suite.name == "standalone" %}
