@@ -26,7 +26,7 @@ public class LightingRandomizerSystem : JobComponentSystem
         if (light == null)
             return;
 
-        m_LightingInfoDefinition = SimulationManager.RegisterMetricDefinition("lighting info", "Per-frame light color and orientation", id: k_LightingInfoGuid);
+        m_LightingInfoDefinition = DatasetCapture.RegisterMetricDefinition("lighting info", "Per-frame light color and orientation", id: k_LightingInfoGuid);
         m_Light = light.GetComponent<Light>();
         // To simulate phong shading we turn off shadows
         m_Light.shadows = LightShadows.None;
@@ -73,7 +73,7 @@ public class LightingRandomizerSystem : JobComponentSystem
             0f
         );
 
-        SimulationManager.ReportMetric(m_LightingInfoDefinition, new[]
+        DatasetCapture.ReportMetric(m_LightingInfoDefinition, new[]
         {
             new LightInfo()
             {

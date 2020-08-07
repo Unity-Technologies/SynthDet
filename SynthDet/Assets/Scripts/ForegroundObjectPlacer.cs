@@ -64,7 +64,7 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         m_ResourceDirectoriesQuery = EntityManager.CreateEntityQuery(typeof(ResourceDirectories));
 
         m_CurriculumQuery = EntityManager.CreateEntityQuery(typeof(CurriculumState));
-        m_ForegroundPlacementInfoDefinition = SimulationManager.RegisterMetricDefinition("foreground placement info", description: "Info about each object placed in the foreground layer. Currently only includes label and orientation.",id: new Guid(k_ForegroundPlacementInfoMetricGuid));
+        m_ForegroundPlacementInfoDefinition = DatasetCapture.RegisterMetricDefinition("foreground placement info", description: "Info about each object placed in the foreground layer. Currently only includes label and orientation.",id: new Guid(k_ForegroundPlacementInfoMetricGuid));
     }
 #if UNITY_EDITOR
     public void LoadAndStartRenderDocCapture(out UnityEditor.EditorWindow gameView)
@@ -138,7 +138,7 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         using (s_PlaceObjects.Auto())
             placedObjectBoundingBoxes = PlaceObjects(camera, statics, occludingObjectBounds, ref curriculumState);
 
-        ReportObjectStats(placedObjectBoundingBoxes, m_CameraContainer);
+        ReportObjectStats(statics, placedObjectBoundingBoxes, m_CameraContainer);
         
         using (s_PlaceOccludingObjects.Auto())
         {
@@ -152,16 +152,15 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         return inputDeps;
     }
     
-    void ReportObjectStats(NativeList<PlacedObject> placedObjectBoundingBoxes, GameObject cameraObject)
+    void ReportObjectStats(PlacementStatics placementStatics, NativeList<PlacedObject> placedObjectBoundingBoxes, GameObject cameraObject)
     {
-        var perceptionCamera = cameraObject.GetComponent<PerceptionCamera>();
         var objectStates = new JArray();
         for (int i = 0; i < placedObjectBoundingBoxes.Length; i++)
         {
             var placedObject = placedObjectBoundingBoxes[i];
             var labeling = m_ParentForeground.transform.GetChild(placedObject.PrefabIndex).gameObject.GetComponent<Labeling>();
             int labelId;
-            if (perceptionCamera.LabelingConfiguration.TryGetMatchingConfigurationEntry(labeling, out LabelEntry labelEntry))
+            if (placementStatics.IdLabelConfig.TryGetMatchingConfigurationEntry(labeling, out IdLabelEntry labelEntry))
                 labelId = labelEntry.id;
             else
                 labelId = -1;
@@ -172,7 +171,7 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
             jObject["rotation"] = new JRaw($"[{rotationEulerAngles.x}, {rotationEulerAngles.y}, {rotationEulerAngles.z}]");
             objectStates.Add(jObject);
         }
-        SimulationManager.ReportMetric(m_ForegroundPlacementInfoDefinition, objectStates.ToString(Formatting.Indented));
+        DatasetCapture.ReportMetric(m_ForegroundPlacementInfoDefinition, objectStates.ToString(Formatting.Indented));
     }
 
     struct PlacedObject : IEquatable<PlacedObject>

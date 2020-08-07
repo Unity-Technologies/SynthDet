@@ -39,6 +39,7 @@ public class ProjectInitialization : MonoBehaviour
     public AppParams AppParameters = AppParamDefaults;
     public bool EnableProfileLog;
     public PerceptionCamera PerceptionCamera;
+    public IdLabelConfig idLabelconfig;
     Entity m_ResourceDirectoriesEntity;
     Entity m_CurriculumStateEntity;
     string m_ProfileLogPath;
@@ -92,10 +93,11 @@ public class ProjectInitialization : MonoBehaviour
             backgroundImages,
             ObjectPlacementUtilities.GenerateInPlaneRotationCurriculum(Allocator.Persistent), 
             ObjectPlacementUtilities.GenerateOutOfPlaneRotationCurriculum(Allocator.Persistent), 
-            new NativeArray<float>(AppParameters.ScaleFactors, Allocator.Persistent));
-        var appParamsMetricDefinition = SimulationManager.RegisterMetricDefinition(
+            new NativeArray<float>(AppParameters.ScaleFactors, Allocator.Persistent),
+            idLabelconfig);
+        var appParamsMetricDefinition = DatasetCapture.RegisterMetricDefinition(
             "app-params", description:"The values from the app-params used in the simulation. Only triggered once per simulation.", id: k_AppParamsMetricGuid);
-        SimulationManager.ReportMetric(appParamsMetricDefinition, new[] {AppParameters});
+        DatasetCapture.ReportMetric(appParamsMetricDefinition, new[] {AppParameters});
         m_CurriculumStateEntity = World.DefaultGameObjectInjectionWorld.EntityManager.CreateEntity();
         World.DefaultGameObjectInjectionWorld.EntityManager.AddComponentData(
             m_CurriculumStateEntity, new CurriculumState());
@@ -151,13 +153,17 @@ public class ProjectInitialization : MonoBehaviour
 
     void ValidateForegroundLabeling(GameObject[] foregroundObjects, PerceptionCamera perceptionCamera)
     {
-        if (perceptionCamera.LabelingConfiguration == null)
+        
+        var boundingBox2DLabeler = (BoundingBox2DLabeler)perceptionCamera.labelers.First(l => l is BoundingBox2DLabeler);
+        if (boundingBox2DLabeler == null)
+            return;
+        var labelConfig = boundingBox2DLabeler.idLabelConfig;
+        if (labelConfig == null)
         {
             Debug.LogError("PerceptionCamera does not have a labeling configuration. This will likely cause the program to fail.");
             return;
         }
 
-        var labelingConfiguration = perceptionCamera.LabelingConfiguration;
         var regex = new Regex(".*_[0-9][0-9]");
         var foregroundNames = foregroundObjects.Select(f =>
         {
@@ -166,8 +172,8 @@ public class ProjectInitialization : MonoBehaviour
                 foregroundName = foregroundName.Substring(0, foregroundName.Length - 3);
             return foregroundName;
         }).ToList();
-        var foregroundObjectsMissingFromConfig = foregroundNames.Where(f => labelingConfiguration.LabelEntries.All(l => l.label != f)).ToList();
-        var configurationsMissingModel = labelingConfiguration.LabelEntries.Skip(1).Select(l => l.label).Where(l => !foregroundNames.Any(f => f == l)).ToList();
+        var foregroundObjectsMissingFromConfig = foregroundNames.Where(f => labelConfig.labelEntries.All(l => l.label != f)).ToList();
+        var configurationsMissingModel = labelConfig.labelEntries.Skip(1).Select(l => l.label).Where(l => !foregroundNames.Any(f => f == l)).ToList();
 
         if (foregroundObjectsMissingFromConfig.Count > 0)
         {
