@@ -45,3 +45,14 @@ Click on the options menu icon, (...) to the right of your project’s Unity ver
 Ensure that Linux Build Support is checked in the components menu and click done to begin the install.
 
 ![Linux build support fna](images/req-4.png "Linux build support component")
+
+## Additional requirements for running Kubeflow Pipeline
+
+Kubeflow Pipelines is required to run [Dataset Evaluation](DatasetEvaluation.md) steps.
+You can use an existing Kubeflow Pipelines deployment, or create your own following Kubeflow official [documentation](https://www.kubeflow.org/docs/).
+The pipelines provided in Dataset Evaluation are only tested against Kubeflow on Kubernetes Engine and Google Cloud Platform.
+
+### Deploy and run pre-compiled Kubeflow Pipeline
+
+Kubeflow official documentation provides a good tutorial how to [deploy]((https://www.kubeflow.org/docs/pipelines/pipelines-quickstart/#deploy-kubeflow-and-open-the-pipelines-ui)) a pre-compiled Kubeflow Pipeline from a public http url,
+as well as how to [run a pipeline](https://www.kubeflow.org/docs/pipelines/pipelines-quickstart/#run-an-ml-pipeline) by creating a new experiment.
