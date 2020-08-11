@@ -54,5 +54,5 @@ The pipelines provided in Dataset Evaluation are only tested against Kubeflow on
 
 ### Deploy and run pre-compiled Kubeflow Pipeline
 
-Kubeflow official documentation provides a good tutorial how to [deploy]((https://www.kubeflow.org/docs/pipelines/pipelines-quickstart/#deploy-kubeflow-and-open-the-pipelines-ui)) a pre-compiled Kubeflow Pipeline from a public http url,
+Kubeflow official documentation provides a good tutorial how to [deploy]((https://www.kubeflow.org/docs/pipelines/pipelines-quickstart/#deploy-kubeflow-and-open-the-pipelines-ui)) a pre-compiled Kubeflow Pipeline using pipelines UI,
 as well as how to [run a pipeline](https://www.kubeflow.org/docs/pipelines/pipelines-quickstart/#run-an-ml-pipeline) by creating a new experiment.
