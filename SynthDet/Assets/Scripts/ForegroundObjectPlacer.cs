@@ -17,12 +17,6 @@ using Random = Unity.Mathematics.Random;
 using Vector3 = UnityEngine.Vector3;
 
 
-public struct ResourceDirectories : IComponentData
-{
-    public NativeString64 ForegroundResourcePath;
-    public NativeString64 BackgroundResourcePath;
-}
-
 unsafe public class ForegroundObjectPlacer : JobComponentSystem
 {
     public const string k_ForegroundPlacementInfoMetricGuid = "061E08CC-4428-4926-9933-A6732524B52B";
@@ -44,7 +38,6 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
     GameObject m_ParentBackgroundInForeground;
     int m_OccludingLayer;
     EntityQuery m_CurriculumQuery;
-    EntityQuery m_ResourceDirectoriesQuery;
     
     GameObjectOneWayCache m_OccludingObjectCache;
     GameObjectOneWayCache m_BackgroundInForegroundObjectCache;
@@ -59,9 +52,6 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         m_ParentBackgroundInForeground = new GameObject("BackgroundInForegroundContainer");
         m_OccludingLayer = LayerMask.NameToLayer("Occluding");
         m_ParentOccluding = new GameObject("OccludingContainer");
-
-        m_CurriculumQuery = EntityManager.CreateEntityQuery(typeof(CurriculumState));
-        m_ResourceDirectoriesQuery = EntityManager.CreateEntityQuery(typeof(ResourceDirectories));
 
         m_CurriculumQuery = EntityManager.CreateEntityQuery(typeof(CurriculumState));
         m_ForegroundPlacementInfoDefinition = DatasetCapture.RegisterMetricDefinition("foreground placement info", description: "Info about each object placed in the foreground layer. Currently only includes label and orientation.",id: new Guid(k_ForegroundPlacementInfoMetricGuid));
@@ -102,9 +92,6 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
                 ObjectPlacementUtilities.SetMeshRenderersEnabledRecursive(gameObject, false);
             }
         }
-
-        if (m_ResourceDirectoriesQuery.CalculateEntityCount() != 1)
-            return inputDeps;
 
         var singletonEntity = m_CurriculumQuery.GetSingletonEntity();
         var curriculumState = EntityManager.GetComponentData<CurriculumState>(singletonEntity);
@@ -390,8 +377,6 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         return objectBounds;
     }
 
-    static Regex s_NameRegex = new Regex(".*_[0-9][0-9]");
-
     void EnsureObjectGroupsExist(PlacementStatics statics, int objectGroupIndex)
     {
         while (m_ParentForeground.transform.childCount < statics.ForegroundPrefabs.Length * (objectGroupIndex + 1))
@@ -401,12 +386,6 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
                 var gameObject = Object.Instantiate(foregroundPrefab, m_ParentForeground.transform);
                 gameObject.layer = m_ForegroundLayer;
                 ObjectPlacementUtilities.SetMeshRenderersEnabledRecursive(gameObject, false);
-                var labeling = gameObject.AddComponent<Labeling>();
-                var name = foregroundPrefab.name;
-                if (s_NameRegex.IsMatch(name))
-                    name = name.Substring(0, name.Length - 3);
-
-                labeling.labels.Add(name);
             }
         }
     }
