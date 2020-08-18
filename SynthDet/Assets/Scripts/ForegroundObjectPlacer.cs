@@ -145,7 +145,7 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         for (int i = 0; i < placedObjectBoundingBoxes.Length; i++)
         {
             var placedObject = placedObjectBoundingBoxes[i];
-            var labeling = m_ParentForeground.transform.GetChild(placedObject.PrefabIndex).gameObject.GetComponent<Labeling>();
+            var labeling = m_ParentForeground.transform.GetChild(placedObject.PrefabIndex).GetChild(0).gameObject.GetComponent<Labeling>();
             int labelId;
             if (placementStatics.IdLabelConfig.TryGetMatchingConfigurationEntry(labeling, out IdLabelEntry labelEntry))
                 labelId = labelEntry.id;
@@ -370,6 +370,8 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
             for (int i = 0; i < prefabs.Length; i++)
             {
                 var bounds = ObjectPlacementUtilities.ComputeBounds(prefabs[i]);
+                //assume objects will be aligned at origin
+                bounds.center = Vector3.zero;
                 objectBounds[i] = bounds;
             }
         }
@@ -383,8 +385,13 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         {
             foreach (var foregroundPrefab in statics.ForegroundPrefabs)
             {
-                var gameObject = Object.Instantiate(foregroundPrefab, m_ParentForeground.transform);
+                var newParent = new GameObject();
+                newParent.transform.parent = m_ParentForeground.transform;
+                var gameObject = Object.Instantiate(foregroundPrefab, newParent.transform);
+                var bounds = ObjectPlacementUtilities.ComputeBounds(gameObject);
+                gameObject.transform.localPosition -= bounds.center;
                 gameObject.layer = m_ForegroundLayer;
+                newParent.name = gameObject.name;
                 ObjectPlacementUtilities.SetMeshRenderersEnabledRecursive(gameObject, false);
             }
         }
