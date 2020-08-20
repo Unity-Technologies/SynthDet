@@ -141,11 +141,11 @@ TODO: check if the notebook contain performance metrics
 ### Using our pre-trained models
 We trained a model using ~400k synthetic examples and then fine tuned it using ~700 real images. You can use the same [visual inspection notebook] mentioned above, but use one of our models from the list below:
 
-- [Real World (760)](http://url)
-- [Synthetic (400,000)](http://url)
-- [Synthetic (400,000) + Real World (76)](http://url)
-- [Synthetic (400,000) + Real World (380)](http://url)
-- [Synthetic (400,000) + Real World (760)](http://url)
+- [Real World (760)](https://storage.googleapis.com/datasetinsights/models/Real-World/FasterRCNN.estimator)
+- [Synthetic (400,000)](https://storage.googleapis.com/datasetinsights/models/Synthetic/FasterRCNN.estimator)
+- [Synthetic (400,000) + Real World (76)](https://storage.googleapis.com/datasetinsights/models/Synthetic-And-Real-World-76-images/FasterRCNN.estimator)
+- [Synthetic (400,000) + Real World (380)](https://storage.googleapis.com/datasetinsights/models/Synthetic-And-Real-World-380-images/FasterRCNN.estimator)
+- [Synthetic (400,000) + Real World (760)](https://storage.googleapis.com/datasetinsights/models/Synthetic-And-Real-World-760-images/FasterRCNN.estimator)
 
 TODO: names of models should be consistent with blog post.
 TODO: the notebooks should include all urls, pick best one by default
