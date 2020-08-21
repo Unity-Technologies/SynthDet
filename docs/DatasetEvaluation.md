@@ -36,7 +36,7 @@ To train the model, simply [import](https://www.kubeflow.org/docs/pipelines/pipe
 
 Once your pipeline has been imported, you can run it vis the web UI as shown below. Alternatively, you can use the [KFP CLI Tool](https://www.kubeflow.org/docs/pipelines/sdk/sdk-overview/#kfp-cli-tool)
 
-[figure shows how to run the pipeline]
+![train on synthdet sample](images/kubeflow/train_on_synthdet_sample.png)
 
 TODO: talk about the output model which will need to be used in the next pipeline
 
@@ -57,7 +57,7 @@ To train the model, simply [import](https://www.kubeflow.org/docs/pipelines/pipe
 
 Once your pipeline has been imported, you can run it vis the web UI as shown below. Alternatively, you can use the [KFP CLI Tool](https://www.kubeflow.org/docs/pipelines/sdk/sdk-overview/#kfp-cli-tool)
 
-[figure shows how to run the pipeline]
+![train on real world daataset](images/kubeflow/train_on_real_world_dataset.png)
 
 TODO: talk about the output model which will need to be used in the next pipeline
 
@@ -75,10 +75,9 @@ To train the model, simply [import](https://www.kubeflow.org/docs/pipelines/pipe
 
 ![upload pipeline](images/kubeflow/upload_pipeline.png)
 
-
 Once your pipeline has been imported, you can run it vis the web UI as shown below. Alternatively, you can use the [KFP CLI Tool](https://www.kubeflow.org/docs/pipelines/sdk/sdk-overview/#kfp-cli-tool)
 
-[figure shows how to run the pipeline]
+![train on synthetic and real world dataset](images/kubeflow/train_on_synthetic_and_real_world_dataset.png)
 
 TODO: talk about the output model which will need to be used in the next pipeline
 
@@ -98,7 +97,7 @@ To train the model, first [import](https://www.kubeflow.org/docs/pipelines/pipel
 
 Once your pipeline has been imported, you can run it via the web UI as shown below. Alternatively, you can use the [KFP CLI Tool](https://www.kubeflow.org/docs/pipelines/sdk/sdk-overview/#kfp-cli-tool)
 
-[figure shows how to run the pipeline]
+![train on synthetic dataset unity simulation](images/kubeflow/train_on_synthetic_dataset_unity_simulation.png)
 
 TODO: talk about the output model which will need to be used in the next pipeline
 
@@ -120,7 +119,7 @@ Simply import the [pre-compiled pipeline] into your kubeflow cluster. The figure
 
 Once your pipeline has been imported, you can run it vis the web UI as shown below. Alternatively, you can use the [KFP CLI Tool](https://www.kubeflow.org/docs/pipelines/sdk/sdk-overview/#kfp-cli-tool)
 
-[figure shows how to run the evaluation pipeline]
+![evaluate the model](images/kubeflow/evaluate_the_model.png)
 
 Whether you trained a model on synthetic, real or multiple datasets, you'll need that model here to specify it as one of the parameters of this pipeline. TODO: mention specifically which field
 
