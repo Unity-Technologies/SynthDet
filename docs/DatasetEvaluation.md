@@ -28,7 +28,7 @@ Note that these instructions focus on the recommended containerized approach to 
 
 ### Train on the SynthDet sample
 
-This section shows you how to train a model on the sample synthetic dataset. Note that this is a small dataset which is the fastest to train but won't produce the best results; for that, you can train a model that uses a larger synthetic dataset and [fine tunes the model on real images](#train-on-synthetic-and-real-world-dataset-optional). To observe the best results we have obtained, you can follow the instructions to run one of our [pre-trained models] below.
+This section shows you how to train a model on the sample synthetic dataset. Note that this is a small dataset which is the fastest to train but won't produce the best results; for that, you can train a model that uses a larger synthetic dataset and [fine tunes the model on real images](#train-on-synthetic-and-real-world-dataset-optional). To observe the best results we have obtained, you can follow the instructions to run one of our [pre-trained models](#using-our-pre-trained-models) below.
 
 To train the model, simply [import](https://www.kubeflow.org/docs/pipelines/pipelines-quickstart/#deploy-kubeflow-and-open-the-pipelines-ui) the pre-compiled [pipeline](https://raw.githubusercontent.com/Unity-Technologies/datasetinsights/master/kubeflow/compiled/train_on_synthdet_sample.yaml) into your kubeflow cluster. The figure below shows how to do this using the web UI. You can optionally use the [KFP CLI Tool](https://www.kubeflow.org/docs/pipelines/sdk/sdk-overview/#kfp-cli-tool)
 
@@ -41,7 +41,7 @@ Once your pipeline has been imported, you can run it vis the web UI as shown bel
 You have to specify run parameters required by this pipeline:
 
 - `docker`: Path to a Docker Registry. We suggest changing this parameter to pull our images on Docker Hub with a specific tag, such as `unitytechnologies/datasetinsights:0.2.0`
-- `source_uri`: SynthDet sample dataset source uri. You can use the default value which points to the SynthDet sample dataset.
+- `source_uri`: The dataset source uri. You can use the default value which points to the required dataset for this pipeline.
 - `config`: Estimator config YAML file. You can use the default value which points to a YAML file packaged with our docker images.
 - `tb_log_dir`: Path to store tensorboard logs used to visualize the training progress.
 - `checkpoint_dir`: Path to store Estimator checkpoints.
@@ -63,7 +63,7 @@ Next, follow the [instructions](#part-3-evaluate-the-model) to evaluate evaluate
 
 ### Train on Real World Dataset (optional)
 
-This section shows you how to train a model on the UnityRealGroceries dataset. Note that this won't produce the best results; for that, you can train a model that uses a larger synthetic dataset and [fine tunes the model on real images]. To observe the best results we have obtained, you can follow the instructions to run one of our [pre-trained models] below.
+This section shows you how to train a model on the UnityRealGroceries dataset. Note that this won't produce the best results; for that, you can train a model that uses a larger synthetic dataset and [fine tunes the model on real images]. To observe the best results we have obtained, you can follow the instructions to run one of our [pre-trained models](#using-our-pre-trained-models) below.
 
 To train the model, simply [import](https://www.kubeflow.org/docs/pipelines/pipelines-quickstart/#deploy-kubeflow-and-open-the-pipelines-ui) the pre-compiled [pipeline](https://raw.githubusercontent.com/Unity-Technologies/datasetinsights/master/kubeflow/compiled/train_on_real_world_dataset.yaml). The figure below shows how to do this using the web UI. You can optionally use the [KFP CLI Tool](https://www.kubeflow.org/docs/pipelines/sdk/sdk-overview/#kfp-cli-tool)
 
@@ -73,11 +73,26 @@ Once your pipeline has been imported, you can run it vis the web UI as shown bel
 
 ![train on real world daataset](images/kubeflow/train_on_real_world_dataset.png)
 
-TODO: talk about the output model which will need to be used in the next pipeline
+You have to specify run parameters required by this pipeline:
 
-You'll want to change `tb-log-dir` to point to a location that is convenient for you and your have permission to write to. You can read the logs from this location to visualize the model's progress using Tensorboard. Note that an invalid location will cause the job to fail, whereas a path to the local filesystem may run but will be hard to monitor as you won't have easy access to the logs.
+- `docker`: Path to a Docker Registry. We suggest changing this parameter to pull our images on Docker Hub with a specific tag, such as `unitytechnologies/datasetinsights:0.2.0`
+- `source_uri`: The dataset source uri. You can use the default value which points to the required dataset for this pipeline.
+- `config`: Estimator config YAML file. You can use the default value which points to a YAML file packaged with our docker images.
+- `tb_log_dir`: Path to store tensorboard logs used to visualize the training progress.
+- `checkpoint_dir`: Path to store Estimator checkpoints.
+- `volume_size`: Size of the Kubernetes Persistent Volume Claims (PVC) that will be used to store the dataset. You can use the default value.
 
-TODO: explain `checkpoint-dir`
+> You'll want to change `tb_log_dir`, `checkpoint_dir` to point to a location that is convenient for you and your Kubernetes cluster have permissions to write to. This is typically a GCS path under the same GCP project. Note that an invalid location will cause the job to fail, whereas a path to the local filesystem may run but will be hard to monitor as you won't have easy access to these files inside a docker container.
+
+![pipeline graph](images/kubeflow/pipeline_graph.png)
+
+To open tensorboard for training visualization, you can run the following command:
+
+```bash
+docker run -p 6006:6006 -v $HOME/.config:/root/.config:ro tensorflow/tensorflow tensorboard --host=0.0.0.0 --logdir=gs://<tb_log_dir>
+```
+
+This assumes you have already [logged in](https://cloud.google.com/sdk/gcloud/reference/auth/login) to GCP using a service account stored in the default location, such as `$HOME/.config`. This service account should have permissions to read `tb_log_dir` to download tensorboard files.
 
 Next, follow the [instructions](#part-3-evaluate-the-model) to evaluate evaluate the performance of this model by running one more pipeline we have prepared. You'll need the location of your model in the next step.
 
@@ -93,11 +108,27 @@ Once your pipeline has been imported, you can run it vis the web UI as shown bel
 
 ![train on synthetic and real world dataset](images/kubeflow/train_on_synthetic_and_real_world_dataset.png)
 
-TODO: talk about the output model which will need to be used in the next pipeline
+You have to specify run parameters required by this pipeline:
 
-You'll want to change `tb-log-dir` to point to a location that is convenient for you and your have permission to write to. You can read the logs from this location to visualize the model's progress using Tensorboard. Note that an invalid location will cause the job to fail, whereas a path to the local filesystem may run but will be hard to monitor as you won't have easy access to the logs.
+- `docker`: Path to a Docker Registry. We suggest changing this parameter to pull our images on Docker Hub with a specific tag, such as `unitytechnologies/datasetinsights:0.2.0`
+- `source_uri`: The dataset source uri. You can use the default value which points to the required dataset for this pipeline.
+- `config`: Estimator config YAML file. You can use the default value which points to a YAML file packaged with our docker images.
+- `checkpoint_file`: Path to the Estimator checkpoint file from previous training runs that you want to load and resume training.
+- `tb_log_dir`: Path to store tensorboard logs used to visualize the training progress.
+- `checkpoint_dir`: Path to store Estimator checkpoints.
+- `volume_size`: Size of the Kubernetes Persistent Volume Claims (PVC) that will be used to store the dataset. You can use the default value.
 
-TODO: explain `checkpoint-dir` and other params specific to this pipeline
+> You'll want to change `tb_log_dir`, `checkpoint_dir` to point to a location that is convenient for you and your Kubernetes cluster have permissions to write to. This is typically a GCS path under the same GCP project. Note that an invalid location will cause the job to fail, whereas a path to the local filesystem may run but will be hard to monitor as you won't have easy access to these files inside a docker container. You'll also want to change `checkpoint_file` to point to a estimator that give you the best validation result in [previous training run](#train-on-the-synthdet-sample). This pipeline will load this model and resume training using real world dataset.
+
+![pipeline graph](images/kubeflow/pipeline_graph.png)
+
+To open tensorboard for training visualization, you can run the following command:
+
+```bash
+docker run -p 6006:6006 -v $HOME/.config:/root/.config:ro tensorflow/tensorflow tensorboard --host=0.0.0.0 --logdir=gs://<tb_log_dir>
+```
+
+This assumes you have already [logged in](https://cloud.google.com/sdk/gcloud/reference/auth/login) to GCP using a service account stored in the default location, such as `$HOME/.config`. This service account should have permissions to read `tb_log_dir` to download tensorboard files.
 
 Next, follow the [instructions](#part-3-evaluate-the-model) to evaluate evaluate the performance of this model by running one more pipeline we have prepared. You'll need the location of your model in the next step.
 
