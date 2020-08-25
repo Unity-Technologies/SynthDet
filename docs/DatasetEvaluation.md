@@ -14,11 +14,11 @@ A larger dataset of 400k we used in our experiments can be made available [upon 
 
 ### UnityGroceries-RealWorld dataset
 
-We've also made a new **[dataset of 1.5k real images](add links here)** which contain groceries and corresponding bounding boxes. You can look at it if you wish, or simply [skip ahead](#part-2-training-a-model) if you're interested in training a model on this dataset.
+We've also made a new [dataset of 1.3k real images](https://github.com/Unity-Technologies/SynthDet/blob/master/docs/UnityGroceriesRealWorld.md) which contain groceries and corresponding bounding boxes. You can look at it if you wish, or simply [skip ahead](#part-2-training-a-model) if you're interested in training a model on this dataset.
 
 ### Create a new synthetic dataset using Unity Simulation (optional)
 
-If you want to run a the full end-to-end pipeline including synthetic dataset generation you can follow [this guide](https://github.com/Unity-Technologies/SynthDet/blob/master/docs/RunningSynthDetCloud.md) and then continue to run [this training pipeline](#train-on-synthetic-dataset-generated-on-unity-simulation-optional).
+If you want to run the full end-to-end pipeline including synthetic dataset generation you can follow [this guide](https://github.com/Unity-Technologies/SynthDet/blob/master/docs/RunningSynthDetCloud.md) and then continue to run [this training pipeline](#train-on-synthetic-dataset-generated-on-unity-simulation-optional).
 
 ## Part 2: Training a model
 
@@ -34,8 +34,7 @@ To train the model, simply [import](https://www.kubeflow.org/docs/pipelines/pipe
 
 ![upload pipeline](images/kubeflow/upload_pipeline.png)
 
-Once your pipeline has been imported, you can run it vis the web UI as shown below. Alternatively, you can use the [KFP CLI Tool](https://www.kubeflow.org/docs/pipelines/sdk/sdk-overview/#kfp-cli-tool)
-
+Once your pipeline has been imported, you can run it via the web UI as shown below. Alternatively, you can use the [KFP CLI Tool](https://www.kubeflow.org/docs/pipelines/sdk/sdk-overview/#kfp-cli-tool)a
 ![train on SynthDet sample](images/kubeflow/train_on_synthdet_sample.png)
 
 You have to specify run parameters required by this pipeline:
@@ -59,7 +58,7 @@ docker run -p 6006:6006 -v $HOME/.config:/root/.config:ro tensorflow/tensorflow 
 
 This assumes you have already [logged in](https://cloud.google.com/sdk/gcloud/reference/auth/login) to GCP using a service account stored in the default location, such as `$HOME/.config`. This service account should have permissions to read `tb_log_dir` to download tensorboard files.
 
-Next, follow the [instructions](#part-3-evaluate-a-model) to evaluate evaluate the performance of this model by running one more pipeline we have prepared. You'll need the location of your model in the next step.
+Next, follow the [instructions](#part-3-evaluate-a-model) to evaluate the performance of this model by running one more pipeline we have prepared. You'll need the location of your model in the next step.
 
 ### Train on UnityGroceries-RealWorld dataset (optional)
 
@@ -69,7 +68,7 @@ To train the model, simply [import](https://www.kubeflow.org/docs/pipelines/pipe
 
 ![upload pipeline](images/kubeflow/upload_pipeline.png)
 
-Once your pipeline has been imported, you can run it vis the web UI as shown below. Alternatively, you can use the [KFP CLI Tool](https://www.kubeflow.org/docs/pipelines/sdk/sdk-overview/#kfp-cli-tool)
+Once your pipeline has been imported, you can run it via the web UI as shown below. Alternatively, you can use the [KFP CLI Tool](https://www.kubeflow.org/docs/pipelines/sdk/sdk-overview/#kfp-cli-tool)
 
 ![train on real world daataset](images/kubeflow/train_on_real_world_dataset.png)
 
@@ -104,7 +103,7 @@ To train the model, simply [import](https://www.kubeflow.org/docs/pipelines/pipe
 
 ![upload pipeline](images/kubeflow/upload_pipeline.png)
 
-Once your pipeline has been imported, you can run it vis the web UI as shown below. Alternatively, you can use the [KFP CLI Tool](https://www.kubeflow.org/docs/pipelines/sdk/sdk-overview/#kfp-cli-tool)
+Once your pipeline has been imported, you can run it via the web UI as shown below. Alternatively, you can use the [KFP CLI Tool](https://www.kubeflow.org/docs/pipelines/sdk/sdk-overview/#kfp-cli-tool)
 
 ![train on synthetic and real world dataset](images/kubeflow/train_on_synthetic_and_real_world_dataset.png)
 
@@ -177,7 +176,7 @@ Simply import the [pre-compiled pipeline](https://raw.githubusercontent.com/Unit
 
 ![upload pipeline](images/kubeflow/upload_pipeline.png)
 
-Once your pipeline has been imported, you can run it vis the web UI as shown below. Alternatively, you can use the [KFP CLI Tool](https://www.kubeflow.org/docs/pipelines/sdk/sdk-overview/#kfp-cli-tool)
+Once your pipeline has been imported, you can run it via the web UI as shown below. Alternatively, you can use the [KFP CLI Tool](https://www.kubeflow.org/docs/pipelines/sdk/sdk-overview/#kfp-cli-tool)
 
 ![evaluate the model](images/kubeflow/evaluate_the_model.png)
 
@@ -192,17 +191,17 @@ You have to specify run parameters required by this pipeline:
 - `tb_log_dir`: Path to store tensorboard logs used to visualize the training progress.
 - `volume_size`: Size of the Kubernetes Persistent Volume Claims (PVC) that will be used to store the dataset. You can use the default value.
 
-Just like for the training pipeline, you'll want to change `tb_log_dir` to point to a location that is convenient for you and your have permission to write to. This is where you'll read the logs and see the **performance metrics** once the pipeline completes.
+Just like for the training pipeline, you'll want to change `tb_log_dir` to point to a location that is convenient for you and you have permission to write to. This is where you'll read the logs and see the **performance metrics** once the pipeline completes.
 
 In addition to the logs, the performance metrics are also available in a Jupyter Notebook we have prepared that includes code to visualize the predictions.
 
 ### visualizing predictions and performance
 
-We recommend running our [docker image](https://hub.docker.com/r/unitytechnologies/datasetinsights) which includes Jupyter as well as our notebooks if you don't want to setup the environment on your own. You can follow the same [instructions](https://github.com/Unity-Technologies/SynthDet/blob/master/docs/RunningSynthDetCloud.md#step-6-run-dataset-statistics-using-the-datasetinsights-jupyter-notebook) you may have used to run our [statistics notebook](https://github.com/Unity-Technologies/datasetinsights/blob/master/notebooks/SynthDet_Statistics.ipynb), but select the newer [visual inspection notebook](https://github.com/Unity-Technologies/datasetinsights/blob/master/notebooks/SynthDet_Evaluation.ipynb) called `SynthDet_Evaluation.ipynb` instead.
+We recommend running our [docker image](https://hub.docker.com/r/unitytechnologies/datasetinsights) which includes Jupyter as well as our notebooks if you don't want to setup the environment on your own. You can follow the same [instructions](https://github.com/Unity-Technologies/SynthDet/blob/master/docs/RunningSynthDetCloud.md#step-6-run-dataset-statistics-using-the-datasetinsights-jupyter-notebook) you may have used to run our [statistics notebook](https://github.com/Unity-Technologies/datasetinsights/blob/master/notebooks/SynthDet_Statistics.ipynb), but select the [visual inspection notebook](https://github.com/Unity-Technologies/datasetinsights/blob/master/notebooks/SynthDet_Evaluation.ipynb) called `SynthDet_Evaluation.ipynb` instead.
 
 ### Using our pre-trained models
 
-We trained a model using `~400k` synthetic examples and then fine tuned it using `~700` real images. You can use the same [visual inspection notebook](https://github.com/Unity-Technologies/datasetinsights/blob/master/notebooks/SynthDet_Evaluation.ipynb) mentioned above, but use one of our models from the list below:
+We trained a model using `~400k` synthetic examples and then fine-tuned it using `~700` real images. You can use the same [visual inspection notebook](https://github.com/Unity-Technologies/datasetinsights/blob/master/notebooks/SynthDet_Evaluation.ipynb) mentioned above, but use one of our models from the list below:
 
 - [Real World (760)](https://storage.googleapis.com/datasetinsights/models/Real-World/FasterRCNN.estimator)
 - [Synthetic (400,000)](https://storage.googleapis.com/datasetinsights/models/Synthetic/FasterRCNN.estimator)
