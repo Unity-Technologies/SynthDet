@@ -228,14 +228,13 @@ In addition to the logs, the performance metrics are also available in a Jupyter
 We recommend running our [docker image](https://hub.docker.com/r/unitytechnologies/datasetinsights) which includes Jupyter as well as our notebooks if you don't want to setup the environment on your own. We also recommend using [Kubeflow Notebooks](https://www.kubeflow.org/docs/notebooks/setup/) with GPU support to speed up model inference.
 
 ![docker cpu memory](images/kubeflow/notebook_docker_cpu_memory.png)
-![gpu volumne](images/kubeflow/notebook_gpu_volume.png)
+![gpu volume](images/kubeflow/notebook_gpu_volume.png)
 
 You should specify the following parameters:
 
 - Choose **Custom image** and specify value: `unitytechnologies/datasetinsights:0.2.0`
 - Change CPU and Memory. We recommend using `8` CPU with `32.0Gi` Memory
 - Change the **Mount Point** under **Data Volumes** section to `/data`
-- Check `add gcp credentials` in **Configurations** section.
 - Select `1` GPU with **Vendor** `NVIDIA`
 
 Once the notebook server starts successfully, open the server and choose `SynthDet_Evaluation.ipynb` under `/datasetinsights/notebooks` directory. Follow the instructions in the notebook to visualize predictions and performance.
