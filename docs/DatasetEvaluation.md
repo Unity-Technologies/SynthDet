@@ -57,7 +57,7 @@ docker run \
   -p 6006:6006 \
   -e GOOGLE_APPLICATION_CREDENTIALS=/tmp/key.json \
   -v $GOOGLE_APPLICATION_CREDENTIALS:/tmp/key.json:ro \
-  tensorflow/tensorflow \
+  -t tensorflow/tensorflow \
   tensorboard \
   --host=0.0.0.0 \
   --logdir=gs://<tb_log_dir>
@@ -99,7 +99,7 @@ docker run \
   -p 6006:6006 \
   -e GOOGLE_APPLICATION_CREDENTIALS=/tmp/key.json \
   -v $GOOGLE_APPLICATION_CREDENTIALS:/tmp/key.json:ro \
-  tensorflow/tensorflow \
+  -t tensorflow/tensorflow \
   tensorboard \
   --host=0.0.0.0 \
   --logdir=gs://<tb_log_dir>
@@ -142,7 +142,7 @@ docker run \
   -p 6006:6006 \
   -e GOOGLE_APPLICATION_CREDENTIALS=/tmp/key.json \
   -v $GOOGLE_APPLICATION_CREDENTIALS:/tmp/key.json:ro \
-  tensorflow/tensorflow \
+  -t tensorflow/tensorflow \
   tensorboard \
   --host=0.0.0.0 \
   --logdir=gs://<tb_log_dir>
@@ -186,7 +186,7 @@ docker run \
   -p 6006:6006 \
   -e GOOGLE_APPLICATION_CREDENTIALS=/tmp/key.json \
   -v $GOOGLE_APPLICATION_CREDENTIALS:/tmp/key.json:ro \
-  tensorflow/tensorflow \
+  -t tensorflow/tensorflow \
   tensorboard \
   --host=0.0.0.0 \
   --logdir=gs://<tb_log_dir>
@@ -246,8 +246,8 @@ docker run \
   -p 8888:8888 \
   -e GOOGLE_APPLICATION_CREDENTIALS=/tmp/key.json \
   -v $GOOGLE_APPLICATION_CREDENTIALS:/tmp/key.json:ro \
-  -v $HOME/data:/data
-  unitytechnologies/datasetinsights:0.2.0
+  -v $HOME/data:/data \
+  -t unitytechnologies/datasetinsights:0.2.0
 ```
 
 This assumes you have an environment variable `GOOGLE_APPLICATION_CREDENTIALS` in the host machine that [points](https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application) to a GCP service account. This service account should have permissions to read `tb_log_dir` to download tensorboard files. Replace `$HOME/data` with the path where you want the dataset to be downloaded.
