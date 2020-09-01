@@ -2,11 +2,12 @@
 ## Installation & Setup
 * [Prerequisites](Prerequisites.md)
 
-## Getting Started 
+## Getting Started
 * [Getting Started with SynthDet](GettingStartedSynthDet.md)
 * [Running SynthDet in Unity Simulation](RunningSynthDetCloud.md)
+* [SynthDet Dataset Evaluation](DatasetEvaluation.md)
 
-## Additional Documentation 
+## Additional Documentation
 * [AnnotatedData](AnnotatedDataset.md)
 * [Background: Unity](BackgroundUnity.md)
 
