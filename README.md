@@ -10,6 +10,10 @@ This project is geared towards ML practitioners and enthusiasts who are actively
 
 [GTC 2020: Synthetic Data: An efficient mechanism to train Perception Systems](https://developer.nvidia.com/gtc/2020/video/s22700)
 
+[Synthetic data: Simulating myriad possibilities to train robust machine learning models](https://blogs.unity3d.com/2020/05/01/synthetic-data-simulating-myriad-possibilities-to-train-robust-machine-learning-models/)
+
+[Use Unity’s perception tools to generate and analyze synthetic data at scale to train your ML models](https://blogs.unity3d.com/2020/06/10/use-unitys-perception-tools-to-generate-and-analyze-synthetic-data-at-scale-to-train-your-ml-models/)
+
 ## Contents 
 * SynthDet - Unity Perception sample project
 * 3D Assets - High quality models of 64 commonly found grocery products
