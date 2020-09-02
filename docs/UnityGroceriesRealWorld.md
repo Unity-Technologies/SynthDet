@@ -4,7 +4,7 @@ As part of this project, we collected a real world dataset containing 1267 image
 
 ## Dataset Collection
 
-To take the photos for the UnityGroceries-RealWorld dataset, we devised a strategy to vary object selection, placement, lighting, and background. After a few test shoots, we realized that major barriers to randomness of placement and object selection were the actual humans doing the selecting and placing. Hence, planning on how to randomize while taking photos became highly important, and something we did before taking photos.
+To take the photos for the dataset, we devised a strategy to vary object selection, placement, lighting, and background. After a few test shoots, we realized that major barriers to randomness of placement and object selection were the actual humans doing the selecting and placing. Hence, planning on how to randomize while taking photos became highly important, and something we did before taking photos.
 
 To provide a mix of lighting and backgrounds, We chose five locations with to take the photos. These were:
 
@@ -38,7 +38,4 @@ We followed similar guidelines from [VOC](http://host.robots.ox.ac.uk/pascal/VOC
 
 ## Dataset Splits
 
-We randomly shuffle all annotated images and split the dataset into a training dataset of 760 (60%) images, a validation dataset of 253 (20%) images and a testing dataset of 254 (20%) images. We also created various randomly selected training subsets from the training dataset to demonstrate model fine-tuning using limited amounts of the training data. To compare model performance under different conditions, we split the testing dataset into subsets of different conditions for different evaluation purposes:
-
-- We split the testing dataset into high/low contrast to test model performance in different lighting conditions. Images in high contrast split tend to have more complicated shadow patterns.
-- We split the testing dataset into high/low foreground to background ratio, Objects in low ratio subset tend to have larger sizes than in high ratio subset.
+All annotated images are randomly shuffled and split into a training dataset of `760 (60%)` images, a validation dataset of `253 (20%)` images and a testing dataset of `254 (20%)` images. A few randomly selected subsets from the training dataset are provided to demonstrate model fine-tuning using limited amounts of the training data. The testing dataset is also split into subsets of different contrast under lighting conditions and different foreground-to-background ratio. Images in high contrast group tend to have more complicated shadow patterns. Images in high foreground-to-background ratio group tend clutter more foreground objects. Indices of the dataset splits are provided along with the dataset in text files (e.g. `groceries_real_train.txt`).
