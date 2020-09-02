@@ -63,7 +63,7 @@ docker run \
   --logdir=gs://<tb_log_dir>
 ```
 
-This assumes you have an environment variable `GOOGLE_APPLICATION_CREDENTIALS` in the host machine that [points](https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application) to a GCP service account. This service account should have permissions to read `tb_log_dir` to download tensorboard files.
+This assumes you have an environment variable `GOOGLE_APPLICATION_CREDENTIALS` in the host machine that points to a GCP service account credential. This service account should have permissions to read `tb_log_dir` to download tensorboard files. If you don't have a GCP service account credential, you should follow this [instruction]((https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application)) to generate a valid credential.
 
 Next, follow the [instructions](#part-3-evaluate-a-model) to evaluate the performance of this model by running one more pipeline we have prepared. You'll need the location of your model in the next step.
 
@@ -77,7 +77,7 @@ To train the model, simply [import](https://www.kubeflow.org/docs/pipelines/pipe
 
 Once your pipeline has been imported, you can run it via the web UI as shown below. Alternatively, you can use the [KFP CLI Tool](https://www.kubeflow.org/docs/pipelines/sdk/sdk-overview/#kfp-cli-tool)
 
-![train on real world daataset](images/kubeflow/train_on_real_world_dataset.png)
+![train on real world dataset](images/kubeflow/train_on_real_world_dataset.png)
 
 You have to specify run parameters required by this pipeline:
 
@@ -105,7 +105,7 @@ docker run \
   --logdir=gs://<tb_log_dir>
 ```
 
-This assumes you have an environment variable `GOOGLE_APPLICATION_CREDENTIALS` in the host machine that [points](https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application) to a GCP service account. This service account should have permissions to read `tb_log_dir` to download tensorboard files.
+This assumes you have an environment variable `GOOGLE_APPLICATION_CREDENTIALS` in the host machine that points to a GCP service account credential. This service account should have permissions to read `tb_log_dir` to download tensorboard files. If you don't have a GCP service account credential, you should follow this [instruction]((https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application)) to generate a valid credential.
 
 Next, follow the [instructions](#part-3-evaluate-a-model) to evaluate evaluate the performance of this model by running one more pipeline we have prepared. You'll need the location of your model in the next step.
 
@@ -148,7 +148,7 @@ docker run \
   --logdir=gs://<tb_log_dir>
 ```
 
-This assumes you have an environment variable `GOOGLE_APPLICATION_CREDENTIALS` in the host machine that [points](https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application) to a GCP service account. This service account should have permissions to read `tb_log_dir` to download tensorboard files.
+This assumes you have an environment variable `GOOGLE_APPLICATION_CREDENTIALS` in the host machine that points to a GCP service account credential. This service account should have permissions to read `tb_log_dir` to download tensorboard files. If you don't have a GCP service account credential, you should follow this [instruction]((https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application)) to generate a valid credential.
 
 Next, follow the [instructions](#part-3-evaluate-a-model) to evaluate evaluate the performance of this model by running one more pipeline we have prepared. You'll need the location of your model in the next step.
 
@@ -192,7 +192,7 @@ docker run \
   --logdir=gs://<tb_log_dir>
 ```
 
-This assumes you have an environment variable `GOOGLE_APPLICATION_CREDENTIALS` in the host machine that [points](https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application) to a GCP service account. This service account should have permissions to read `tb_log_dir` to download tensorboard files.
+This assumes you have an environment variable `GOOGLE_APPLICATION_CREDENTIALS` in the host machine that points to a GCP service account credential. This service account should have permissions to read `tb_log_dir` to download tensorboard files. If you don't have a GCP service account credential, you should follow this [instruction]((https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application)) to generate a valid credential.
 
 Next, follow the [instructions](#part-3-evaluate-a-model) to evaluate evaluate the performance of this model by running one more pipeline we have prepared. You'll need the location of your model in the next step.
 
@@ -223,7 +223,7 @@ Just like for the training pipeline, you'll want to change `tb_log_dir` to point
 
 In addition to the logs, the performance metrics are also available in a Jupyter Notebook we have prepared that includes code to visualize the predictions.
 
-### visualizing predictions and performance
+### Visualizing predictions and performance
 
 We recommend running our [docker image](https://hub.docker.com/r/unitytechnologies/datasetinsights) which includes Jupyter as well as our notebooks if you don't want to setup the environment on your own. We also recommend using [Kubeflow Notebooks](https://www.kubeflow.org/docs/notebooks/setup/) with GPU support to speed up model inference.
 
@@ -249,8 +249,6 @@ docker run \
   -v $HOME/data:/data \
   -t unitytechnologies/datasetinsights:0.2.0
 ```
-
-This assumes you have an environment variable `GOOGLE_APPLICATION_CREDENTIALS` in the host machine that [points](https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application) to a GCP service account. This service account should have permissions to read `tb_log_dir` to download tensorboard files. Replace `$HOME/data` with the path where you want the dataset to be downloaded.
 
 ### Using our pre-trained models
 
