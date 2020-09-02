@@ -4,7 +4,7 @@ This guide shows you how to evaluate the value/quality of a synthetic dataset by
 
 ## Part 1: Datasets
 
-TODO: finalize name for datasets (i.e. real, synthetic large and small) and make sure the name is consistently used throughout the guide and blog post. We use placeholders `UnityGroceries-Synthetic` and `UnityGroceries-RealWorld` in this document.
+> TODO: finalize name for datasets (i.e. real, synthetic large and small) and make sure the name is consistently used throughout the guide and blog post. We use placeholders `UnityGroceries-Synthetic` and `UnityGroceries-RealWorld` in this document.
 
 ### UnityGroceries-Synthetic dataset
 
@@ -24,11 +24,15 @@ If you want to run the full end-to-end pipeline including synthetic dataset gene
 
 Once you know which dataset you want to train on, you can follow the instruction below to train a model on it.
 
+> TODO: We should make kubeflow as a prerequisite more clear and explicit. Basically, we provide docker image but they will need to setup their own infra.
+
 Note that these instructions focus on the recommended containerized approach to run a training job on a [Kubeflow](https://www.kubeflow.org/docs/gke/gcp-e2e) cluster on Google Kubernetes Engine ([GKE](https://cloud.google.com/kubernetes-engine)). We do this to avoid reproducibility issues people may encounter on different platforms with different dependencies etc. You can use our [docker image](https://hub.docker.com/r/unitytechnologies/datasetinsights) if you're interested in running the same container on your own infrastructure; otherwise you can run one of the pre-compiled Kubeflow Pipelines documented below.
 
 ### Train on UnityGroceries-Synthetic dataset
 
 This section shows you how to train a model on the sample synthetic dataset. Note that this is a small dataset which is the fastest to train but won't produce the best results; for that, you can train a model that uses a larger synthetic dataset and [fine tunes the model on real images](#train-on-synthetic-and-real-world-dataset-optional). To observe the best results we have obtained, you can follow the instructions to run one of our [pre-trained models](#using-our-pre-trained-models) below.
+
+> TODO: instead of hiding uri under `pipeline`, this should be explicit in this doc.
 
 To train the model, simply [import](https://www.kubeflow.org/docs/pipelines/pipelines-quickstart/#deploy-kubeflow-and-open-the-pipelines-ui) the pre-compiled [pipeline](https://raw.githubusercontent.com/Unity-Technologies/datasetinsights/master/kubeflow/compiled/train_on_synthdet_sample.yaml) into your kubeflow cluster. The figure below shows how to do this using the web UI. You can optionally use the [KFP CLI Tool](https://www.kubeflow.org/docs/pipelines/sdk/sdk-overview/#kfp-cli-tool)
 
@@ -62,6 +66,8 @@ docker run \
   --host=0.0.0.0 \
   --logdir=gs://<tb_log_dir>
 ```
+
+> TODO: explain why GCS credential is required.
 
 Open `http://localhost:6006` in web browser to see tensorboard results. This command assumes you have an environment variable `GOOGLE_APPLICATION_CREDENTIALS` in the host machine that points to a GCP service account credential. This service account should have permissions to read `tb_log_dir` to download tensorboard files. If you don't have a GCP service account credential, you should follow this [instruction](https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application) to generate a valid credential.
 
@@ -198,6 +204,8 @@ Next, follow the [instructions](#part-3-evaluate-a-model) to evaluate evaluate t
 
 ## Part 3: Evaluate a model
 
+> TODO: This description seems out of place. The flow does not seem to continue from training. Also, describe the process of picking one of the best model that can be used for this section.
+
 In this section, we'll use a trained model to generate predictions on the test split of UnityGroceries-RealWorld dataset and measure its performance using well-known performance metrics like [mAP](https://datasetinsights.readthedocs.io/en/latest/datasetinsights.evaluation_metrics.html#datasetinsights.evaluation_metrics.average_precision_2d.MeanAveragePrecisionAverageOverIOU) and [mAR](https://datasetinsights.readthedocs.io/en/latest/datasetinsights.evaluation_metrics.html#datasetinsights.evaluation_metrics.average_recall_2d.MeanAverageRecallAverageOverIOU). We have prepared another Kubeflow [pipeline](https://raw.githubusercontent.com/Unity-Technologies/datasetinsights/master/kubeflow/compiled/evaluate_the_model.yaml) for this.
 
 Simply import the [pre-compiled pipeline](https://raw.githubusercontent.com/Unity-Technologies/datasetinsights/master/kubeflow/compiled/evaluate_the_model.yaml) into your kubeflow cluster. The figure below shows how to do this using the web UI. You can optionally use the [KFP CLI Tool](https://www.kubeflow.org/docs/pipelines/sdk/sdk-overview/#kfp-cli-tool)
@@ -215,8 +223,8 @@ You have to specify run parameters required by this pipeline:
 - `docker`: Path to a Docker Registry. We suggest changing this parameter to pull our images on Docker Hub with a specific tag, such as `unitytechnologies/datasetinsights:0.2.0`
 - `source_uri`: The dataset source uri. You can use the default value which points to the required dataset for this pipeline.
 - `config`: Estimator config YAML file. You can use the default value which points to a YAML file packaged with our docker images.
-- `checkpoint_file`: Path to the Estimator checkpoint file from previous training runs that you want to load for evaluation.
-- `tb_log_dir`: Path to store tensorboard logs used to visualize the training progress.
+- `checkpoint_file`: Path to the Estimator checkpoint file from previous training runs that you want to load for evaluation. (e.g. gs://<checkpoint_dir>/FasterRCNN.estimator)
+- `tb_log_dir`: Path to store tensorboard logs used to visualize the evaluation progress.
 - `volume_size`: Size of the Kubernetes Persistent Volume Claims (PVC) that will be used to store the dataset. You can use the default value.
 
 Just like for the training pipeline, you'll want to change `tb_log_dir` to point to a location that is convenient for you and you have permission to write to. This is where you'll read the logs and see the **performance metrics** once the pipeline completes.
@@ -227,6 +235,7 @@ In addition to the logs, the performance metrics are also available in a Jupyter
 
 We recommend running our [docker image](https://hub.docker.com/r/unitytechnologies/datasetinsights) which includes Jupyter as well as our notebooks if you don't want to setup the environment on your own. We also recommend using [Kubeflow Notebooks](https://www.kubeflow.org/docs/notebooks/setup/) with GPU support to speed up model inference.
 
+![kubeflow notebook](images/kubeflow/notebook.png)
 ![docker cpu memory](images/kubeflow/notebook_docker_cpu_memory.png)
 ![gpu volume](images/kubeflow/notebook_gpu_volume.png)
 
@@ -234,7 +243,7 @@ You should specify the following parameters:
 
 - Choose **Custom image** and specify value: `unitytechnologies/datasetinsights:0.2.0`
 - Change CPU and Memory. We recommend using `8` CPU with `32.0Gi` Memory
-- Change the **Mount Point** under **Data Volumes** section to `/data`
+- Change the **Mount Point** under **Data Volumes** section to `/data`. Make sure you have more than `20GiB` storage.
 - Select `1` GPU with **Vendor** `NVIDIA`
 
 Once the notebook server starts successfully, open the server and choose `SynthDet_Evaluation.ipynb` under `/datasetinsights/notebooks` directory. Follow the instructions in the notebook to visualize predictions and performance.
