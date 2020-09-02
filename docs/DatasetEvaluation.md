@@ -24,9 +24,9 @@ If you want to run the full end-to-end pipeline including synthetic dataset gene
 
 Once you know which dataset you want to train on, you can follow the instruction below to train a model on it.
 
-> TODO: We should make kubeflow as a prerequisite more clear and explicit. Basically, we provide docker image but they will need to setup their own infra.
+Note that these instructions focus on the recommended containerized approach to run a training job on a [Kubeflow](https://www.kubeflow.org/docs/gke/gcp-e2e) cluster on Google Kubernetes Engine ([GKE](https://cloud.google.com/kubernetes-engine)). We provide [pre-compiled Kubeflow pipelines](https://github.com/Unity-Technologies/datasetinsights/tree/master/kubeflow/compiled) and a [docker image](https://hub.docker.com/r/unitytechnologies/datasetinsights) for you to follow steps documented below. We do this to avoid reproducibility issues people may encounter on different platforms with different dependencies etc. We will assume you have access to a Kubeflow cluster going forward.
 
-Note that these instructions focus on the recommended containerized approach to run a training job on a [Kubeflow](https://www.kubeflow.org/docs/gke/gcp-e2e) cluster on Google Kubernetes Engine ([GKE](https://cloud.google.com/kubernetes-engine)). We do this to avoid reproducibility issues people may encounter on different platforms with different dependencies etc. You can use our [docker image](https://hub.docker.com/r/unitytechnologies/datasetinsights) if you're interested in running the same container on your own infrastructure; otherwise you can run one of the pre-compiled Kubeflow Pipelines documented below.
+> Alternatively, you can use the same docker image on your own container-orchestration system following similar steps.
 
 ### Train on UnityGroceries-Synthetic dataset
 
