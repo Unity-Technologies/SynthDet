@@ -1,14 +1,14 @@
-# SynthDet Documentation
-## Installation & Setup
+# SynthDet documentation
+## Installation and setup
 * [Prerequisites](Prerequisites.md)
 
-## Getting Started 
+## Getting started 
 * [Getting Started with SynthDet](GettingStartedSynthDet.md)
 * [Running SynthDet in Unity Simulation](RunningSynthDetCloud.md)
 * [Dataset Insights](https://github.com/Unity-Technologies/dataset-insights)
 * [Getting Started with SynthDet Viewer AR App](https://github.com/Unity-Technologies/perception-synthdet-demo-app)
 
-## Additional Documentation 
+## Additional documentation 
 * [Annotated Data](AnnotatedDataset.md)
 * [Background: Unity](BackgroundUnity.md)
 
