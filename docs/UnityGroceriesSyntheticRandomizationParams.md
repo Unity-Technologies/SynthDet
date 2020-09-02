@@ -1,4 +1,4 @@
-#UnityGroceries - Synthetic Randomization Parameters
+# UnityGroceries - Synthetic Randomization Parameters
 
 SynthDet follows a curriculum strategy for generating data. The full dataset is 
 generated using a sequence of scale factors, generally starting with objects 
