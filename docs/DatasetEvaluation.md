@@ -63,7 +63,7 @@ docker run \
   --logdir=gs://<tb_log_dir>
 ```
 
-Open `http://localhost:6006` to see tensorboard results. This command assumes you have an environment variable `GOOGLE_APPLICATION_CREDENTIALS` in the host machine that points to a GCP service account credential. This service account should have permissions to read `tb_log_dir` to download tensorboard files. If you don't have a GCP service account credential, you should follow this [instruction]((https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application)) to generate a valid credential.
+Open `http://localhost:6006` in web browser to see tensorboard results. This command assumes you have an environment variable `GOOGLE_APPLICATION_CREDENTIALS` in the host machine that points to a GCP service account credential. This service account should have permissions to read `tb_log_dir` to download tensorboard files. If you don't have a GCP service account credential, you should follow this [instruction](https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application) to generate a valid credential.
 
 Next, follow the [instructions](#part-3-evaluate-a-model) to evaluate the performance of this model by running one more pipeline we have prepared. You'll need the location of your model in the next step.
 
@@ -105,7 +105,7 @@ docker run \
   --logdir=gs://<tb_log_dir>
 ```
 
-This assumes you have an environment variable `GOOGLE_APPLICATION_CREDENTIALS` in the host machine that points to a GCP service account credential. This service account should have permissions to read `tb_log_dir` to download tensorboard files. If you don't have a GCP service account credential, you should follow this [instruction]((https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application)) to generate a valid credential.
+Open `http://localhost:6006` in web browser to see tensorboard results. This command assumes you have an environment variable `GOOGLE_APPLICATION_CREDENTIALS` in the host machine that points to a GCP service account credential. This service account should have permissions to read `tb_log_dir` to download tensorboard files. If you don't have a GCP service account credential, you should follow this [instruction](https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application) to generate a valid credential.
 
 Next, follow the [instructions](#part-3-evaluate-a-model) to evaluate evaluate the performance of this model by running one more pipeline we have prepared. You'll need the location of your model in the next step.
 
@@ -148,7 +148,7 @@ docker run \
   --logdir=gs://<tb_log_dir>
 ```
 
-This assumes you have an environment variable `GOOGLE_APPLICATION_CREDENTIALS` in the host machine that points to a GCP service account credential. This service account should have permissions to read `tb_log_dir` to download tensorboard files. If you don't have a GCP service account credential, you should follow this [instruction]((https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application)) to generate a valid credential.
+Open `http://localhost:6006` in web browser to see tensorboard results. This command assumes you have an environment variable `GOOGLE_APPLICATION_CREDENTIALS` in the host machine that points to a GCP service account credential. This service account should have permissions to read `tb_log_dir` to download tensorboard files. If you don't have a GCP service account credential, you should follow this [instruction](https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application) to generate a valid credential.
 
 Next, follow the [instructions](#part-3-evaluate-a-model) to evaluate evaluate the performance of this model by running one more pipeline we have prepared. You'll need the location of your model in the next step.
 
@@ -192,7 +192,7 @@ docker run \
   --logdir=gs://<tb_log_dir>
 ```
 
-This assumes you have an environment variable `GOOGLE_APPLICATION_CREDENTIALS` in the host machine that points to a GCP service account credential. This service account should have permissions to read `tb_log_dir` to download tensorboard files. If you don't have a GCP service account credential, you should follow this [instruction]((https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application)) to generate a valid credential.
+Open `http://localhost:6006` in web browser to see tensorboard results. This command assumes you have an environment variable `GOOGLE_APPLICATION_CREDENTIALS` in the host machine that points to a GCP service account credential. This service account should have permissions to read `tb_log_dir` to download tensorboard files. If you don't have a GCP service account credential, you should follow this [instruction](https://cloud.google.com/docs/authentication/production#providing_credentials_to_your_application) to generate a valid credential.
 
 Next, follow the [instructions](#part-3-evaluate-a-model) to evaluate evaluate the performance of this model by running one more pipeline we have prepared. You'll need the location of your model in the next step.
 
