@@ -4,7 +4,7 @@ As part of this project, we collected a real world dataset containing 1267 image
 
 ## Dataset Collection
 
-To take the photos for the dataset, we devised a strategy to vary object selection, placement, lighting, and background. We found that we, the humans, needed more humans and a better strategy to randomize more thoroughly and faster. This new strategy is what is outlined.
+To take the photos for the dataset, we devised a strategy to vary object selection, placement, lighting, and background. We iterated on our strategy a handful of times throughout the process to maximize our randomness and speed of data collection. The final strategy which we used for most of the images is described below.
 
 To provide a mix of lighting and backgrounds, We chose five locations with to take the photos. These were:
 
