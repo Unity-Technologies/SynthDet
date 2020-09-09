@@ -1,12 +1,15 @@
 # SynthDet Documentation
+<img src="images/Synthetic Data pipeline-Perception Workflow.png" align="middle"/>
+
 ## Installation & Setup
 * [Prerequisites](Prerequisites.md)
 
-## Getting Started 
-* [Getting Started with SynthDet](GettingStartedSynthDet.md)
-* [Running SynthDet in Unity Simulation](RunningSynthDetCloud.md)
+## Getting Started with data generation in Unity
+* Data generation example project - [Getting Started with SynthDet](GettingStartedSynthDet.md)
+* Scaling up data generation - [Running SynthDet in Unity Simulation](RunningSynthDetCloud.md)
+* Evaluating a dataset - [Dataset Evaluation with Dataset Insights framework](https://github.com/Unity-Technologies/datasetinsights/blob/master/docs/source/Evaluation_Tutorial.md)
 
-## Additional Documentation 
+## Additional Documentation
 * [AnnotatedData](AnnotatedDataset.md)
 * [Background: Unity](BackgroundUnity.md)
 

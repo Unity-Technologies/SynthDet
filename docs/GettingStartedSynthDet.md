@@ -2,6 +2,9 @@
 
 The goal of the workflow steps is to provide you with everything that you need to get started using the SynthDet project to create a synthetic dataset of grocery products and explore statistics on the dataset.
 
+<img src="images/Synthetic Data pipeline-SynthDet local.png" align="middle"/>
+
+
 ## Workflow (Step-by-step)
 
 ### Step 1: Open the SynthDet Sample project

@@ -1,4 +1,5 @@
 # Running SynthDet in Unity Simulation
+<img src="images/Synthetic Data pipeline-SynthDet cloud.png" align="middle"/>
 
 This walkthrough shows how to generate a dataset at scale using Unity Simulation.
 
