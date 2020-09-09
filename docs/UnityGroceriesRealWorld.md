@@ -4,7 +4,7 @@ As part of this project, we collected a real world dataset containing 1267 image
 
 ## Dataset Collection
 
-To take the photos for the dataset, we devised a strategy to vary object selection, placement, lighting, and background. After a few test shoots, we realized that major barriers to randomness of placement and object selection were the actual humans doing the selecting and placing. Hence, planning on how to randomize while taking photos became highly important, and something we did before taking photos.
+To take the photos for the dataset, we devised a strategy to vary object selection, placement, lighting, and background. We found that we, the humans, needed more humans and a better strategy to randomize more thoroughly and faster. This new strategy is what is outlined.
 
 To provide a mix of lighting and backgrounds, We chose five locations with to take the photos. These were:
 
