@@ -7,7 +7,7 @@
 ## Getting Started with data generation in Unity
 * Data generation example project - [Getting Started with SynthDet](GettingStartedSynthDet.md)
 * Scaling up data generation - [Running SynthDet in Unity Simulation](RunningSynthDetCloud.md)
-* Evaluating a dataset - [Dataset Evaluation with Dataset Insights framework](DatasetEvaluation.md)
+* Evaluating a dataset - [Dataset Evaluation with Dataset Insights framework](https://github.com/Unity-Technologies/datasetinsights/blob/master/docs/source/Evaluation_Tutorial.md)
 
 ## Additional Documentation
 * [AnnotatedData](AnnotatedDataset.md)
