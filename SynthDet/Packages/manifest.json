@@ -5,8 +5,8 @@
     "com.unity.editorcoroutines": "0.1.0-preview.2",
     "com.unity.entities": "0.8.0-preview.8",
     "com.unity.ide.rider": "1.1.4",
-    "com.unity.ide.vscode": "1.2.0",
-    "com.unity.perception": "0.3.0-preview.2",
+    "com.unity.ide.vscode": "1.2.1",
+    "com.unity.perception": "0.4.0-preview.1",
     "com.unity.postprocessing": "2.3.0",
     "com.unity.recorder": "2.1.0-preview.1",
     "com.unity.render-pipelines.universal": "7.3.1",
@@ -48,5 +48,8 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
-  }
+  },
+  "testables": [
+    "com.unity.perception"
+  ]
 }
