@@ -70,7 +70,7 @@ Once the Unity Simulation run has been executed, the run needs to be verified th
 
 1. Run the `datasetinsights` docker image from DockerHub using the following command:
 
-```docker run -p 8888:8888 -v $HOME/data:/data -t unitytechnologies/datasetinsights:0.2.0```
+```docker run -p 8888:8888 -v $HOME/data:/data -t unitytechnologies/datasetinsights:latest```
 
 Replace `$HOME/data` with the path where you want the dataset to be downloaded.
 
