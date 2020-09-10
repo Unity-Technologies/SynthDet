@@ -296,6 +296,7 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         var localRandom = m_Rand;
         var randomPtr = (Random*) UnsafeUtility.AddressOf(ref localRandom);
         var placementRegion = ObjectPlacementUtilities.ComputePlacementRegion(camera, k_ForegroundLayerDistance);
+        var objectScale = m_Rand.NextFloat()
         
         using (s_ComputePlacements.Auto())
         {
@@ -307,6 +308,7 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
                 ObjectBounds = objectBounds,
                 OccludingObjectBounds = occludingObjectBounds,
                 PlaceObjects = placedObjectBoundingBoxes,
+                Scale = 
                 RandomPtr = randomPtr,
                 NativePlacementStatics = new NativePlacementStatics
                 {
@@ -397,24 +399,29 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         }
     }
 
-    static CurriculumState NextCurriculumState(CurriculumState curriculumState, NativePlacementStatics statics)
+    static CurriculumState NextCurriculumState(CurriculumState curriculumState, NativePlacementStatics statics, Random random)
     {
-        curriculumState.PrefabIndex++;
-        if (curriculumState.PrefabIndex < statics.ForegroundPrefabCount)
-            return curriculumState;
+        // Choose a random object and orientation each time. Scale is chosen once per frame.
+        curriculumState.PrefabIndex = random.NextInt(0, statics.ForegroundPrefabCount - 1);
+        curriculumState.OutOfPlaneRotationIndex = random.NextInt(0, statics.OutOfPlaneRotations.Length - 1);
+        curriculumState.InPlaneRotationIndex = random.NextInt(0, statics.InPlaneRotations.Length - 1);
 
-        curriculumState.PrefabIndex = 0;
-        curriculumState.OutOfPlaneRotationIndex++;
-        if (curriculumState.OutOfPlaneRotationIndex < statics.OutOfPlaneRotations.Length)
-            return curriculumState;
+        // curriculumState.PrefabIndex++;
+        // if (curriculumState.PrefabIndex < statics.ForegroundPrefabCount)
+        //     return curriculumState;
 
-        curriculumState.OutOfPlaneRotationIndex = 0;
-        curriculumState.InPlaneRotationIndex++;
-        if (curriculumState.InPlaneRotationIndex < statics.InPlaneRotations.Length)
-            return curriculumState;
+        // curriculumState.PrefabIndex = 0;
+        // curriculumState.OutOfPlaneRotationIndex++;
+        // if (curriculumState.OutOfPlaneRotationIndex < statics.OutOfPlaneRotations.Length)
+        //     return curriculumState;
 
-        curriculumState.InPlaneRotationIndex = 0;
-        curriculumState.ScaleIndex++;
+        // curriculumState.OutOfPlaneRotationIndex = 0;
+        // curriculumState.InPlaneRotationIndex++;
+        // if (curriculumState.InPlaneRotationIndex < statics.InPlaneRotations.Length)
+        //     return curriculumState;
+
+        // curriculumState.InPlaneRotationIndex = 0;
+        // curriculumState.ScaleIndex++;
 
         return curriculumState;
     }
