@@ -52,13 +52,13 @@ windows_{{suite.name}}_{{editor.version}}:
     {% if suite.name == "standalone" %}
     - utr/utr --testproject=./SynthDet --editor-location=./.Editor --artifacts_path=test-results --stdout-filter=minimal --extra-editor-arg="--force-d3d11" {{suite.args}}StandaloneWindows64
     {% else %}
-    - utr/utr --testproject=./SynthDet --editor-location=./.Editor --artifacts_path=test-results --stdout-filter=minimal --extra-editor-arg="--force-d3d11" {{suite.args}} 
+    - utr/utr --testproject=./SynthDet --editor-location=./.Editor --artifacts_path=test-results --stdout-filter=minimal --extra-editor-arg="--force-d3d11" {{suite.args}}
     {% endif %}
   artifacts:
     logs:
       paths:
         - "test-results/**/*"
-        
+
 linux_{{suite.name}}_{{editor.version}}:
   name : {{ suite.display_name }} tests ({{ editor.version }}, Linux)
   agent:
@@ -80,5 +80,5 @@ linux_{{suite.name}}_{{editor.version}}:
     logs:
       paths:
         - "test-results/**/*"
-{% endfor %} 
+{% endfor %}
 {% endfor %}

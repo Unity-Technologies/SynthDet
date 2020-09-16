@@ -1,4 +1,5 @@
 # Running SynthDet in Unity Simulation
+<img src="images/Synthetic Data pipeline-SynthDet cloud.png" align="middle"/>
 
 This walkthrough demonstrates how to use Unity Simulation to generate a dataset at scale.
 
@@ -38,8 +39,8 @@ For more information, see documentation on [Setting up your project for Unity Se
 
 <img src="images/USimRunWindow.PNG" align="middle"/>
 
-3. Select **Execute on Unity Simulation**. It takes around ten minutes for a run to complete and the Editor might seem frozen while it is executing the run.
-4. When the run is complete, check the console log and take note of the **Execution ID** and **build id** from the debug message: 
+2. Select **Execute on Unity Simulation**. It takes around ten minutes for a run to complete and the Editor might seem frozen while it is executing the run.
+3. When the run is complete, check the console log and take note of the **Execution ID** and **build id** from the debug message: 
 
 <img src="images/NoteExecutionID.PNG" align="middle"/>
 
@@ -66,7 +67,7 @@ This downloads a CSV file that contains links to the generated data. You can use
 
 1. Use the following command to run the `datasetinsights` docker image from DockerHub using the following command:
 
-```docker run -p 8888:8888 -v $HOME/data:/data -t unitytechnologies/datasetinsights:0.0.1```
+```docker run -p 8888:8888 -v $HOME/data:/data -t unitytechnologies/datasetinsights:0.1.2```
 
 Replace `$HOME/data` with the path you want to download the dataset to.
 
