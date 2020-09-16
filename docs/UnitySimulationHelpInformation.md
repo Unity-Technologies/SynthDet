@@ -12,7 +12,8 @@ This section explains the Run in Unity Simulation window and the definitions of 
 * **Path to build zip** is used for the location of the Linux player build of the target project: the user unzips this and runs it on a Unity Simulation node
 * **Scale Factor Range** is a graph mapping the scale factor values in the 0-1 range
 * **Scale Factor Steps** is the number of samples between 0-1 that the user simulates on
-* Another way to think of Scale Factor Range and Scale Factor Steps is a change in the graph that min and max values in the graph range
+
+In other words, **Scale Factor Steps** is the number of scale factors that are executed in this run. SynthDet generates hundreds of images for each step, so this number also controls the amount of images generated in the dataset.
 
 ## Unity Simulation can’t find my project
 If Unity Simulation can’t find your execution ID in the active project you might need to activate the sample project in order to find your execution ID. This mainly applies if you have already used Unity Simulation with other projects. 
