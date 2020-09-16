@@ -4,7 +4,8 @@ using UnityEngine;
 [Serializable]
 public struct AppParams
 {
-    public float[] ScaleFactors;
+    public float ScaleFactorMin;
+    public float ScaleFactorMax;
     public int MaxFrames;
     public int MaxForegroundObjectsPerFrame;
 

@@ -17,7 +17,8 @@ public class ProjectInitialization : MonoBehaviour
     // defined one here statically to be used in both places
     public static readonly AppParams AppParamDefaults = new AppParams()
     {
-        ScaleFactors = new[] { 1.0f, .5f},
+        ScaleFactorMin = .5f,
+        ScaleFactorMax = 1f,
         MaxFrames = 5000,
         MaxForegroundObjectsPerFrame = 500,
         NumBackgroundFillPasses = 1,
@@ -73,7 +74,7 @@ public class ProjectInitialization : MonoBehaviour
         }
         
         Debug.Log($"{nameof(ProjectInitialization)}: Starting up. MaxFrames: {AppParameters.MaxFrames}, " +
-            $"scale factors {{{string.Join(", ", AppParameters.ScaleFactors)}}}");
+            $"scale factors - Min: {AppParameters.ScaleFactorMin} Max: {AppParameters.ScaleFactorMax}");
         
         m_PlacementStatics = new PlacementStatics(
             AppParameters.MaxFrames, 
@@ -87,7 +88,8 @@ public class ProjectInitialization : MonoBehaviour
             backgroundImages,
             ObjectPlacementUtilities.GenerateInPlaneRotationCurriculum(Allocator.Persistent), 
             ObjectPlacementUtilities.GenerateOutOfPlaneRotationCurriculum(Allocator.Persistent), 
-            new NativeArray<float>(AppParameters.ScaleFactors, Allocator.Persistent),
+            AppParameters.ScaleFactorMin, 
+            AppParameters.ScaleFactorMax,
             idLabelconfig);
         var appParamsMetricDefinition = DatasetCapture.RegisterMetricDefinition(
             "app-params", description:"The values from the app-params used in the simulation. Only triggered once per simulation.", id: k_AppParamsMetricGuid);
@@ -208,8 +210,6 @@ public class ProjectInitialization : MonoBehaviour
             Manager.Instance.ConsumerFileProduced(targetPath);
         }
 #endif
-
-        m_PlacementStatics.ScaleFactors.Dispose();
         m_PlacementStatics.InPlaneRotations.Dispose();
         m_PlacementStatics.OutOfPlaneRotations.Dispose();
         World.DefaultGameObjectInjectionWorld?.EntityManager?.DestroyEntity(m_ResourceDirectoriesEntity);

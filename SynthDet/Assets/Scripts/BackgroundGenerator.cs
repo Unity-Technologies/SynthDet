@@ -9,6 +9,7 @@ using UnityEngine.Perception.GroundTruth;
 using Random = Unity.Mathematics.Random;
 
 [UpdateAfter(typeof(LightingRandomizerSystem))]
+[UpdateAfter(typeof(ForegroundObjectPlacer))]
 public class BackgroundGenerator : JobComponentSystem
 {
     AppParams m_AppParams;
@@ -150,9 +151,6 @@ public class BackgroundGenerator : JobComponentSystem
         var curriculumState = EntityManager.GetComponentData<CurriculumState>(entity);
         var statics = EntityManager.GetComponentObject<PlacementStatics>(entity);
 
-        if (curriculumState.ScaleIndex >= statics.ScaleFactors.Length)
-            return inputDeps;
-
         var meshInfos = new NativeArray<MeshInfo>(statics.BackgroundPrefabs.Length, Allocator.TempJob);
         for (int i = 0; i < statics.BackgroundPrefabs.Length; i++)
         {
@@ -169,7 +167,7 @@ public class BackgroundGenerator : JobComponentSystem
         var foregroundRotation = 
             ObjectPlacementUtilities.ComposeForegroundRotation(curriculumState, statics.OutOfPlaneRotations, statics.InPlaneRotations);
         var foregroundScale = ObjectPlacementUtilities.ComputeForegroundScaling(
-            foregroundBounds, statics.ScaleFactors[curriculumState.ScaleIndex]);
+            foregroundBounds, curriculumState.ScaleFactor);
         var transformer = new WorldToScreenTransformer(camera);
         // NOTE: For perspective projection, size will depend on position within the viewport, but we're approximating
         //       by computing size for the center

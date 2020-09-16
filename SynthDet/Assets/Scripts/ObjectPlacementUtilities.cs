@@ -10,7 +10,7 @@ using Random = Unity.Mathematics.Random;
 
 public struct CurriculumState : IComponentData
 {
-    public int ScaleIndex;
+    public float ScaleFactor;
     public int OutOfPlaneRotationIndex;
     public int InPlaneRotationIndex;
     public int PrefabIndex;
@@ -19,8 +19,8 @@ public struct CurriculumState : IComponentData
 public class PlacementStatics : Component
 {
     public readonly int MaxFrames;
-    public readonly float ScalingMin;
-    public readonly float ScalingSize;
+    public readonly float OccludingScalingMin;
+    public readonly float OccludingScalingSize;
     public readonly float OccludingHueMaxOffset;
     public readonly float BackgroundObjectInForegroundChance;
     public readonly int MaxForegroundObjectsPerFrame;
@@ -29,20 +29,22 @@ public class PlacementStatics : Component
     public readonly Texture2D[] BackgroundImages;
     public readonly NativeArray<Quaternion> InPlaneRotations;
     public readonly NativeArray<Quaternion> OutOfPlaneRotations;
-    public readonly NativeArray<float> ScaleFactors;
+    public readonly float ScaleFactorMin;
+    public readonly float ScaleFactorMax;
     public readonly IdLabelConfig IdLabelConfig;
 
-    public PlacementStatics(int maxFrames, int maxForegroundObjectsPerFrame, float scalingMin, float scalingSize, float occludingHueMaxOffset, float backgroundObjectInForegroundChance, GameObject[] foreground, GameObject[] backgroundPrefabs, Texture2D[] backgroundImages, NativeArray<Quaternion> inPlaneRot, NativeArray<Quaternion> outPlaneRot, NativeArray<float> scaleFactors, IdLabelConfig idLabelConfig)
+    public PlacementStatics(int maxFrames, int maxForegroundObjectsPerFrame, float occludingScalingMin, float occludingScalingSize, float occludingHueMaxOffset, float backgroundObjectInForegroundChance, GameObject[] foreground, GameObject[] backgroundPrefabs, Texture2D[] backgroundImages, NativeArray<Quaternion> inPlaneRot, NativeArray<Quaternion> outPlaneRot, float scaleFactorMin, float scaleFactorMax, IdLabelConfig idLabelConfig)
     {
         MaxFrames = maxFrames;
         ForegroundPrefabs = foreground;
         BackgroundPrefabs = backgroundPrefabs;
         InPlaneRotations = inPlaneRot;
         OutOfPlaneRotations = outPlaneRot;
-        ScaleFactors = scaleFactors;
+        ScaleFactorMin = scaleFactorMin;
+        ScaleFactorMax = scaleFactorMax;
         IdLabelConfig = idLabelConfig;
-        ScalingMin = scalingMin;
-        ScalingSize = scalingSize;
+        OccludingScalingMin = occludingScalingMin;
+        OccludingScalingSize = occludingScalingSize;
         OccludingHueMaxOffset = occludingHueMaxOffset;
         BackgroundObjectInForegroundChance = backgroundObjectInForegroundChance;
         MaxForegroundObjectsPerFrame = maxForegroundObjectsPerFrame;

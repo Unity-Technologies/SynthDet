@@ -21,7 +21,7 @@ public class EndSimulationSystem : ComponentSystem
         var entity = m_EntityQuery.GetSingletonEntity();
         var curriculumState = EntityManager.GetComponentData<CurriculumState>(entity);
         var placementStatics = EntityManager.GetComponentObject<PlacementStatics>(entity);
-        if (curriculumState.ScaleIndex >= placementStatics.ScaleFactors.Length || UnityEngine.Time.frameCount > placementStatics.MaxFrames)
+        if (UnityEngine.Time.frameCount > placementStatics.MaxFrames)
         {
             Debug.Log($"Frames: {UnityEngine.Time.frameCount} Duration: {UnityEngine.Time.realtimeSinceStartup}s, Effective FPS: {(float)UnityEngine.Time.frameCount / UnityEngine.Time.realtimeSinceStartup}. Does not include cleanup.");
 #if UNITY_EDITOR

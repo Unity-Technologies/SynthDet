@@ -67,7 +67,6 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
     }
 #endif
 
-
     protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
         if (m_CameraContainer == null)
@@ -102,12 +101,12 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         if (statics.BackgroundPrefabs == null || statics.BackgroundPrefabs.Length == 0)
             return inputDeps;
 
-        if (curriculumState.ScaleIndex >= statics.ScaleFactors.Length)
-            return inputDeps;
-
         var perceptionCamera = m_CameraContainer.GetComponent<PerceptionCamera>();
         if (perceptionCamera != null)
-            perceptionCamera.SetPersistentSensorData("scale", statics.ScaleFactors[curriculumState.ScaleIndex]);
+        {
+            perceptionCamera.SetPersistentSensorData("scaleMin", statics.ScaleFactorMin);
+            perceptionCamera.SetPersistentSensorData("scaleMax", statics.ScaleFactorMax);
+        }
 
         var camera = m_CameraContainer.GetComponent<Camera>();
         NativeList<PlacedObject> placedObjectBoundingBoxes;
@@ -203,7 +202,6 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         public int MaxForegroundObjects;
         public NativeArray<Quaternion> InPlaneRotations;
         public NativeArray<Quaternion> OutOfPlaneRotations;
-        public NativeArray<float> ScaleFactors;
         public float BackgroundObjectInForegroundChance;
     }
 
@@ -225,6 +223,7 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
 
         public WorldToScreenTransformer Transformer;
         public Rect ImageCoordinates;
+        public float Scale;
         public void Execute()
         {
             bool placedSuccessfully;
@@ -247,7 +246,7 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
                 }
 
                 var scale =
-                    ObjectPlacementUtilities.ComputeForegroundScaling(bounds, NativePlacementStatics.ScaleFactors[curriculumState.ScaleIndex]);
+                    ObjectPlacementUtilities.ComputeForegroundScaling(bounds, Scale);
                 var rotation = ObjectPlacementUtilities.ComposeForegroundRotation(curriculumState,
                     NativePlacementStatics.OutOfPlaneRotations, NativePlacementStatics.InPlaneRotations);
                 var placedObject = new PlacedObject
@@ -273,7 +272,7 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
                         placedSuccessfully = true;
                         PlaceObjects.Add(placedObject);
                         if (!placeOccluding)
-                            *CurriculumStatePtr = NextCurriculumState(curriculumState, NativePlacementStatics);
+                            *CurriculumStatePtr = NextCurriculumState(curriculumState, NativePlacementStatics, RandomPtr);
 
                         break;
                     }
@@ -282,7 +281,7 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
                 // If it can’t be placed within the scene due to violations of the cropping or overlap
                 // constraints we stop processing the current foreground scene
                 // and start with the next one.
-            } while (placedSuccessfully && PlaceObjects.Length < NativePlacementStatics.MaxForegroundObjects && CurriculumStatePtr->ScaleIndex < NativePlacementStatics.ScaleFactors.Length);
+            } while (placedSuccessfully && PlaceObjects.Length < NativePlacementStatics.MaxForegroundObjects);
         }
     }
     
@@ -296,7 +295,8 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         var localRandom = m_Rand;
         var randomPtr = (Random*) UnsafeUtility.AddressOf(ref localRandom);
         var placementRegion = ObjectPlacementUtilities.ComputePlacementRegion(camera, k_ForegroundLayerDistance);
-        var objectScale = m_Rand.NextFloat()
+        var objectScale = m_Rand.NextFloat(statics.ScaleFactorMin, statics.ScaleFactorMax);
+        localCurriculumState.ScaleFactor = objectScale;
         
         using (s_ComputePlacements.Auto())
         {
@@ -308,7 +308,7 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
                 ObjectBounds = objectBounds,
                 OccludingObjectBounds = occludingObjectBounds,
                 PlaceObjects = placedObjectBoundingBoxes,
-                Scale = 
+                Scale = objectScale,
                 RandomPtr = randomPtr,
                 NativePlacementStatics = new NativePlacementStatics
                 {
@@ -316,7 +316,6 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
                     MaxForegroundObjects = statics.MaxForegroundObjectsPerFrame,
                     InPlaneRotations = statics.InPlaneRotations,
                     OutOfPlaneRotations = statics.OutOfPlaneRotations,
-                    ScaleFactors = statics.ScaleFactors,
                     BackgroundObjectInForegroundChance = statics.BackgroundObjectInForegroundChance,
                 }
             };
@@ -399,12 +398,12 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         }
     }
 
-    static CurriculumState NextCurriculumState(CurriculumState curriculumState, NativePlacementStatics statics, Random random)
+    static CurriculumState NextCurriculumState(CurriculumState curriculumState, NativePlacementStatics statics, Random* random)
     {
         // Choose a random object and orientation each time. Scale is chosen once per frame.
-        curriculumState.PrefabIndex = random.NextInt(0, statics.ForegroundPrefabCount - 1);
-        curriculumState.OutOfPlaneRotationIndex = random.NextInt(0, statics.OutOfPlaneRotations.Length - 1);
-        curriculumState.InPlaneRotationIndex = random.NextInt(0, statics.InPlaneRotations.Length - 1);
+        curriculumState.PrefabIndex = random->NextInt(0, statics.ForegroundPrefabCount - 1);
+        curriculumState.OutOfPlaneRotationIndex = random->NextInt(0, statics.OutOfPlaneRotations.Length - 1);
+        curriculumState.InPlaneRotationIndex = random->NextInt(0, statics.InPlaneRotations.Length - 1);
 
         // curriculumState.PrefabIndex++;
         // if (curriculumState.PrefabIndex < statics.ForegroundPrefabCount)
@@ -493,8 +492,8 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
                 PlacedForegroundObjects = placedObjects,
                 RandomSeed = m_Rand.NextUInt(),
                 PlacedOccludingObjects = placedOccludingObjects,
-                ScalingMin = statics.ScalingMin,
-                ScalingSize = statics.ScalingSize
+                ScalingMin = statics.OccludingScalingMin,
+                ScalingSize = statics.OccludingScalingSize
             };
             job.Schedule(placedObjects.Length, 10).Complete();
         }

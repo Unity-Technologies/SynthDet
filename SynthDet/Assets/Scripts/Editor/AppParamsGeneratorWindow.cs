@@ -296,7 +296,7 @@ public class AppParamsGeneratorWindow : EditorWindow
     
     int EstimateTotalFrames()
     {
-        var scaleFactorRange = m_ScaleFactorCurve.value;
+        // var scaleFactorRange = m_ScaleFactorCurve.value;
         var steps = m_StepsField.value;
         var stepsPerJob = m_StepsPerJobField.value;
         var maxFramesPerJob = m_MaxFramesField.value;
@@ -305,32 +305,33 @@ public class AppParamsGeneratorWindow : EditorWindow
         if (steps == 0 || maxFramesPerJob == 0 || stepsPerJob == 0 || maxForegroundObjectsPerFrame == 0)
             return 0;
 
-        var inPlaneRotations = ObjectPlacementUtilities.GenerateInPlaneRotationCurriculum(Allocator.Temp);
-        var outOfPlaneRotations = ObjectPlacementUtilities.GenerateOutOfPlaneRotationCurriculum(Allocator.Temp);
-
-        var framesPerScaleFactorMaxObjects = inPlaneRotations.Length * outOfPlaneRotations.Length * 64 / maxForegroundObjectsPerFrame;
-        var scaleAccountingForBackgroundInForeground = 1/(1-m_BackgroundInForegroundChanceField.value);
-        var framesPerScaleFactorAtOneScale = k_EstimatedFramesPerCurriculumStepAtOneScale * scaleAccountingForBackgroundInForeground * inPlaneRotations.Length * outOfPlaneRotations.Length;
-
-        inPlaneRotations.Dispose();
-        outOfPlaneRotations.Dispose();
-
-        var stepSize = 1f / (steps + 1);
-        var time = 0f;
-        var estimate = 0;
-
-        for (int i = 0; i < steps; i++)
-        {
-            var scaleFactor = scaleFactorRange.Evaluate(time);
-            var stepEstimate = (int)(framesPerScaleFactorAtOneScale * (scaleFactor * scaleFactor));
-            stepEstimate = Math.Max(stepEstimate, framesPerScaleFactorMaxObjects);
-            estimate += stepEstimate;
-            time += stepSize;
-        }
+        // var inPlaneRotations = ObjectPlacementUtilities.GenerateInPlaneRotationCurriculum(Allocator.Temp);
+        // var outOfPlaneRotations = ObjectPlacementUtilities.GenerateOutOfPlaneRotationCurriculum(Allocator.Temp);
+        //
+        // var framesPerScaleFactorMaxObjects = inPlaneRotations.Length * outOfPlaneRotations.Length * 64 / maxForegroundObjectsPerFrame;
+        // var scaleAccountingForBackgroundInForeground = 1/(1-m_BackgroundInForegroundChanceField.value);
+        // var framesPerScaleFactorAtOneScale = k_EstimatedFramesPerCurriculumStepAtOneScale * scaleAccountingForBackgroundInForeground * inPlaneRotations.Length * outOfPlaneRotations.Length;
+        //
+        // inPlaneRotations.Dispose();
+        // outOfPlaneRotations.Dispose();
+        //
+        // var stepSize = 1f / (steps + 1);
+        // var time = 0f;
+        // var estimate = 0;
+        //
+        // for (int i = 0; i < steps; i++)
+        // {
+        //     var scaleFactor = scaleFactorRange.Evaluate(time);
+        //     var stepEstimate = (int)(framesPerScaleFactorAtOneScale * (scaleFactor * scaleFactor));
+        //     stepEstimate = Math.Max(stepEstimate, framesPerScaleFactorMaxObjects);
+        //     estimate += stepEstimate;
+        //     time += stepSize;
+        // }
 
         var maxFrames = (m_StepsField.value / stepsPerJob) * maxFramesPerJob;
 
-        return math.min(maxFrames, estimate);
+        // return math.min(maxFrames, estimate);
+        return maxFrames;
     }
 
     float m_Progress;
@@ -563,8 +564,6 @@ public class AppParamsGeneratorWindow : EditorWindow
         var appParamIds = new List<AppParam>();
         for (int i = 0; i < steps; i++)
         {
-            var scaleFactor = scaleFactorRange.Evaluate(time);
-            scaleFactors.Add(scaleFactor);
             stepsThisJob++;
             if (stepsThisJob == stepsPerJob)
             {
@@ -575,7 +574,8 @@ public class AppParamsGeneratorWindow : EditorWindow
                 if (token.IsCancellationRequested)
                     return null;
                 
-                appParams.ScaleFactors = scaleFactors.ToArray();
+                appParams.ScaleFactorMin = scaleFactorRange.Evaluate(0);
+                appParams.ScaleFactorMax = scaleFactorRange.Evaluate(1);
                 var appParamId = API.UploadAppParam(appParamName, appParams);
                 appParamIds.Add(new AppParam()
                 {
