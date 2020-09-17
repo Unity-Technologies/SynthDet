@@ -17,7 +17,7 @@ These workflow steps describe the process of using the sample SynthDet project t
 
 ### Step 2: Generating data locally 
 1. With **MainScene** open, press the Play button. The sample project quickly generates a collection of random images, which you can see in the Game view. 
-    <img src="images/PlayBttn.png" align="middle"/>
+    <img src="images/PlayBttn.PNG" align="middle"/>
 2. The MainScene continues for about one minute, then exists Play mode. Allow the scene to run until it exits Play mode.
 3. To view the dataset of generated data, navigate to the following location on your computer:
     - macOS: `~/Library/Application Support/UnityTechnologies/SynthDet`
@@ -31,7 +31,7 @@ Once the data is generated locally, you can use`datasetinsights`  to show datase
 
 1. Use the following command to run the `datasetinsights` docker image from DockerHub:
 
-```docker run -p 8888:8888 -v "<Synthetic Data File Path>":/data -t unitytechnologies/datasetinsights:0.1.0```
+```docker run -p 8888:8888 -v "<Synthetic Data File Path>":/data -t unitytechnologies/datasetinsights:latest```
 
 Replace `<Synthetic Data File Path>` with the path to the local datasets (listed in step 2.3).
 
