@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Unity.Simulation;
@@ -27,17 +28,19 @@ public class ProjectInitialization : MonoBehaviour
         LightRotationMax = 90f,
         BackgroundHueMaxOffset = 180,
         OccludingHueMaxOffset = 180f,
+        BackgroundObjectInForegroundChance = .2f,
         NoiseStrengthMax = 0.02f,
         BlurKernelSizeMax = 0.01f,
         BlurStandardDeviationMax = 0.5f
     };
-    public string ForegroundObjectResourcesDirectory = "Foreground";
     public string BackgroundObjectResourcesDirectory = "Background";
     public string BackgroundImageResourcesDirectory = "GroceryStoreDataset";
 
     public AppParams AppParameters = AppParamDefaults;
     public bool EnableProfileLog;
     public PerceptionCamera PerceptionCamera;
+    public IdLabelConfig idLabelconfig;
+    public GameObject[] foregroundObjects;
     Entity m_ResourceDirectoriesEntity;
     Entity m_CurriculumStateEntity;
     string m_ProfileLogPath;
@@ -45,19 +48,12 @@ public class ProjectInitialization : MonoBehaviour
 
     void Start()
     {
-        m_ResourceDirectoriesEntity = World.DefaultGameObjectInjectionWorld.EntityManager.CreateEntity(typeof(ResourceDirectories));
-        World.DefaultGameObjectInjectionWorld.EntityManager.SetComponentData(m_ResourceDirectoriesEntity, new ResourceDirectories
-        {
-            ForegroundResourcePath = ForegroundObjectResourcesDirectory,
-            BackgroundResourcePath = BackgroundObjectResourcesDirectory
-        });
-        var foregroundObjects = Resources.LoadAll<GameObject>(ForegroundObjectResourcesDirectory);
         var backgroundObjects = Resources.LoadAll<GameObject>(BackgroundObjectResourcesDirectory);
         var backgroundImages = Resources.LoadAll<Texture2D>(BackgroundImageResourcesDirectory);
 
         if (foregroundObjects.Length == 0)
         {
-            Debug.LogError($"No Prefabs of FBX files found in foreground object directory \"{ForegroundObjectResourcesDirectory}\".");
+            Debug.LogError($"No Prefabs given in Foreground Objects list.");
             return;
         }
         if (backgroundObjects.Length == 0)
@@ -85,15 +81,17 @@ public class ProjectInitialization : MonoBehaviour
             AppParameters.ScalingMin, 
             AppParameters.ScalingSize, 
             AppParameters.OccludingHueMaxOffset, 
+            AppParameters.BackgroundObjectInForegroundChance,
             foregroundObjects, 
             backgroundObjects, 
             backgroundImages,
             ObjectPlacementUtilities.GenerateInPlaneRotationCurriculum(Allocator.Persistent), 
             ObjectPlacementUtilities.GenerateOutOfPlaneRotationCurriculum(Allocator.Persistent), 
-            new NativeArray<float>(AppParameters.ScaleFactors, Allocator.Persistent));
-        var appParamsMetricDefinition = SimulationManager.RegisterMetricDefinition(
+            new NativeArray<float>(AppParameters.ScaleFactors, Allocator.Persistent),
+            idLabelconfig);
+        var appParamsMetricDefinition = DatasetCapture.RegisterMetricDefinition(
             "app-params", description:"The values from the app-params used in the simulation. Only triggered once per simulation.", id: k_AppParamsMetricGuid);
-        SimulationManager.ReportMetric(appParamsMetricDefinition, new[] {AppParameters});
+        DatasetCapture.ReportMetric(appParamsMetricDefinition, new[] {AppParameters});
         m_CurriculumStateEntity = World.DefaultGameObjectInjectionWorld.EntityManager.CreateEntity();
         World.DefaultGameObjectInjectionWorld.EntityManager.AddComponentData(
             m_CurriculumStateEntity, new CurriculumState());
@@ -149,29 +147,50 @@ public class ProjectInitialization : MonoBehaviour
 
     void ValidateForegroundLabeling(GameObject[] foregroundObjects, PerceptionCamera perceptionCamera)
     {
-        if (perceptionCamera.LabelingConfiguration == null)
+        
+        var boundingBox2DLabeler = (BoundingBox2DLabeler)perceptionCamera.labelers.First(l => l is BoundingBox2DLabeler);
+        if (boundingBox2DLabeler == null)
+            return;
+        var labelConfig = boundingBox2DLabeler.idLabelConfig;
+        if (labelConfig == null)
         {
             Debug.LogError("PerceptionCamera does not have a labeling configuration. This will likely cause the program to fail.");
             return;
         }
 
-        var labelingConfiguration = perceptionCamera.LabelingConfiguration;
-        var regex = new Regex(".*_[0-9][0-9]");
-        var foregroundNames = foregroundObjects.Select(f =>
+        var foregroundObjectsMissingFromConfig = new List<GameObject>();
+        var foundLabels = new List<string>();
+        foreach (var foregroundObject in foregroundObjects)
         {
-            var foregroundName = f.name;
-            if (regex.IsMatch(foregroundName))
-                foregroundName = foregroundName.Substring(0, foregroundName.Length - 3);
-            return foregroundName;
-        }).ToList();
-        var foregroundObjectsMissingFromConfig = foregroundNames.Where(f => labelingConfiguration.LabelEntries.All(l => l.label != f)).ToList();
-        var configurationsMissingModel = labelingConfiguration.LabelEntries.Skip(1).Select(l => l.label).Where(l => !foregroundNames.Any(f => f == l)).ToList();
+            var labeling = foregroundObject.GetComponent<Labeling>();
+            if (labeling == null)
+            {
+                foregroundObjectsMissingFromConfig.Add(foregroundObject);
+                continue;
+            }
+
+            bool found = false;
+            foreach (var label in labeling.labels)
+            {
+                if (labelConfig.labelEntries.Select(e => e.label).Contains(label))
+                {
+                    foundLabels.Add(label);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+                foregroundObjectsMissingFromConfig.Add(foregroundObject);
+        }
 
         if (foregroundObjectsMissingFromConfig.Count > 0)
         {
             Debug.LogError($"The following foreground models are not present in the LabelingConfiguration: {string.Join(", ", foregroundObjectsMissingFromConfig)}");
         }
-        if (configurationsMissingModel.Count > 0)
+        
+        var configurationsMissingModel = labelConfig.labelEntries.Select(l => l.label).Where(l => !foundLabels.Contains(l)).ToArray();
+        if (configurationsMissingModel.Length > 0)
         {
             Debug.LogError($"The following LabelingConfiguration entries do not correspond to any foreground object model: {string.Join(", ", configurationsMissingModel)}");
         }

@@ -5,6 +5,7 @@ using Unity.Entities;
 using UnityEngine;
 using Unity.Mathematics;
 using UnityEngine.Assertions;
+using UnityEngine.Perception.GroundTruth;
 using Random = Unity.Mathematics.Random;
 
 public struct CurriculumState : IComponentData
@@ -21,6 +22,7 @@ public class PlacementStatics : Component
     public readonly float ScalingMin;
     public readonly float ScalingSize;
     public readonly float OccludingHueMaxOffset;
+    public readonly float BackgroundObjectInForegroundChance;
     public readonly int MaxForegroundObjectsPerFrame;
     public readonly GameObject[] ForegroundPrefabs;
     public readonly GameObject[] BackgroundPrefabs;
@@ -28,8 +30,9 @@ public class PlacementStatics : Component
     public readonly NativeArray<Quaternion> InPlaneRotations;
     public readonly NativeArray<Quaternion> OutOfPlaneRotations;
     public readonly NativeArray<float> ScaleFactors;
+    public readonly IdLabelConfig IdLabelConfig;
 
-    public PlacementStatics(int maxFrames, int maxForegroundObjectsPerFrame, float scalingMin, float scalingSize, float occludingHueMaxOffset, GameObject[] foreground, GameObject[] backgroundPrefabs, Texture2D[] backgroundImages, NativeArray<Quaternion> inPlaneRot, NativeArray<Quaternion> outPlaneRot, NativeArray<float> scaleFactors)
+    public PlacementStatics(int maxFrames, int maxForegroundObjectsPerFrame, float scalingMin, float scalingSize, float occludingHueMaxOffset, float backgroundObjectInForegroundChance, GameObject[] foreground, GameObject[] backgroundPrefabs, Texture2D[] backgroundImages, NativeArray<Quaternion> inPlaneRot, NativeArray<Quaternion> outPlaneRot, NativeArray<float> scaleFactors, IdLabelConfig idLabelConfig)
     {
         MaxFrames = maxFrames;
         ForegroundPrefabs = foreground;
@@ -37,9 +40,11 @@ public class PlacementStatics : Component
         InPlaneRotations = inPlaneRot;
         OutOfPlaneRotations = outPlaneRot;
         ScaleFactors = scaleFactors;
+        IdLabelConfig = idLabelConfig;
         ScalingMin = scalingMin;
         ScalingSize = scalingSize;
         OccludingHueMaxOffset = occludingHueMaxOffset;
+        BackgroundObjectInForegroundChance = backgroundObjectInForegroundChance;
         MaxForegroundObjectsPerFrame = maxForegroundObjectsPerFrame;
         BackgroundImages = backgroundImages;
     }
