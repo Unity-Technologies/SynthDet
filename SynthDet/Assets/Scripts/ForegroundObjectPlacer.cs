@@ -402,24 +402,30 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
     {
         // Choose a random object and orientation each time. Scale is chosen once per frame.
         curriculumState.PrefabIndex = random->NextInt(0, statics.ForegroundPrefabCount - 1);
-        curriculumState.OutOfPlaneRotationIndex = random->NextInt(0, statics.OutOfPlaneRotations.Length - 1);
-        curriculumState.InPlaneRotationIndex = random->NextInt(0, statics.InPlaneRotations.Length - 1);
+        // curriculumState.OutOfPlaneRotationIndex = random->NextInt(0, statics.OutOfPlaneRotations.Length - 1);
+        // curriculumState.InPlaneRotationIndex = random->NextInt(0, statics.InPlaneRotations.Length - 1);
 
         // curriculumState.PrefabIndex++;
         // if (curriculumState.PrefabIndex < statics.ForegroundPrefabCount)
         //     return curriculumState;
 
-        // curriculumState.PrefabIndex = 0;
-        // curriculumState.OutOfPlaneRotationIndex++;
-        // if (curriculumState.OutOfPlaneRotationIndex < statics.OutOfPlaneRotations.Length)
-        //     return curriculumState;
+        //curriculumState.PrefabIndex = 0;
+        
+        curriculumState.FouxPrefabIndex++;
+        if (curriculumState.FouxPrefabIndex < statics.ForegroundPrefabCount)
+            return curriculumState;
 
-        // curriculumState.OutOfPlaneRotationIndex = 0;
-        // curriculumState.InPlaneRotationIndex++;
-        // if (curriculumState.InPlaneRotationIndex < statics.InPlaneRotations.Length)
-        //     return curriculumState;
+        curriculumState.FouxPrefabIndex = 0;
+        curriculumState.OutOfPlaneRotationIndex++;
+        if (curriculumState.OutOfPlaneRotationIndex < statics.OutOfPlaneRotations.Length)
+            return curriculumState;
 
-        // curriculumState.InPlaneRotationIndex = 0;
+        curriculumState.OutOfPlaneRotationIndex = 0;
+        curriculumState.InPlaneRotationIndex++;
+        if (curriculumState.InPlaneRotationIndex < statics.InPlaneRotations.Length)
+            return curriculumState;
+
+        curriculumState.InPlaneRotationIndex = 0;
         // curriculumState.ScaleIndex++;
 
         return curriculumState;

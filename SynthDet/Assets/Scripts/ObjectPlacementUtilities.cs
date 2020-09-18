@@ -14,6 +14,9 @@ public struct CurriculumState : IComponentData
     public int OutOfPlaneRotationIndex;
     public int InPlaneRotationIndex;
     public int PrefabIndex;
+    //added this as a placeholder for the old PrefabIndex, which is not randomized each frame. This makes it so thar
+    //orientations are only changed once every X placements
+    public int FouxPrefabIndex;
 }
 
 public class PlacementStatics : Component
