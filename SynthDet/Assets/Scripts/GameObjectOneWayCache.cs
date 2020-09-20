@@ -17,15 +17,17 @@ public class GameObjectOneWayCache
     Dictionary<int, int> m_InstanceIdToIndex;
     List<GameObject>[] m_InstantiatedObjects;
     int[] m_NumObjectsActive;
+    Func<GameObject, GameObject> m_SpawnCallback;
     int NumObjectsInCache { get; set; }
     public int NumObjectsActive { get; private set; }
 
-    public GameObjectOneWayCache(Transform parent, GameObject[] prefabs)
+    public GameObjectOneWayCache(Transform parent, GameObject[] prefabs, Func<GameObject, GameObject> spawnCallback = null)
     {
         m_CacheParent = parent;
         m_InstanceIdToIndex = new Dictionary<int, int>();
         m_InstantiatedObjects = new List<GameObject>[prefabs.Length];
         m_NumObjectsActive = new int[prefabs.Length];
+        m_SpawnCallback = spawnCallback;
         
         var index = 0;
         foreach (var prefab in prefabs)
@@ -55,7 +57,17 @@ public class GameObjectOneWayCache
         else
         {
             ++NumObjectsInCache;
-            var newObject = Object.Instantiate(prefab, m_CacheParent);
+            GameObject newObject;
+            if (m_SpawnCallback == null)
+            {
+                newObject = Object.Instantiate(prefab, m_CacheParent);
+            }
+            else
+            {   
+                newObject = m_SpawnCallback(prefab);
+                newObject.transform.SetParent(m_CacheParent, true);
+            }
+
             ++m_NumObjectsActive[index];
             m_InstantiatedObjects[index].Add(newObject);
             return newObject;
