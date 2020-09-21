@@ -260,8 +260,7 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
                 }
                 else
                 {
-                    prefabIndex = RandomPtr->NextInt(0, NativePlacementStatics.ForegroundPrefabCount);
-                    //prefabIndex = curriculumState.PrefabIndex;
+                    prefabIndex = curriculumState.PrefabIndex;
                     bounds = ObjectBounds[prefabIndex];
                 }
 
