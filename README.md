@@ -14,6 +14,8 @@ This project is geared towards ML practitioners and enthusiasts who are actively
 
 [Use Unity’s perception tools to generate and analyze synthetic data at scale to train your ML models](https://blogs.unity3d.com/2020/06/10/use-unitys-perception-tools-to-generate-and-analyze-synthetic-data-at-scale-to-train-your-ml-models/)
 
+[Training a performant object detection ML model on synthetic data using Unity Perception tools](https://blogs.unity3d.com/2020/09/17/training-a-performant-object-detection-ml-model-on-synthetic-data-using-unity-perception-tools/)
+
 ## Contents 
 * SynthDet - Unity Perception sample project
 * 3D Assets - High quality models of 64 commonly found grocery products
