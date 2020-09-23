@@ -261,7 +261,7 @@ public class AppParamsGeneratorWindow : EditorWindow
 
     void SetDefaultFieldValues()
     {
-        m_ScaleFactorCurve.value = AnimationCurve.Linear(0f, 1.0f, 1f, 0.5f);
+        m_ScaleFactorCurve.value = AnimationCurve.Linear(0f, 0.5f, 1f, 1f);
         //The number required to get approx. 400k frames
         m_StepsField.value = 377;
         m_StepsPerJobField.value = 1;

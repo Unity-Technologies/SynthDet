@@ -102,13 +102,6 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         if (statics.BackgroundPrefabs == null || statics.BackgroundPrefabs.Length == 0)
             return inputDeps;
 
-        var perceptionCamera = m_CameraContainer.GetComponent<PerceptionCamera>();
-        if (perceptionCamera != null)
-        {
-            perceptionCamera.SetPersistentSensorData("scaleMin", statics.ScaleFactorMin);
-            perceptionCamera.SetPersistentSensorData("scaleMax", statics.ScaleFactorMax);
-        }
-
         var camera = m_CameraContainer.GetComponent<Camera>();
         NativeList<PlacedObject> placedObjectBoundingBoxes;
         var occludingObjects = statics.BackgroundPrefabs;
@@ -316,6 +309,13 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         var placementRegion = ObjectPlacementUtilities.ComputePlacementRegion(camera, k_ForegroundLayerDistance);
         var objectScale = m_Rand.NextFloat(statics.ScaleFactorMin, statics.ScaleFactorMax);
         localCurriculumState.ScaleFactor = objectScale;
+        
+
+        var perceptionCamera = m_CameraContainer.GetComponent<PerceptionCamera>();
+        if (perceptionCamera != null)
+        {
+            perceptionCamera.SetPersistentSensorData("scale", objectScale);
+        }
         
         using (s_ComputePlacements.Auto())
         {
