@@ -14,14 +14,18 @@ public class LightingRandomizerSystem : JobComponentSystem
     MetricDefinition m_LightingInfoDefinition;
     
     ProjectInitialization m_InitParams;
+    EntityQuery m_CurriculumQuery;
 
     protected override void OnCreate()
     {
-        m_Rand = new Random(1);
+        m_CurriculumQuery = EntityManager.CreateEntityQuery(typeof(CurriculumState));
     }
 
     void Initialize()
     {
+        var statics = EntityManager.GetComponentObject<PlacementStatics>(m_CurriculumQuery.GetSingletonEntity());
+        m_Rand = new Random(statics.RandomSeed + (uint)UnityEngine.Time.frameCount * ObjectPlacementUtilities.LargePrimeNumber);
+        
         var light = GameObject.Find("Directional Light");
         if (light == null)
             return;

@@ -93,7 +93,6 @@ public class BackgroundGenerator : JobComponentSystem
     
     protected void Initialize()
     {
-        m_Rand = new Random(2);
         m_CurriculumQuery = EntityManager.CreateEntityQuery(typeof(CurriculumState));
         
         const string globalInitParamsName = "Management";
@@ -117,6 +116,8 @@ public class BackgroundGenerator : JobComponentSystem
             m_CameraForward * k_PlacementDistance + camera.transform.position,
             Quaternion.identity);
         var statics = EntityManager.GetComponentObject<PlacementStatics>(m_CurriculumQuery.GetSingletonEntity());
+        
+        m_Rand = new Random(statics.RandomSeed + 2 * ObjectPlacementUtilities.LargePrimeNumber);
         objectCache = new GameObjectOneWayCache(container.transform, statics.BackgroundPrefabs);
 
         backgroundHueMaxOffset = init.AppParameters.BackgroundHueMaxOffset;

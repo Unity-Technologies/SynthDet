@@ -13,6 +13,8 @@ using UnityEngine.UIElements;
 using System.IO;
 using UnityEditor.Build.Reporting;
 using ZipUtility;
+using Random = UnityEngine.Random;
+
 public class AppParamsGeneratorWindow : EditorWindow
 {
     [MenuItem("Window/Run in USim...")]
@@ -31,6 +33,7 @@ public class AppParamsGeneratorWindow : EditorWindow
     IntegerField m_StepsField;
     IntegerField m_StepsPerJobField;
     CurveField m_ScaleFactorCurve;
+    IntegerField m_SeedField;
     IntegerField m_MaxFramesField;
     IntegerField m_MaxForegroundObjectsPerFrame;
     IntegerField m_BackgroundObjectDensityField;
@@ -144,6 +147,11 @@ public class AppParamsGeneratorWindow : EditorWindow
         {
             viewDataKey = "Max frames"
         };
+        m_SeedField = new IntegerField("Random Seed")
+        {
+            viewDataKey = "Seed"
+        };
+        rootVisualElement.Add(m_SeedField);
         m_MaxFramesField.RegisterValueChangedCallback(a => UpdateEstimate());
         rootVisualElement.Add(m_MaxFramesField);
 
@@ -267,6 +275,7 @@ public class AppParamsGeneratorWindow : EditorWindow
         m_StepsPerJobField.value = 1;
         
         var defaults = ProjectInitialization.AppParamDefaults;
+        m_SeedField.value = (int)(Random.value * int.MaxValue);
         m_MaxFramesField.value = defaults.MaxFrames;
         m_MaxForegroundObjectsPerFrame.value = defaults.MaxForegroundObjectsPerFrame;
         m_BackgroundObjectDensityField.value = defaults.BackgroundObjectDensity;
@@ -348,6 +357,7 @@ public class AppParamsGeneratorWindow : EditorWindow
         var appParams = new AppParams()
         {
             // NOTE: ScaleFactors intentionally not populated here because it varies by USim instance
+            Seed = (uint)m_SeedField.value,
             MaxFrames = m_MaxFramesField.value,
             MaxForegroundObjectsPerFrame = m_MaxForegroundObjectsPerFrame.value,
             BackgroundObjectDensity = m_BackgroundObjectDensityField.value,
@@ -574,8 +584,12 @@ public class AppParamsGeneratorWindow : EditorWindow
                 if (token.IsCancellationRequested)
                     return null;
                 
-                appParams.ScaleFactorMin = scaleFactorRange.Evaluate(((float)i) / steps);
-                appParams.ScaleFactorMax = scaleFactorRange.Evaluate(((float)i + 1) / steps);
+                // appParams.ScaleFactorMin = scaleFactorRange.Evaluate(((float)i) / steps);
+                // appParams.ScaleFactorMax = scaleFactorRange.Evaluate(((float)i + 1) / steps);
+                appParams.ScaleFactorMin = scaleFactorRange.Evaluate(0);
+                appParams.ScaleFactorMax = scaleFactorRange.Evaluate(1);
+
+                appParams.Seed = appParams.Seed + (uint)i * ObjectPlacementUtilities.LargePrimeNumber;
                 var appParamId = API.UploadAppParam(appParamName, appParams);
                 appParamIds.Add(new AppParam()
                 {

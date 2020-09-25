@@ -4,6 +4,7 @@ using UnityEngine;
 [Serializable]
 public struct AppParams
 {
+    public uint Seed;
     public float ScaleFactorMin;
     public float ScaleFactorMax;
     public int MaxFrames;

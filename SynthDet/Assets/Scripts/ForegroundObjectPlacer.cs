@@ -47,7 +47,6 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
     // Initialize your operator here
     protected override void OnCreate()
     {
-        m_Rand = new Random(1);
         m_ForegroundLayer = LayerMask.NameToLayer("Foreground");
         m_ParentForeground = new GameObject("ForegroundContainer");
         m_ParentBackgroundInForeground = new GameObject("BackgroundInForegroundContainer");
@@ -101,6 +100,8 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
             return inputDeps;
         if (statics.BackgroundPrefabs == null || statics.BackgroundPrefabs.Length == 0)
             return inputDeps;
+        
+        m_Rand = new Random(statics.RandomSeed + (uint)UnityEngine.Time.frameCount * ObjectPlacementUtilities.LargePrimeNumber);
 
         var camera = m_CameraContainer.GetComponent<Camera>();
         NativeList<PlacedObject> placedObjectBoundingBoxes;

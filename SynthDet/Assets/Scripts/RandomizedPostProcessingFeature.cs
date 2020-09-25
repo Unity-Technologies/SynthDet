@@ -4,6 +4,7 @@
 using UnityEditor;
 #endif
 using System;
+using Unity.Entities;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Perception.GroundTruth;
@@ -109,6 +110,10 @@ public class RandomizedPostProcessingFeature : ScriptableRendererFeature
         }
 
         var p = m_InitParams.AppParameters;
+
+        var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        var placementStatics = entityManager.GetComponentObject<PlacementStatics>(entityManager.CreateEntityQuery(typeof(CurriculumState)).GetSingletonEntity());
+        m_Rand = new Random(placementStatics.RandomSeed + (uint)Time.frameCount * ObjectPlacementUtilities.LargePrimeNumber);
         var kernelSize = RenderMaxStrength ? p.BlurKernelSizeMax : m_Rand.NextFloat(0f, p.BlurKernelSizeMax);
         var stdDev = (RenderMaxStrength ? p.BlurStandardDeviationMax : 
             m_Rand.NextFloat(0f, p.BlurStandardDeviationMax)) * kernelSize;

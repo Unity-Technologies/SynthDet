@@ -17,6 +17,7 @@ public class ProjectInitialization : MonoBehaviour
     // defined one here statically to be used in both places
     public static readonly AppParams AppParamDefaults = new AppParams()
     {
+        Seed = 10532943,
         ScaleFactorMin = .5f,
         ScaleFactorMax = 1f,
         MaxFrames = 5000,
@@ -77,6 +78,7 @@ public class ProjectInitialization : MonoBehaviour
             $"scale factors - Min: {AppParameters.ScaleFactorMin} Max: {AppParameters.ScaleFactorMax}");
         
         m_PlacementStatics = new PlacementStatics(
+            AppParameters.Seed,
             AppParameters.MaxFrames, 
             AppParameters.MaxForegroundObjectsPerFrame, 
             AppParameters.ScalingMin, 

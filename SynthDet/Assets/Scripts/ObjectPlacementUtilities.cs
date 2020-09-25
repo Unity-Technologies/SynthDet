@@ -21,6 +21,7 @@ public struct CurriculumState : IComponentData
 
 public class PlacementStatics : Component
 {
+    public readonly uint RandomSeed;
     public readonly int MaxFrames;
     public readonly float OccludingScalingMin;
     public readonly float OccludingScalingSize;
@@ -36,8 +37,9 @@ public class PlacementStatics : Component
     public readonly float ScaleFactorMax;
     public readonly IdLabelConfig IdLabelConfig;
 
-    public PlacementStatics(int maxFrames, int maxForegroundObjectsPerFrame, float occludingScalingMin, float occludingScalingSize, float occludingHueMaxOffset, float backgroundObjectInForegroundChance, GameObject[] foreground, GameObject[] backgroundPrefabs, Texture2D[] backgroundImages, NativeArray<Quaternion> inPlaneRot, NativeArray<Quaternion> outPlaneRot, float scaleFactorMin, float scaleFactorMax, IdLabelConfig idLabelConfig)
+    public PlacementStatics(uint randomSeed, int maxFrames, int maxForegroundObjectsPerFrame, float occludingScalingMin, float occludingScalingSize, float occludingHueMaxOffset, float backgroundObjectInForegroundChance, GameObject[] foreground, GameObject[] backgroundPrefabs, Texture2D[] backgroundImages, NativeArray<Quaternion> inPlaneRot, NativeArray<Quaternion> outPlaneRot, float scaleFactorMin, float scaleFactorMax, IdLabelConfig idLabelConfig)
     {
+        RandomSeed = randomSeed;
         MaxFrames = maxFrames;
         ForegroundPrefabs = foreground;
         BackgroundPrefabs = backgroundPrefabs;
