@@ -50,3 +50,16 @@ UNITY TECHNOLOGIES IS NOT AFFILIATED WITH, AND DOES NOT ENDORSE/SPONSOR AND IS N
 
 ## License
 * [License](LICENSE.md)
+
+## Citation
+```
+@misc{synthdet2020,
+    title={Training a performant object detection {ML} model on synthetic data using {U}nity {P}erception tools},
+    author={You-Cyuan Jhang and Adam Palmar and Bowen Li and Saurav Dhakad and Sanjay Kumar Vishwakarma and Jonathan Hogins and Adam Crespi and Chris Kerr and Sharmila Chockalingam and Cesar Romero and Alex Thaman and Sujoy Ganguly},
+    howpublished = {\url{https://blogs.unity3d.com/2020/09/17/training-a-performant-object-detection-ml-model-on-synthetic-data-using-unity-perception-tools/}},
+    journal={Unity Techonologies Blog},
+    publisher={Unity Technologies},
+    year={2020},
+    month={Sep}
+}
+```
