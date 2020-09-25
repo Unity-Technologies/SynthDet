@@ -574,7 +574,8 @@ public class AppParamsGeneratorWindow : EditorWindow
                 if (token.IsCancellationRequested)
                     return null;
                 
-                appParams.ScaleFactorMin = appParams.ScaleFactorMax = scaleFactorRange.Evaluate(((float)i) / (steps - 1));
+                appParams.ScaleFactorMin = scaleFactorRange.Evaluate(((float)i) / steps);
+                appParams.ScaleFactorMax = scaleFactorRange.Evaluate(((float)i + 1) / steps);
                 var appParamId = API.UploadAppParam(appParamName, appParams);
                 appParamIds.Add(new AppParam()
                 {
