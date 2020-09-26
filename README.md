@@ -29,7 +29,7 @@ Version|Release Date |Source
 -------|-------------|------
    V0.1  |May 26, 2020|[source](https://github.com/Unity-Technologies/SynthDet)
 
-## Citation
+## Inspiration
 SynthDet was inspired by the following research paper from Google Cloud AI:  
 
 Hinterstoisser, S., Pauly, O., Heibel, H., Marek, M., & Bokeloh, M. (2019). [*An Annotation Saved is an Annotation Earned: Using Fully Synthetic Training for Object Instance Detection.* ](https://arxiv.org/pdf/1902.09967.pdf)
@@ -50,3 +50,18 @@ UNITY TECHNOLOGIES IS NOT AFFILIATED WITH, AND DOES NOT ENDORSE/SPONSOR AND IS N
 
 ## License
 * [License](LICENSE.md)
+
+## Citation
+If you find this package useful, consider citing it using:
+
+```
+@misc{synthdet2020,
+    title={Training a performant object detection {ML} model on synthetic data using {U}nity {P}erception tools},
+    author={You-Cyuan Jhang and Adam Palmar and Bowen Li and Saurav Dhakad and Sanjay Kumar Vishwakarma and Jonathan Hogins and Adam Crespi and Chris Kerr and Sharmila Chockalingam and Cesar Romero and Alex Thaman and Sujoy Ganguly},
+    howpublished = {\url{https://blogs.unity3d.com/2020/09/17/training-a-performant-object-detection-ml-model-on-synthetic-data-using-unity-perception-tools/}},
+    journal={Unity Techonologies Blog},
+    publisher={Unity Technologies},
+    year={2020},
+    month={Sep}
+}
+```
