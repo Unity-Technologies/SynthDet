@@ -6,7 +6,10 @@ These workflow steps describe the process of using the sample SynthDet project t
 
 ## Workflow
 
-### Step 1: Open the SynthDet sample project
+### Step 1: Set up additional prerequisites
+See [Prerequisites: Additional requirements for running in Unity Simulation](Prerequisites.md).
+
+### Step 2: Open the SynthDet sample project
 
 1. Open the Unity Hub
 2. Click **Add** and select the (repo root)/SynthDet folder
@@ -15,7 +18,7 @@ These workflow steps describe the process of using the sample SynthDet project t
 
 <img src="images/MainScene.PNG" align="middle"/>
 
-### Step 2: Generating data locally 
+### Step 3: Generating data locally 
 1. With **MainScene** open, press the Play button. The sample project quickly generates a collection of random images, which you can see in the Game view. 
     <img src="images/PlayBttn.PNG" align="middle"/>
 2. The MainScene continues for about one minute, then exists Play mode. Allow the scene to run until it exits Play mode.
@@ -33,7 +36,7 @@ Once the data is generated locally, you can use`datasetinsights`  to show datase
 
 ```docker run -p 8888:8888 -v "<Synthetic Data File Path>":/data -t unitytechnologies/datasetinsights:latest```
 
-Replace `<Synthetic Data File Path>` with the path to the local datasets (listed in step 2.3).
+Replace `<Synthetic Data File Path>` with the path to the local datasets (listed in step 2.3). You may need to specify an absolute file path instead of a relative path for the `<Synthetic Data File Path>`.
 
 > If you experience issues with Docker on Windows, see [the Docker documentation](Docker.md).
 
