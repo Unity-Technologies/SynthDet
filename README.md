@@ -8,6 +8,8 @@
 SynthDet is an open source project that demonstrates an end-to-end object detection pipeline using synthetic image data. The project includes all the code and assets for generating a synthetic dataset in Unity. Using recent [research](#Citation), SynthDet utilizes Unity Perception package to generate highly randomized images of 64 common grocery products (example: cereal boxes and candy) and export them along with appropriate labels and annotations (2D bounding boxes). The synthetic dataset generated can then be used to train a deep learning based object detection model.
 This project is geared towards ML practitioners and enthusiasts who are actively exploring synthetic data or just looking to get started. 
 
+#### [Getting started with SynthDet](docs/Readme.md)
+
 [GTC 2020: Synthetic Data: An efficient mechanism to train Perception Systems](https://developer.nvidia.com/gtc/2020/video/s22700)
 
 [Synthetic data: Simulating myriad possibilities to train robust machine learning models](https://blogs.unity3d.com/2020/05/01/synthetic-data-simulating-myriad-possibilities-to-train-robust-machine-learning-models/)
@@ -21,13 +23,6 @@ This project is geared towards ML practitioners and enthusiasts who are actively
 * 3D Assets - High quality models of 64 commonly found grocery products
 * Unity Perception package
 * Unity Dataset Insights Python package
-
-## Release & Documentation
-#### [Getting started with SynthDet](docs/Readme.md)
-
-Version|Release Date |Source
--------|-------------|------
-   V0.1  |May 26, 2020|[source](https://github.com/Unity-Technologies/SynthDet)
 
 ## Inspiration
 SynthDet was inspired by the following research paper from Google Cloud AI:  
