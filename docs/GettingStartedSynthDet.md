@@ -18,7 +18,7 @@ These workflow steps describe the process of using the sample SynthDet project t
 ### Step 2: Generating data locally 
 1. With **MainScene** open, press the Play button. The sample project quickly generates a collection of random images, which you can see in the Game view. 
     <img src="images/PlayBttn.PNG" align="middle"/>
-2. The MainScene continues for about one minute, then exists Play mode. Allow the scene to run until it exits Play mode.
+2. The MainScene continues for about one minute, then exits Play mode. Allow the scene to run until it exits Play mode.
 3. To view the dataset of generated data, navigate to the following location on your computer:
     - macOS: `~/Library/Application Support/UnityTechnologies/SynthDet`
     - Linux: `$XDG_CONFIG_HOME/unity3d/UnityTechnologies/SynthDet`
