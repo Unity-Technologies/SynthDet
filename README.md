@@ -27,6 +27,7 @@ This project is geared towards ML practitioners and enthusiasts who are actively
 
 Version|Release Date |Source
 -------|-------------|------
+   V0.1  |Sep 22, 2020|[source](https://github.com/Unity-Technologies/SynthDet)
    V0.1  |May 26, 2020|[source](https://github.com/Unity-Technologies/SynthDet)
 
 ## Inspiration
