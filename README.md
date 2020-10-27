@@ -8,15 +8,7 @@
 SynthDet is an open source project that demonstrates an end-to-end object detection pipeline using synthetic image data. The project includes all the code and assets for generating a synthetic dataset in Unity. Using recent [research](#Citation), SynthDet utilizes Unity Perception package to generate highly randomized images of 64 common grocery products (example: cereal boxes and candy) and export them along with appropriate labels and annotations (2D bounding boxes). The synthetic dataset generated can then be used to train a deep learning based object detection model.
 This project is geared towards ML practitioners and enthusiasts who are actively exploring synthetic data or just looking to get started. 
 
-#### [Getting started with SynthDet](docs/Readme.md)
-
-[GTC 2020: Synthetic Data: An efficient mechanism to train Perception Systems](https://developer.nvidia.com/gtc/2020/video/s22700)
-
-[Synthetic data: Simulating myriad possibilities to train robust machine learning models](https://blogs.unity3d.com/2020/05/01/synthetic-data-simulating-myriad-possibilities-to-train-robust-machine-learning-models/)
-
-[Use Unity’s perception tools to generate and analyze synthetic data at scale to train your ML models](https://blogs.unity3d.com/2020/06/10/use-unitys-perception-tools-to-generate-and-analyze-synthetic-data-at-scale-to-train-your-ml-models/)
-
-[Training a performant object detection ML model on synthetic data using Unity Perception tools](https://blogs.unity3d.com/2020/09/17/training-a-performant-object-detection-ml-model-on-synthetic-data-using-unity-perception-tools/)
+### [Getting started with SynthDet](docs/Readme.md)
 
 ## Contents 
 * SynthDet - Unity Perception sample project
@@ -34,18 +26,6 @@ For general questions or concerns please contact the Perception team at percepti
 
 For feedback, bugs, or other issues please file a github issue and the Perception team will investigate the issue as soon as possible.
 
-<!--## Additional Resources 
----Annotated real dataset---
-
-THIS DATA MAY BE USED FOR NON-COMMERCIAL PURPOSES ONLY AND IS PROVIDED "AS IS" AND "AS AVAILABLE", WITH NO REPRESENTATIONS OR WARRANTIES OF ANY KIND; SEE LICENSE FOR DETAILS. 
-YOU ARE SOLELY RESPONSIBLE, AND ACCEPT FULL RESPONSIBILITY, FOR YOUR USE OF THIS DATA, INCLUDING ANY USE INFRINGING OF ANY THIRD PARTY'S INTELLECTUAL PROPERTY RIGHTS.
-UNITY TECHNOLOGIES IS NOT AFFILIATED WITH, AND DOES NOT ENDORSE/SPONSOR AND IS NOT ENDORSED OR SPONSORED BY, ANY COMPANIES OR BRANDS IDENTIFIABLE IN THE DATA.
-
-[Real world dataset link](https://storage.cloud.google.com/thea-dev/data/groceries/v1.zip?authuser=0) with object detection labels according to the [Coco data format](http://cocodataset.org/#format-data)!-->
-
-## License
-* [License](LICENSE.md)
-
 ## Citation
 If you find this package useful, consider citing it using:
 
@@ -60,3 +40,15 @@ If you find this package useful, consider citing it using:
     month={Sep}
 }
 ```
+
+## Additional Resources
+[GTC 2020: Synthetic Data: An efficient mechanism to train Perception Systems](https://developer.nvidia.com/gtc/2020/video/s22700)
+
+[Synthetic data: Simulating myriad possibilities to train robust machine learning models](https://blogs.unity3d.com/2020/05/01/synthetic-data-simulating-myriad-possibilities-to-train-robust-machine-learning-models/)
+
+[Use Unity’s perception tools to generate and analyze synthetic data at scale to train your ML models](https://blogs.unity3d.com/2020/06/10/use-unitys-perception-tools-to-generate-and-analyze-synthetic-data-at-scale-to-train-your-ml-models/)
+
+[Training a performant object detection ML model on synthetic data using Unity Perception tools](https://blogs.unity3d.com/2020/09/17/training-a-performant-object-detection-ml-model-on-synthetic-data-using-unity-perception-tools/)
+
+## License
+[Apache License 2.0](LICENSE.md)
