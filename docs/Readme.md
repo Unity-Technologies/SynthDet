@@ -13,6 +13,7 @@
 ## Additional Documentation
 * [AnnotatedData](AnnotatedDataset.md)
 * [Background on Unity](BackgroundUnity.md)
+* [Creating your own 3D assets](CreatingAssets.md)
 
 ## Help
 * [Docker Help](Docker.md)
