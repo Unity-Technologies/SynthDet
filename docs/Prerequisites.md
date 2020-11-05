@@ -1,7 +1,7 @@
 # Prerequisites
 To run SynthDet and dataset statistics: 
 
-1. Download and install [Unity 2019.3](https://unity3d.com/get-unity/download)
+1. Download and install [Unity 2019.4](https://unity3d.com/get-unity/download)
 2. Clone the [SynthDet repository](https://github.com/Unity-Technologies/SynthDet) and initialize the LFS (large file storage) submodules:
 ```
 git lfs install
