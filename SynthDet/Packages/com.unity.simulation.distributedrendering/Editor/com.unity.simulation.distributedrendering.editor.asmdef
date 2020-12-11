@@ -1,0 +1,13 @@
+{
+	"name": "com.unity.simulation.distributedrendering.editor",
+	"references": [
+		"com.unity.simulation.distributedrendering"
+	],
+	"includePlatforms": [
+		"Editor"
+	],
+	"allowUnsafeCode": true,
+	"autoReferenced": true,
+	"overrideReferences": false,
+	"noEngineReferences": false
+}

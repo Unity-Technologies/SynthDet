@@ -1,0 +1,51 @@
+
+#start-live-link__body__configurations-list {
+    border-color: #232323;
+}
+
+#start-live-link__body__empty-message {
+    border-color: #232323;
+}
+
+.start-live-link__item-template__error-icon {
+     background-image: resource("d_console.erroricon.png");
+}
+
+#start-live-link__footer__start-button {
+    background-color: #4271AD;
+    color: #EEEEEE;
+    border-top-color: #3B659B;
+    border-left-color: #3B659B;
+    border-right-color: #3B659B;
+    border-bottom-color: #223A59;
+}
+#start-live-link__footer__start-button:hover {
+     background-color: #4678B9;
+}
+#start-live-link__footer__start-button:active {
+    background-color: #416EAA;
+}
+
+.start-live-link__item-template__icon-noTarget { background-image: resource("d_BuildSettings.Standalone.png"); }
+.start-live-link__item-template__icon-windows { background-image: resource("d_BuildSettings.Metro.png"); }
+.start-live-link__item-template__icon-xboxOne { background-image: resource("d_BuildSettings.XboxOne.png"); }
+.start-live-link__item-template__icon-standalone { background-image: resource("d_BuildSettings.Standalone.png"); }
+.start-live-link__item-template__icon-iOS { background-image: resource("d_BuildSettings.iPhone.png"); }
+.start-live-link__item-template__icon-android { background-image: resource("d_BuildSettings.Android.png"); }
+.start-live-link__item-template__icon-webGL { background-image: resource("d_BuildSettings.WebGL.png"); }
+.start-live-link__item-template__icon-ps4 { background-image: resource("d_BuildSettings.PS4.png"); }
+.start-live-link__item-template__icon-tvOS { background-image: resource("d_BuildSettings.tvOS.png"); }
+.start-live-link__item-template__icon-switch { background-image: resource("d_BuildSettings.Switch.png"); }
+.start-live-link__item-template__icon-lumin { background-image: resource("d_BuildSettings.Lumin.png"); }
+.start-live-link__item-template__icon-stadia { background-image: resource("d_BuildSettings.Stadia.png"); }
+
+#start-live-link__message {
+    border-color: #232323;
+}
+
+.start-live-link__message__icon-error {
+    background-image: resource("d_console.erroricon@2x.png");
+}
+.start-live-link__message__icon-info {
+    background-image: resource("d_console.infoicon@2x.png");
+}

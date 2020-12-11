@@ -1,0 +1,7 @@
+{
+	"name": "com.unity.simulation.sprawl",
+	"displayName":"Unity Simulation Sprawl",
+	"version": "0.0.10-preview.19",
+	"unity": "2019.4",
+  	"description": "Sprawl framwork to run ML pipelines in USim."
+}

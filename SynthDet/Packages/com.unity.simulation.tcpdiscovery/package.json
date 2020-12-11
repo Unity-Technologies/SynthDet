@@ -1,0 +1,11 @@
+{
+    "name": "com.unity.simulation.tcpdiscovery",
+    "displayName":"Unity Simulation TCP Discovery",
+    "version": "0.0.1-preview.1",
+    "unity": "2019.3",
+    "description": "Support for client server discovery and messaging.",
+    "author": {
+    	"name": "Unity Technologies",
+    	"url": "https://www.unity3d.com"
+    }
+}

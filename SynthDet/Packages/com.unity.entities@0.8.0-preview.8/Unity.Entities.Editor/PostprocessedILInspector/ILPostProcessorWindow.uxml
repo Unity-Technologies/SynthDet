@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:engine="UnityEngine.UIElements"
+    xmlns:editor="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd"
+>
+    <engine:VisualElement class="row expand">
+        <engine:VisualElement class="left-panel">
+            <editor:ToolbarSearchField name="Script Search Field" class="script-search"/>
+                <engine:ListView name="Scripts ListView" class="script-list-view expand"/>
+        </engine:VisualElement>
+        <engine:VisualElement class="separator"/>
+        <engine:VisualElement class="right-panel">
+            <engine:VisualElement class="row align-end">
+                <engine:Button name="Copy Code" text="Copy decompiled code" class="copy-code-button"/>
+                <editor:EnumField name="Language Popup" text="Language" class="language-popup-root"/>
+                <engine:VisualElement name="Fontsize Popup" text="Font size" class="font-size-popup-root"/>
+            </engine:VisualElement>
+            <engine:ListView name="Decompiled Script ListView" class="expand"/>
+            <engine:Label name="Status Label" text="Status" class="status-label"/>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

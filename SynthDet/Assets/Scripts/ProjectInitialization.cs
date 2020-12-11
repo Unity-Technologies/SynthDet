@@ -8,6 +8,8 @@ using Unity.Entities;
 using UnityEngine;
 using UnityEngine.Perception.GroundTruth;
 using System.IO;
+using UnityEditor;
+using Object = System.Object;
 
 public class ProjectInitialization : MonoBehaviour
 {
@@ -45,6 +47,8 @@ public class ProjectInitialization : MonoBehaviour
     Entity m_CurriculumStateEntity;
     string m_ProfileLogPath;
     PlacementStatics m_PlacementStatics;
+    private Dictionary<string, GameObject> m_ResourcesDirectory;
+    private Dictionary<string, Texture2D> m_ImagesDictionary;
 
     void Start()
     {
@@ -74,19 +78,24 @@ public class ProjectInitialization : MonoBehaviour
         
         Debug.Log($"{nameof(ProjectInitialization)}: Starting up. MaxFrames: {AppParameters.MaxFrames}, " +
             $"scale factors {{{string.Join(", ", AppParameters.ScaleFactors)}}}");
+
+        var basePath = Path.Combine(Application.dataPath, "Resources");
+        //PopulateResourcesPrefabsDirecotory<GameObject>(Path.Combine(basePath, BackgroundObjectResourcesDirectory), ref m_ResourcesDirectory, new []{ ".fbx"});
+        //PopulateResourcesPrefabsDirecotory<Texture2D>(Path.Combine(basePath,BackgroundImageResourcesDirectory), ref m_ImagesDictionary, new [] {".jpg", ".png"});
+        PopulateResources();
         
         m_PlacementStatics = new PlacementStatics(
-            AppParameters.MaxFrames, 
-            AppParameters.MaxForegroundObjectsPerFrame, 
-            AppParameters.ScalingMin, 
-            AppParameters.ScalingSize, 
-            AppParameters.OccludingHueMaxOffset, 
+            AppParameters.MaxFrames,
+            AppParameters.MaxForegroundObjectsPerFrame,
+            AppParameters.ScalingMin,
+            AppParameters.ScalingSize,
+            AppParameters.OccludingHueMaxOffset,
             AppParameters.BackgroundObjectInForegroundChance,
-            foregroundObjects, 
-            backgroundObjects, 
-            backgroundImages,
-            ObjectPlacementUtilities.GenerateInPlaneRotationCurriculum(Allocator.Persistent), 
-            ObjectPlacementUtilities.GenerateOutOfPlaneRotationCurriculum(Allocator.Persistent), 
+            foregroundObjects,
+            m_ResourcesDirectory,
+            m_ImagesDictionary,
+            ObjectPlacementUtilities.GenerateInPlaneRotationCurriculum(Allocator.Persistent),
+            ObjectPlacementUtilities.GenerateOutOfPlaneRotationCurriculum(Allocator.Persistent),
             new NativeArray<float>(AppParameters.ScaleFactors, Allocator.Persistent),
             idLabelconfig);
         var appParamsMetricDefinition = DatasetCapture.RegisterMetricDefinition(
@@ -117,6 +126,115 @@ public class ProjectInitialization : MonoBehaviour
         Manager.Instance.ShutdownNotification += CleanupState;
         
         //PerceptionCamera.renderedObjectInfosCalculated += OnRenderedObjectInfosCalculated;
+    }
+
+
+    private void PopulateResources()
+    {
+        var resPaths = Resources.Load<ResourcesPaths>("ResourcesRelativePaths");
+        Debug.Assert(resPaths != null, "ResPaths is null");
+
+        var imagesRelPaths = Resources.Load<ImagesResourcesPath>("ImageResourcesRelativePaths");
+        Debug.Assert(imagesRelPaths != null, "Images Resources Relative paths is null");
+
+        foreach (var prefab in resPaths.prefabs)
+        {
+            if (m_ResourcesDirectory == null)
+                m_ResourcesDirectory = new Dictionary<string, GameObject>();
+            
+            m_ResourcesDirectory.Add(prefab.relativePath, prefab.gameObject);
+        }
+        
+        foreach (var texture in imagesRelPaths.textures)
+        {
+            if (m_ImagesDictionary == null)
+                m_ImagesDictionary = new Dictionary<string, Texture2D>();
+            
+            m_ImagesDictionary.Add(texture.relativePath, texture.texture);
+        }
+    }
+    
+    
+    #if UNITY_EDITOR
+    [MenuItem("Tools/ResourcesPaths")]
+    public static void PopulateResourcesPathAsset()
+    {
+        var resPaths = ScriptableObject.CreateInstance<ResourcesPaths>();
+        var imagesPaths = ScriptableObject.CreateInstance<ImagesResourcesPath>();
+        var go = GameObject.FindObjectOfType<ProjectInitialization>();
+        var basePath = Path.Combine(Application.dataPath, "Resources");
+        if (go != null)
+        {
+            go.PopulateResourcesPrefabsDirecotory(Path.Combine(basePath, go.BackgroundObjectResourcesDirectory), ref go.m_ResourcesDirectory, new []{ ".fbx"});
+            go.PopulateResourcesPrefabsDirecotory(Path.Combine(basePath, go.BackgroundImageResourcesDirectory), ref go.m_ImagesDictionary, new [] {".jpg", ".png"});
+        }
+
+        foreach (var entry in go.m_ResourcesDirectory)
+        {
+            if (resPaths.prefabs == null)
+            {
+                resPaths.prefabs = new List<Prefab>();
+            }
+            
+            resPaths.prefabs.Add(new Prefab()
+            {
+                relativePath = entry.Key,
+                gameObject = entry.Value
+            });
+        }
+        
+        foreach (var entry in go.m_ImagesDictionary)
+        {
+            if (imagesPaths.textures == null)
+            {
+                imagesPaths.textures = new List<TextureResource>();
+            }
+            
+            imagesPaths.textures.Add(new TextureResource()
+            {
+                relativePath = entry.Key,
+                texture = entry.Value
+            });
+        }
+        
+        AssetDatabase.CreateAsset(resPaths, "Assets/ResourcesRelativePaths.asset");
+        AssetDatabase.CreateAsset(imagesPaths, "Assets/ImageResourcesRelativePaths.asset");
+        AssetDatabase.SaveAssets();
+        Selection.activeObject = resPaths;
+
+    }
+    #endif
+
+    private void PopulateResourcesPrefabsDirecotory<T>(string basePath, ref Dictionary<string, T> dir, 
+        string[] assetExtensions) where T : UnityEngine.Object
+    {
+        
+        var directories = Directory.GetDirectories(basePath);
+
+        foreach (var directory in directories)
+        {
+            PopulateResourcesPrefabsDirecotory<T>(directory, ref dir, assetExtensions);
+        }
+
+        if (dir == null)
+            dir = new Dictionary<string, T>();
+
+        var path = Path.Combine(Application.dataPath, basePath);
+        if (!Directory.Exists(path))
+            Log.E("No directory named " + basePath + " is found");
+
+        var files = Directory.GetFiles(path);
+        foreach (var file in files)
+        {
+            var extension = Path.GetExtension(file);
+            if (assetExtensions.Contains(extension))
+            {
+                var fileRelativePath = file.Split(new string[] {"/Resources/"}, StringSplitOptions.None)[1];
+                string filePathWithoutExt = fileRelativePath.Substring(0, fileRelativePath.Length - extension.Length);
+                var prefab = Resources.Load(filePathWithoutExt, typeof(T)) as T;
+                dir.Add(filePathWithoutExt, prefab);   
+            }
+        }
     }
 
     static bool TryGetAppParamPathFromCommandLine(out string appParamPath)

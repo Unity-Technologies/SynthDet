@@ -1,0 +1,22 @@
+{
+    "name": "com.unity.simulation.distributedrendering",
+    "displayName":"Unity Simulation Distributed Rendering",
+    "version": "0.0.1-preview.1",
+    "unity": "2019.3",
+    "description": "Distributed rendering support for the Unity Simulation platform.",
+    "dependencies": {
+		"com.unity.simulation.tcpdiscovery": "0.0.1-preview.1"
+    },
+    "author": {
+    	"name": "Unity Technologies",
+    	"url": "https://www.unity3d.com"
+    },
+    "keywords": [
+    	"Simulation"
+    ],
+    "dependencies":
+    {
+        "com.unity.simulation.capture": "0.0.10-preview.13",
+        "com.unity.playerloop-editor" : "0.1.0-preview"
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "name": "com.unity.simulation.tcpdiscovery.samples",
+    "references": [
+        "GUID:beab2f2248e434909ae68067263753fc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

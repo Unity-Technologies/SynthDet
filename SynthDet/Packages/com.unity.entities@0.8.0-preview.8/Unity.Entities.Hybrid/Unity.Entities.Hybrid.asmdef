@@ -1,0 +1,36 @@
+{
+    "name": "Unity.Entities.Hybrid",
+    "references": [
+        "Unity.Burst",
+        "Unity.Collections",
+        "Unity.Entities",
+        "Unity.Jobs",
+        "Unity.Mathematics",
+        "Unity.Mathematics.Extensions",
+        "Unity.Build",
+        "Unity.Build.Classic",
+        "Unity.Build.Common",
+        "Unity.Properties",
+        "Unity.Properties.Editor"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.modules.physics",
+            "expression": "",
+            "define": "LEGACY_PHYSICS"
+        },
+        {
+            "name": "com.unity.package-validation-suite",
+            "expression": "0.4.0-preview.6",
+            "define": "UNITY_SKIP_UPDATES_WITH_VALIDATION_SUITE"
+        }
+    ],
+    "noEngineReferences": false
+}

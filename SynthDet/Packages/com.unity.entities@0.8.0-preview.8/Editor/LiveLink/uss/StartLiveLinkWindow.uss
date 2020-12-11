@@ -1,0 +1,112 @@
+#start-live-link {
+    padding: 15px;
+    flex-shrink: 0;
+    flex-grow: 1;
+}
+
+#start-live-link__header-title {
+    font-size: 20px;
+}
+
+#start-live-link__body {
+    margin-top: 15px;
+    flex-grow: 1;
+    flex-basis: auto;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+#start-live-link__body__search {
+    margin: 0;
+    padding-left: 0;
+    width: auto;
+}
+
+#start-live-link__body__empty-message {
+    margin-top: 10px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    min-height: 100px;
+    flex-grow: 1;
+    flex-shrink: 0;
+    padding: 5px;
+}
+#start-live-link__body__empty-message Label {
+    white-space: normal;
+}
+
+#start-live-link__body__configurations-list {
+    margin-top: 10px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    flex-grow: 1;
+    flex-shrink: 0;
+    display: none;
+}
+
+#start-live-link__build-message {
+    margin-top: 15px;
+    flex-direction: row-reverse;
+}
+
+#start-live-link__footer {
+    margin-top: 15px;
+    flex-direction: row-reverse;
+}
+
+#start-live-link__footer__start-button {
+    width: 110px;
+    border-radius: 4px;
+}
+
+#start-live-link__footer__build-mode-container {
+    flex-shrink: 0;
+    width: 140px;
+}
+
+.start-live-link__item-template {
+    flex-direction: row;
+}
+
+.start-live-link__item-template Image {
+    width: 16px;
+    height: 16px;
+}
+
+.start-live-link__item-template__device-icon {
+    margin: 2px 1px 2px 2px;
+}
+
+.start-live-link__item-template__error-icon {
+    margin: 2px;
+}
+
+.start-live-link__item-template Label {
+    flex: 1;
+    -unity-text-align: middle-left;
+}
+
+#start-live-link__message {
+    margin-top: 10px;
+    border-radius: 3px;
+    border-width: 1px;
+    flex-direction: row;
+    padding: 3px 5px;
+}
+
+#start-live-link__message Image {
+    margin: 0;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+}
+
+#start-live-link__message Label {
+    flex-shrink: 1;
+    white-space: normal;
+    -unity-text-align: middle-left;
+}

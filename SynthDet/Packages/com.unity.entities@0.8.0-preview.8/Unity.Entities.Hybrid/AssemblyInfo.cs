@@ -1,0 +1,18 @@
+﻿using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("Unity.Entities.Editor")]
+[assembly: InternalsVisibleTo("Unity.Entities.Hybrid.Tests")]
+[assembly: InternalsVisibleTo("Unity.Entities.TestComponents")]
+[assembly: InternalsVisibleTo("Unity.Scenes.Editor")]
+[assembly: InternalsVisibleTo("Unity.Scenes.Hybrid")]
+[assembly: InternalsVisibleTo("Unity.Scenes.Hybrid.Tests")]
+[assembly: InternalsVisibleTo("Unity.DOTS.Editor")]
+[assembly: InternalsVisibleTo("Unity.DOTS.Editor.Tests")]
+[assembly: InternalsVisibleTo("Unity.Transforms.Hybrid")]
+[assembly: InternalsVisibleTo("UnitTests.Editmode")]
+[assembly: InternalsVisibleTo("Unity.Samples.Tests")]
+[assembly: InternalsVisibleTo("Unity.Entities.Hybrid.EndToEnd.Tests")]
+[assembly: InternalsVisibleTo("Unity.Scenes.Hybrid.Tests.Playmode")]
+[assembly: InternalsVisibleTo("Unity.Physics.Hybrid")]
+[assembly: InternalsVisibleTo("Unity.Entities.Hybrid.CodeGen")]
+[assembly: InternalsVisibleTo("Unity.Entities.Hybrid.CodeGen.Tests")]

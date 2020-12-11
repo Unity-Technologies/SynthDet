@@ -1,0 +1,103 @@
+.live-link-connections-dropdown {
+    border-width: 1px;
+}
+
+.live-link-connections-dropdown__all-connections-actions-section {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-bottom-width: 1px;
+    border-top-width: 1px;
+}
+
+.live-link-connections-dropdown__start-section {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.live-link-connections-dropdown__label-button {
+    border-width: 0;
+    border-radius: 0;
+    flex-direction: row;
+    -unity-text-align: middle-left;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0);
+    margin: 0;
+    padding-left: 8px;
+    padding-right: 4px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    height: 20px;
+}
+
+#live-link-connections-dropdown__EmptyMessage {
+    padding-left: 8px;
+    padding-right: 4px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+#live-link-connections-dropdown__Groups {
+    padding-top: 2px;
+}
+
+.live-link-connections-dropdown__groups__item {
+    margin-bottom: 2px;
+}
+
+.live-link-connections-dropdown__groups__item__title {
+    flex-direction: row;
+    align-items: center;
+    padding-left: 8px;
+    padding-right: 4px;
+    height: 20px;
+    -unity-text-align: middle-left;
+}
+
+.live-link-connections-dropdown__groups__item__title Label {
+    flex-grow: 1;
+    -unity-font-style: bold;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.live-link-connections-dropdown__groups__item__title ToolbarMenu {
+    border-width: 0;
+    background-color: rgba(0, 0, 0, 0);
+    height: 16px;
+    width: 16px;
+}
+
+.live-link-connections-dropdown__groups__item__title ToolbarMenu .unity-toolbar-menu__arrow {
+    background-image: none;
+}
+
+.live-link-connections-dropdown__groups__item__device {
+    flex-direction: row;
+    align-items: center;
+    padding-left: 8px;
+    padding-right: 4px;
+    height: 20px;
+}
+
+.live-link-connections-dropdown__groups__item__device Label {
+    flex-grow: 1;
+    padding-left: 4px;
+    padding-right: 8px;
+}
+
+.live-link-connections-dropdown__groups__item__device Image {
+    width: 16px;
+    height: 16px;
+}
+
+.live-link-connections-dropdown__icon-button {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+}

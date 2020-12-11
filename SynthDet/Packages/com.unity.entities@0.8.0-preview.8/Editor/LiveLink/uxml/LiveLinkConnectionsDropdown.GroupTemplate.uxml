@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement class="live-link-connections-dropdown__groups__item">
+        <ui:VisualElement class="live-link-connections-dropdown__groups__item__title">
+            <ui:Label />
+            <uie:ToolbarMenu />
+        </ui:VisualElement>
+        <ui:VisualElement name="live-link-connections-dropdown__GroupedDevices" class="live-link-connections-dropdown__groups__item__devices" />
+    </ui:VisualElement>
+</ui:UXML>

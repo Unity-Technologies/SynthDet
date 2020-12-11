@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
+using Unity.Simulation.DistributedRendering;
 using UnityEngine;
 using UnityEngine.Perception.GroundTruth;
 using Random = Unity.Mathematics.Random;
@@ -109,14 +111,19 @@ public class BackgroundGenerator : JobComponentSystem
         camera = perceptionCamera.GetComponentInParent<Camera>();
         m_ForegroundCenter = 
             camera.transform.position + m_CameraForward * ForegroundObjectPlacer.k_ForegroundLayerDistance;
+        
+        #if UNITY_SIMULATION_DR_SCENE_SERVER
+        camera.gameObject.SetActive(false);
+        #endif
         // Compute the bottom left corner of the view frustum
         // IMPORTANT: We're assuming the camera is facing along the positive z-axis
         container = new GameObject("BackgroundContainer");
         container.transform.SetPositionAndRotation(
             m_CameraForward * k_PlacementDistance + camera.transform.position,
             Quaternion.identity);
+        FrameManager.Instance.StartTrackingGameObject(container);
         var statics = EntityManager.GetComponentObject<PlacementStatics>(m_CurriculumQuery.GetSingletonEntity());
-        objectCache = new GameObjectOneWayCache(container.transform, statics.BackgroundPrefabs);
+        objectCache = new GameObjectOneWayCache(container.transform, statics.ResourcesDictionary);
 
         backgroundHueMaxOffset = init.AppParameters.BackgroundHueMaxOffset;
         initialized = true;
@@ -225,11 +232,13 @@ public class BackgroundGenerator : JobComponentSystem
             var properties = new MaterialPropertyBlock();
             foreach (var meshDrawInfo in meshesToDraw)
             {
-                var prefab = statics.BackgroundPrefabs[meshDrawInfo.MeshIndex];
+                var prefab = statics.ResourcesDictionary.ElementAt(meshDrawInfo.MeshIndex).Key;
                 var sceneObject = objectCache.GetOrInstantiate(prefab);
                 ObjectPlacementUtilities.CreateRandomizedHue(properties, backgroundHueMaxOffset, ref m_Rand);
                 // ReSharper disable once Unity.PreferAddressByIdToGraphicsParams
                 properties.SetTexture("_BaseMap", statics.BackgroundImages[meshDrawInfo.TextureIndex]);
+                sceneObject.GetComponent<MaterialPropertyBlockUpdater>().resourceTexturePath =
+                    statics.Images.ElementAt(meshDrawInfo.TextureIndex).Key;
                 sceneObject.GetComponentInChildren<MeshRenderer>().SetPropertyBlock(properties);
                 sceneObject.transform.SetPositionAndRotation(meshDrawInfo.Position, meshDrawInfo.Rotation);
                 sceneObject.transform.localScale = meshDrawInfo.Scale;

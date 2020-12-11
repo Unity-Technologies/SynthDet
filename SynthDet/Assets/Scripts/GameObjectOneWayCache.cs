@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Profiling;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using Unity.Simulation.DistributedRendering;
 
 /// <summary>
 /// Facilitates object pooling for a pre-specified collection of prefabs with the caveat that objects can be fetched
@@ -19,18 +20,20 @@ public class GameObjectOneWayCache
     int[] m_NumObjectsActive;
     int NumObjectsInCache { get; set; }
     public int NumObjectsActive { get; private set; }
+    private Dictionary<string, GameObject> m_ResourcesDictionary;
 
-    public GameObjectOneWayCache(Transform parent, GameObject[] prefabs)
+    public GameObjectOneWayCache(Transform parent, Dictionary<string, GameObject> resourcesDictionary)
     {
         m_CacheParent = parent;
         m_InstanceIdToIndex = new Dictionary<int, int>();
-        m_InstantiatedObjects = new List<GameObject>[prefabs.Length];
-        m_NumObjectsActive = new int[prefabs.Length];
+        m_InstantiatedObjects = new List<GameObject>[resourcesDictionary.Count];
+        m_NumObjectsActive = new int[resourcesDictionary.Count];
+        m_ResourcesDictionary = resourcesDictionary;
         
         var index = 0;
-        foreach (var prefab in prefabs)
+        foreach (var prefab in resourcesDictionary.Values)
         {
-            var instanceId = prefab.GetInstanceID();
+            var instanceId = (prefab as GameObject).GetInstanceID();
             m_InstanceIdToIndex.Add(instanceId, index);
             m_InstantiatedObjects[index] = new List<GameObject>();
             m_NumObjectsActive[index] = 0;
@@ -56,6 +59,38 @@ public class GameObjectOneWayCache
         {
             ++NumObjectsInCache;
             var newObject = Object.Instantiate(prefab, m_CacheParent);
+            ++m_NumObjectsActive[index];
+            m_InstantiatedObjects[index].Add(newObject);
+            return newObject;
+        }
+    }
+    
+    public GameObject GetOrInstantiate(string path)
+    {
+        if (m_ResourcesDictionary[path] == null)
+        {
+            throw new ArgumentException($"Prefab {path} is not in cache.");
+        }
+
+        var prefab = m_ResourcesDictionary[path];
+        
+        if (!m_InstanceIdToIndex.TryGetValue(prefab.GetInstanceID(), out var index))
+        {
+            throw new ArgumentException($"Prefab {prefab.name} (ID: {prefab.GetInstanceID()}) is not in cache.");
+        }
+
+        ++NumObjectsActive;
+        if (m_NumObjectsActive[index] < m_InstantiatedObjects[index].Count)
+        {
+            var nextInCache = m_InstantiatedObjects[index][m_NumObjectsActive[index]];
+            ++m_NumObjectsActive[index];
+            return nextInCache;
+        }
+        else
+        {
+            ++NumObjectsInCache;
+            var newObject = FrameManager.Instance.Instantiate(path, m_CacheParent.gameObject) as GameObject;//Object.Instantiate(prefab, m_CacheParent);
+            newObject.AddComponent<MaterialPropertyBlockUpdater>();
             ++m_NumObjectsActive[index];
             m_InstantiatedObjects[index].Add(newObject);
             return newObject;

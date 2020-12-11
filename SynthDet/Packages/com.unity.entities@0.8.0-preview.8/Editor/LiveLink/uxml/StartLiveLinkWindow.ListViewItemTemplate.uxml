@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement class="start-live-link__item-template">
+        <ui:Image class="start-live-link__item-template__device-icon"/>
+        <ui:Label />
+        <ui:Image class="start-live-link__item-template__error-icon"/>
+    </ui:VisualElement>
+</ui:UXML>

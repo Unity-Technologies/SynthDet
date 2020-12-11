@@ -1,0 +1,25 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="start-live-link">
+        <ui:Label name="start-live-link__header-title" text="Choose Build Configuration" />
+        <ui:VisualElement name="start-live-link__body">
+            <uie:ToolbarSearchField name="start-live-link__body__search" />
+            <ui:VisualElement name="start-live-link__body__empty-message" >
+                <ui:Label text="Create a new Build Configuration to get started with Live Link" />
+            </ui:VisualElement>
+            <ui:ListView name="start-live-link__body__configurations-list" item-height="20" />
+        </ui:VisualElement>
+        <ui:VisualElement name="start-live-link__footer">
+            <ui:VisualElement>
+                <ui:Button name="start-live-link__footer__start-button" text="Start Live Link" />
+            </ui:VisualElement>
+            <ui:VisualElement name="start-live-link__footer__build-mode-container" />
+        </ui:VisualElement>
+        <ui:VisualElement name="start-live-link__build-message">
+            <ui:Label text="Building ..." />
+        </ui:VisualElement>
+        <ui:VisualElement name="start-live-link__message">
+            <ui:Image class="start-live-link__message__icon-error" />
+            <ui:Label />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

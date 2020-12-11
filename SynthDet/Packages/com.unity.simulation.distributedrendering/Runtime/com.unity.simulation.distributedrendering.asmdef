@@ -1,0 +1,33 @@
+{
+    "name": "com.unity.simulation.distributedrendering",
+    "references": [
+        "com.unity.simulation.tcpdiscovery",
+        "com.unity.simulation.sprawl.runtime",
+        "Unity.ScriptablePlayerLoop",
+        "Unity.Simulation.Capture",
+        "Unity.Simulation.Core",
+        ""
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Newtonsoft.Json.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.simulation.tcpdiscovery",
+            "expression": "",
+            "define": "SIMULATION_CLUSTERMANAGER_PRESENT"
+        },
+        {
+            "name": "com.unity.simulation.sprawl",
+            "expression": "",
+            "define": "SIMULATION_SPRAWL_PRESENT"
+        }
+    ],
+    "noEngineReferences": false
+}

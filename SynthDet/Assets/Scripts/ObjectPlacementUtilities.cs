@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -6,6 +8,7 @@ using UnityEngine;
 using Unity.Mathematics;
 using UnityEngine.Assertions;
 using UnityEngine.Perception.GroundTruth;
+using Object = System.Object;
 using Random = Unity.Mathematics.Random;
 
 public struct CurriculumState : IComponentData
@@ -31,12 +34,15 @@ public class PlacementStatics : Component
     public readonly NativeArray<Quaternion> OutOfPlaneRotations;
     public readonly NativeArray<float> ScaleFactors;
     public readonly IdLabelConfig IdLabelConfig;
+    public readonly Dictionary<string, GameObject> ResourcesDictionary;
+    public readonly Dictionary<string, Texture2D> Images; 
 
-    public PlacementStatics(int maxFrames, int maxForegroundObjectsPerFrame, float scalingMin, float scalingSize, float occludingHueMaxOffset, float backgroundObjectInForegroundChance, GameObject[] foreground, GameObject[] backgroundPrefabs, Texture2D[] backgroundImages, NativeArray<Quaternion> inPlaneRot, NativeArray<Quaternion> outPlaneRot, NativeArray<float> scaleFactors, IdLabelConfig idLabelConfig)
+    public PlacementStatics(int maxFrames, int maxForegroundObjectsPerFrame, float scalingMin, float scalingSize, float occludingHueMaxOffset, float backgroundObjectInForegroundChance, GameObject[] foreground, Dictionary<string, GameObject> resourcesDictionary, Dictionary<string, Texture2D> backgroundImages, NativeArray<Quaternion> inPlaneRot, NativeArray<Quaternion> outPlaneRot, NativeArray<float> scaleFactors, IdLabelConfig idLabelConfig)
     {
         MaxFrames = maxFrames;
         ForegroundPrefabs = foreground;
-        BackgroundPrefabs = backgroundPrefabs;
+        ResourcesDictionary = resourcesDictionary;
+        BackgroundPrefabs = resourcesDictionary.Values.ToArray();
         InPlaneRotations = inPlaneRot;
         OutOfPlaneRotations = outPlaneRot;
         ScaleFactors = scaleFactors;
@@ -46,7 +52,8 @@ public class PlacementStatics : Component
         OccludingHueMaxOffset = occludingHueMaxOffset;
         BackgroundObjectInForegroundChance = backgroundObjectInForegroundChance;
         MaxForegroundObjectsPerFrame = maxForegroundObjectsPerFrame;
-        BackgroundImages = backgroundImages;
+        BackgroundImages = backgroundImages.Values.ToArray() as Texture2D[];
+        Images = backgroundImages;
     }
 }
 

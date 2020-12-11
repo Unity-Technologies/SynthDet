@@ -1,0 +1,28 @@
+{
+    "name": "Unity.Scenes.Editor.Tests",
+    "references": [
+        "Unity.Entities.Tests",
+        "Unity.Entities",
+        "Unity.Scenes.Hybrid",
+        "Unity.Scenes.Editor",
+        "Unity.Entities.Hybrid",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "Unity.Entities.TestComponents"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

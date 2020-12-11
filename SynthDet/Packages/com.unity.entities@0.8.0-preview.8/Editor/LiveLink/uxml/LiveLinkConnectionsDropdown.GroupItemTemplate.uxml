@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement class="live-link-connections-dropdown__groups__item__device">
+        <ui:Image />
+        <ui:Label />
+        <ui:Button class="live-link-connections-dropdown__groups__item__device__reset-button live-link-connections-dropdown__icon-button" style="display: none;" tooltip="Reset linked Player" />
+        <ui:Button class="live-link-connections-dropdown__groups__item__device__disable-button live-link-connections-dropdown__icon-button" style="display: none;" tooltip="Disable link" />
+        <ui:Button class="live-link-connections-dropdown__groups__item__device__reset-when-disabled-button live-link-connections-dropdown__icon-button" style="display: none;" tooltip="Reset and enable link" />
+    </ui:VisualElement>
+</ui:UXML>

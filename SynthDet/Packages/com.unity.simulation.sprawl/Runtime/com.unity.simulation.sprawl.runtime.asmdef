@@ -1,0 +1,21 @@
+{
+    "name": "com.unity.simulation.sprawl.runtime",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "System.Runtime.CompilerServices.Unsafe.dll",
+        "Newtonsoft.Json.dll",
+        "Google.Protobuf.dll",
+        "Grpc.Core.Api.dll",
+        "Grpc.Core.dll",
+        "StackExchange.Redis.dll",
+        "System.Memory.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

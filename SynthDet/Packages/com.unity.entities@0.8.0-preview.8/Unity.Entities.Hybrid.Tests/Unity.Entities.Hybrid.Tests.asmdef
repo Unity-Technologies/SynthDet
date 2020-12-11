@@ -1,0 +1,31 @@
+{
+    "name": "Unity.Entities.Hybrid.Tests",
+    "references": [
+        "Unity.Entities",
+        "Unity.Entities.Hybrid",
+        "Unity.Entities.Tests",
+        "Unity.Entities.TestComponents",
+        "Unity.Collections",
+        "Unity.Jobs",
+        "Unity.Transforms",
+        "Unity.Transforms.Hybrid",
+        "Unity.Mathematics",
+        "Unity.Build",
+        "Unity.Build.Classic",
+        "Unity.Build.Common",
+        "Unity.Burst"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

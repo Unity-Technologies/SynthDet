@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -9,6 +10,7 @@ using Unity.Collections.LowLevel.Unsafe;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
+using Unity.Simulation.DistributedRendering;
 using UnityEngine;
 using UnityEngine.Perception.GroundTruth;
 using Object = UnityEngine.Object;
@@ -43,12 +45,15 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
     GameObjectOneWayCache m_BackgroundInForegroundObjectCache;
     MetricDefinition m_ForegroundPlacementInfoDefinition;
 
+    private GameObject[] m_PrefabsArray;
+
     // Initialize your operator here
     protected override void OnCreate()
     {
         m_Rand = new Random(1);
         m_ForegroundLayer = LayerMask.NameToLayer("Foreground");
         m_ParentForeground = new GameObject("ForegroundContainer");
+        FrameManager.Instance.StartTrackingGameObject(m_ParentForeground);
         m_ParentBackgroundInForeground = new GameObject("BackgroundInForegroundContainer");
         m_OccludingLayer = LayerMask.NameToLayer("Occluding");
         m_ParentOccluding = new GameObject("OccludingContainer");
@@ -111,8 +116,10 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
 
         var camera = m_CameraContainer.GetComponent<Camera>();
         NativeList<PlacedObject> placedObjectBoundingBoxes;
-        var occludingObjects = statics.BackgroundPrefabs;
-        var occludingObjectBounds = ComputeObjectBounds(occludingObjects);
+        var occludingObjects = statics.ResourcesDictionary;//statics.BackgroundPrefabs;
+        if (m_PrefabsArray == null)
+            m_PrefabsArray = occludingObjects.Values.ToArray();
+        var occludingObjectBounds = ComputeObjectBounds(m_PrefabsArray);
         
         if (m_OccludingObjectCache == null)
             m_OccludingObjectCache = new GameObjectOneWayCache(m_ParentOccluding.transform, occludingObjects);
@@ -129,7 +136,7 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
         
         using (s_PlaceOccludingObjects.Auto())
         {
-            PlaceOccludingObjects(occludingObjects, occludingObjectBounds, camera, statics, placedObjectBoundingBoxes);
+            PlaceOccludingObjects(m_PrefabsArray, occludingObjectBounds, camera, statics, placedObjectBoundingBoxes);
         }
 
         EntityManager.SetComponentData(singletonEntity, curriculumState);
@@ -332,7 +339,11 @@ unsafe public class ForegroundObjectPlacer : JobComponentSystem
                 GameObject gameObject;
                 if (placedObject.IsOccluding)
                 {
-                    gameObject = m_BackgroundInForegroundObjectCache.GetOrInstantiate(statics.BackgroundPrefabs[placedObject.PrefabIndex]);
+                    var resourcesRelativePaths = Resources.Load<ResourcesPaths>("ResourcesRelativePaths");
+                    Debug.Assert(resourcesRelativePaths != null, "resourcesRelativePaths is null");
+                    gameObject = m_BackgroundInForegroundObjectCache.GetOrInstantiate(resourcesRelativePaths.prefabs
+                        .ElementAt(placedObject.PrefabIndex).gameObject);
+                    //gameObject = m_BackgroundInForegroundObjectCache.GetOrInstantiate(statics.ResourcesDictionary.ElementAt(placedObject.PrefabIndex).Key);//statics.BackgroundPrefabs[placedObject.PrefabIndex]);
                     
                     var meshRenderer = gameObject.GetComponentInChildren<MeshRenderer>();
                     meshRenderer.GetPropertyBlock(materialPropertyBlock);

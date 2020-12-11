@@ -1,0 +1,7 @@
+{
+    "BuildSteps": [
+        "GlobalObjectId_V1-1-b08acfa97ea29e84597342a6a2afa6b2-93214019566545601-0",
+        "Unity.Platforms.Windows.Build.BuildStepProduceWindowsArtifacts, Unity.Platforms.Windows.Build"
+    ],
+    "RunStep": "Unity.Platforms.Windows.Build.RunStepWindows, Unity.Platforms.Windows.Build"
+}

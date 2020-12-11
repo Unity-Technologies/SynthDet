@@ -1,0 +1,65 @@
+.row
+{
+    flex-direction:row;
+}
+
+.expand
+{
+    flex-grow: 1;
+}
+
+.script-search
+{
+    width:99%;
+    flex-grow: 0;
+}
+
+.align-end
+{
+    align-self: flex-end;
+}
+
+.left-panel
+{
+    flex-grow: 0.4;
+    max-width: 450px;
+}
+
+.script-list-view
+{
+    margin-left: 15px;
+    margin-right: 2px;
+}
+
+.separator
+{
+    background-color: #5e5e5e;
+    width: 5px;
+}
+
+.right-panel
+{
+    flex-grow:0.6;
+}
+
+.status-label
+{
+    -unity-text-align: middle-right;
+    border-top-width: 1px;
+    border-color: black;
+}
+
+.copy-code-button
+{
+    width:200px;
+}
+
+.language-popup-root
+{
+    width:100px;
+}
+
+.font-size-popup-root
+{
+    width:100px;
+}

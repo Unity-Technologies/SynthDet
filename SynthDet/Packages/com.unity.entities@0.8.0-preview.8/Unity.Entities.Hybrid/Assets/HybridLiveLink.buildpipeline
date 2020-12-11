@@ -1,0 +1,10 @@
+{
+    "BuildSteps": [
+        "Unity.Build.Classic.SaveScenesAndAssets, Unity.Build.Classic",
+        "Unity.Build.Classic.BuildStepApplyPlayerSettings, Unity.Build.Classic",
+        "Unity.Build.Classic.BuildStepSwitchPlatfomClassic, Unity.Build.Classic",
+        "Unity.Scenes.Editor.BuildStepCreateResourceCatalog, Unity.Scenes.Editor",
+        "Unity.Scenes.Editor.BuildStepBuildClassicLiveLink, Unity.Scenes.Editor"
+    ],
+    "RunStep": "Unity.Build.Classic.RunStepNotImplemented, Unity.Build.Classic"
+}

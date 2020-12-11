@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement class="live-link-connections-dropdown">
+        <ui:VisualElement name="live-link-connections-dropdown__Groups" style="display: none;" />
+        <ui:Label name="live-link-connections-dropdown__EmptyMessage" text="No players linked" style="display: none;" />
+        <ui:VisualElement class="live-link-connections-dropdown__all-connections-actions-section">
+            <ui:Button name="live-link-connections-dropdown__footer__reset" text="Reset all linked players" class="live-link-connections-dropdown__label-button" />
+            <ui:Button name="live-link-connections-dropdown__footer__disable" text="Disable all links" class="live-link-connections-dropdown__label-button" />
+        </ui:VisualElement>
+        <ui:VisualElement class="live-link-connections-dropdown__start-section">
+            <ui:Button name="live-link-connections-dropdown__footer__start" text="Start Live Link ..." class="live-link-connections-dropdown__label-button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

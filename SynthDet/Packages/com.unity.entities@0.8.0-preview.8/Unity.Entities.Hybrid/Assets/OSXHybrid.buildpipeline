@@ -1,0 +1,7 @@
+{
+    "BuildSteps": [
+        "GlobalObjectId_V1-1-99fe1e2a22b18e14d9dd5dacc75a0212-93214019566545601-0",
+        "Unity.Platforms.MacOS.Build.BuildStepProduceMacOSArtifacts, Unity.Platforms.macOS.Build"
+    ],
+    "RunStep": "Unity.Platforms.MacOS.Build.RunStepMacOS, Unity.Platforms.macOS.Build"
+}

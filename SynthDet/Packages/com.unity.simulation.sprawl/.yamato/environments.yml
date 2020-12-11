@@ -1,0 +1,33 @@
+
+package_path: "."
+
+test_editors_lite:
+  - version: 2019.4
+
+test_editors_full:
+  - version: 2018.4
+  - version: 2019.4
+  - version: 2020.1
+
+publish_editors:
+  - version: 2019.4
+
+test_platforms:
+  - name: win
+    type: Unity::VM
+    image: package-ci/win10:stable
+    flavor: b1.large
+  - name: mac
+    type: Unity::VM::osx
+    image: package-ci/mac:stable
+    flavor: m1.mac
+
+publish_platforms:
+  - name: win
+    type: Unity::VM
+    image: package-ci/win10:stable
+    flavor: b1.large
+  - name: mac
+    type: Unity::VM::osx
+    image: package-ci/mac:stable
+    flavor: m1.mac

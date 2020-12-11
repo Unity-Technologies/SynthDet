@@ -1,0 +1,44 @@
+.live-link-connections-dropdown {
+    border-color: #636363;
+}
+
+.live-link-connections-dropdown__all-connections-actions-section {
+    border-color: #636363;
+}
+
+.live-link-connections-dropdown__start-section {
+    border-color: #636363;
+}
+
+.live-link-connections-dropdown__label-button:hover {
+    background-color: rgb(86, 86, 86);
+}
+
+.live-link-connections-dropdown__icon-button:hover {
+    background-color: #606060;
+}
+
+.live-link-connections-dropdown__groups__item__device__hover {
+    background-color: #444444;
+}
+
+.live-link-connections-dropdown__groups__item__title ToolbarMenu {
+    background-image: resource('d__Menu');
+}
+
+.live-link-connections-dropdown__status--connected { background-image: url("../Icons/d_Connected@2x.png"); }
+.live-link-connections-dropdown__status--error { background-image: url("../Icons/d_ConnectionError@2x.png"); }
+.live-link-connections-dropdown__status--disabled { background-image: url("../Icons/d_Disconnected@2x.png"); }
+.live-link-connections-dropdown__status--reseting { background-image: url("../Icons/d_LiveLinkReset@2x.png"); }
+
+.live-link-connections-dropdown__groups__item__device__disable-button {
+    background-image: url('../Icons/d_Disconnected@2x.png');
+}
+
+.live-link-connections-dropdown__groups__item__device__reset-button {
+    background-image: url('../Icons/d_LiveLinkReset@2x.png');
+}
+
+.live-link-connections-dropdown__groups__item__device__reset-when-disabled-button {
+    background-image: url('../Icons/d_LiveLinkReset@2x.png');
+}
