@@ -11,7 +11,7 @@ This project is geared towards ML practitioners and enthusiasts who are actively
 ### [Getting started with SynthDet](docs/Readme.md)
 
 ## Contents 
-* SynthDet - Computer Vision sample project using Unity's Perception package
+* SynthDet - Sample computer vision project using Unity's Perception package
 * 3D Assets - High quality models of 64 commonly found grocery products
 * Unity's Perception package
 * Unity Dataset Insights Python package
@@ -22,9 +22,9 @@ SynthDet was inspired by the following research paper from Google Cloud AI:
 Hinterstoisser, S., Pauly, O., Heibel, H., Marek, M., & Bokeloh, M. (2019). [*An Annotation Saved is an Annotation Earned: Using Fully Synthetic Training for Object Instance Detection.* ](https://arxiv.org/pdf/1902.09967.pdf)
 
 ## Support
-For general questions or concerns please contact the Computer Vision team at computer-vision@unity3d.com.
+For general questions or concerns please contact the Unity Computer Vision team at computer-vision@unity3d.com.
 
-For feedback, bugs, or other issues please file a GitHub issue and the Computer Vision team will investigate the issue as soon as possible.
+For feedback, bugs, or other issues please file a GitHub issue and the Unity Computer Vision team will investigate the issue as soon as possible.
 
 ## Citation
 If you find this package useful, consider citing it using:
