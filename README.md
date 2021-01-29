@@ -11,7 +11,7 @@ This project is geared towards ML practitioners and enthusiasts who are actively
 ### [Getting started with SynthDet](docs/Readme.md)
 
 ## Contents 
-* SynthDet - Unity Perception sample project
+* SynthDet - Sample project using Unity's Perception package
 * 3D Assets - High quality models of 64 commonly found grocery products
 * Unity Perception package
 * Unity Dataset Insights Python package
@@ -21,10 +21,10 @@ SynthDet was inspired by the following research paper from Google Cloud AI:
 
 Hinterstoisser, S., Pauly, O., Heibel, H., Marek, M., & Bokeloh, M. (2019). [*An Annotation Saved is an Annotation Earned: Using Fully Synthetic Training for Object Instance Detection.* ](https://arxiv.org/pdf/1902.09967.pdf)
 
-## Support 
-For general questions or concerns please contact the Perception team at perception@unity3d.com
+## Support
+For general questions or concerns please contact the Computer Vision team at computer-vision@unity3d.com.
 
-For feedback, bugs, or other issues please file a github issue and the Perception team will investigate the issue as soon as possible.
+For feedback, bugs, or other issues please file a GitHub issue and the Computer Vision team will investigate the issue as soon as possible.
 
 ## Citation
 If you find this package useful, consider citing it using:
@@ -46,9 +46,9 @@ If you find this package useful, consider citing it using:
 
 [Synthetic data: Simulating myriad possibilities to train robust machine learning models](https://blogs.unity3d.com/2020/05/01/synthetic-data-simulating-myriad-possibilities-to-train-robust-machine-learning-models/)
 
-[Use Unity’s perception tools to generate and analyze synthetic data at scale to train your ML models](https://blogs.unity3d.com/2020/06/10/use-unitys-perception-tools-to-generate-and-analyze-synthetic-data-at-scale-to-train-your-ml-models/)
+[Use Unity’s computer vision tools to generate and analyze synthetic data at scale to train your ML models](https://blogs.unity3d.com/2020/06/10/use-unitys-perception-tools-to-generate-and-analyze-synthetic-data-at-scale-to-train-your-ml-models/)
 
-[Training a performant object detection ML model on synthetic data using Unity Perception tools](https://blogs.unity3d.com/2020/09/17/training-a-performant-object-detection-ml-model-on-synthetic-data-using-unity-perception-tools/)
+[Training a performant object detection ML model on synthetic data using Unity computer vision tools](https://blogs.unity3d.com/2020/09/17/training-a-performant-object-detection-ml-model-on-synthetic-data-using-unity-perception-tools/)
 
 ## License
 [Apache License 2.0](LICENSE.md)
