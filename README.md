@@ -11,7 +11,7 @@ This project is geared towards ML practitioners and enthusiasts who are actively
 ### [Getting started with SynthDet](docs/Readme.md)
 
 ## Contents 
-* SynthDet - Sample computer vision project using Unity's Perception package
+* SynthDet - Sample computer vision data generation project using Unity's Perception package
 * 3D Assets - High quality models of 64 commonly found grocery products
 * Unity's Perception package
 * Unity Dataset Insights Python package
