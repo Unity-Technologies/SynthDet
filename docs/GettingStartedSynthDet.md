@@ -36,7 +36,7 @@ Once the data is generated locally, you can use`datasetinsights`  to show datase
 
 ```docker run -p 8888:8888 -v "<Synthetic Data File Path>":/data -t unitytechnologies/datasetinsights:latest```
 
-Replace `<Synthetic Data File Path>` with the path to the local datasets (listed in step 2.3). You may need to specify an absolute file path instead of a relative path for the `<Synthetic Data File Path>`.
+Replace `<Synthetic Data File Path>` with the path to the local datasets (listed in step 3.3).
 
 > If you experience issues with Docker on Windows, see [the Docker documentation](Docker.md).
 
