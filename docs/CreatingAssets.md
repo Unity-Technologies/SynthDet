@@ -3,7 +3,7 @@
 
 
 Using the SynthDet example project, you are able to create a custom dataset for your own objects.
-Creating 3D content for synthetic data and bringing into a Unity project can be challenging.  We have provided you some tutorial videos to help with the scanning and import process.  The videos below are primarily focused on creating content for object detection ML models.  The same approaches can be used for creating digital twins of other objects. For other computer vision tasks there are other strategies that may be employed, including making use of existing assets on the [Unity Asset Store](https://assetstore.unity.com/) or creating assets by hand.  For more information, please [reach out to us](mailto:perception@unity3d.com) to see how we can help!
+Creating 3D content for synthetic data and bringing into a Unity project can be challenging.  We have provided you some tutorial videos to help with the scanning and import process.  The videos below are primarily focused on creating content for object detection ML models.  The same approaches can be used for creating digital twins of other objects. For other computer vision tasks there are other strategies that may be employed, including making use of existing assets on the [Unity Asset Store](https://assetstore.unity.com/) or creating assets by hand.  For more information, please [reach out to us](mailto:computer-vision@unity3d.com) to see how we can help!
 
 | Video link | Description |
 | --- | --- |
