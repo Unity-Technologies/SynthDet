@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Experimental.Perception.Randomization.Parameters;
-using UnityEngine.Experimental.Perception.Randomization.Randomizers;
-using UnityEngine.Experimental.Perception.Randomization.Randomizers.SampleRandomizers;
-using Object = UnityEngine.Object;
+using UnityEngine.Perception.Randomization.Parameters;
+using UnityEngine.Perception.Randomization.Randomizers;
+using UnityEngine.Perception.Randomization.Randomizers.Utilities;
+using UnityEngine.Perception.Randomization.Samplers;
 
 
 /// <summary>
@@ -60,7 +60,7 @@ public class MyDualLayerForegroundObjectPlacementRandomizer : Randomizer
 
     void PlaceLayerOneObjects()
     {
-        var seed = scenario.GenerateRandomSeed();
+        var seed = SamplerState.NextRandomState();
         var placementSamples = PoissonDiskSampling.GenerateSamples(
             layerOnePlacementArea.x, layerOnePlacementArea.y, layerOneSeparationDistance.Sample(), seed);
         var offset = new Vector3(layerOnePlacementArea.x, layerOnePlacementArea.y, 0) * -0.5f;
@@ -77,7 +77,7 @@ public class MyDualLayerForegroundObjectPlacementRandomizer : Randomizer
 
     void PlaceLayerTwoObjects()
     {
-        var seed = scenario.GenerateRandomSeed();
+        var seed = SamplerState.NextRandomState();
         var placementSamples = PoissonDiskSampling.GenerateSamples(
             layerTwoPlacementArea.x, layerTwoPlacementArea.y, layerTwoSeparationDistance.Sample(), seed);
         var offset = new Vector3(layerTwoPlacementArea.x, layerTwoPlacementArea.y, 0) * -0.5f;

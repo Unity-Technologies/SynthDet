@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Experimental.Perception.Randomization.Parameters;
-using UnityEngine.Experimental.Perception.Randomization.Randomizers;
+using UnityEngine.Perception.Randomization.Parameters;
+using UnityEngine.Perception.Randomization.Randomizers;
 
 [Serializable]
 [AddRandomizerMenu("Perception/My Foreground Occluder Scale Randomizer")]
@@ -11,10 +11,10 @@ public class MyForegroundOccluderScaleRandomizer : Randomizer
 
     protected override void OnIterationStart()
     {
-        var taggedObjects = tagManager.Query<MyForegroundOccluderScaleRandomizerTag>();
-        foreach (var taggedObject in taggedObjects)
+        var tags = tagManager.Query<MyForegroundOccluderScaleRandomizerTag>();
+        foreach (var tag in tags)
         {
-            taggedObject.transform.localScale = Vector3.one * scale.Sample();
+            tag.transform.localScale = Vector3.one * scale.Sample();
         }
     }
 }

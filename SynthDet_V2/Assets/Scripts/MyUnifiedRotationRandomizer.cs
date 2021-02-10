@@ -1,10 +1,8 @@
 ﻿using System;
-using UnityEngine.Experimental.Perception.Randomization.Parameters;
-using UnityEngine.Experimental.Perception.Randomization.Randomizers;
-using UnityEngine.Experimental.Perception.Randomization.Randomizers.SampleRandomizers.Tags;
-using UnityEngine.Experimental.Perception.Randomization.Samplers;
 using UnityEngine;
-
+using UnityEngine.Perception.Randomization.Parameters;
+using UnityEngine.Perception.Randomization.Randomizers;
+using UnityEngine.Perception.Randomization.Samplers;
 
 /// <summary>
 /// Randomizes the rotation of objects tagged with a RotationRandomizerTag
@@ -28,10 +26,10 @@ public class MyUnifiedRotationRandomizer : Randomizer
     /// </summary>
     protected override void OnIterationStart()
     {
-        var taggedObjects = tagManager.Query<MyUnifiedRotationRandomizerTag>();
+        var tags = tagManager.Query<MyUnifiedRotationRandomizerTag>();
         var rotationSample = Quaternion.Euler(rotation.Sample());
-        foreach (var taggedObject in taggedObjects)
-            taggedObject.transform.rotation = rotationSample;
+        foreach (var tag in tags)
+            tag.transform.rotation = rotationSample;
     }
 }
 
