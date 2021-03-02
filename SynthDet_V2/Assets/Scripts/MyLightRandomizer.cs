@@ -11,6 +11,7 @@ public class MyLightRandomizer : Randomizer
     public FloatParameter lightIntensityParameter;
     public ColorRgbParameter lightColorParameter;
     public FloatParameter auxParameter;
+    
     protected override void OnIterationStart()
     {
         var randomizerTags = tagManager.Query<MyLightRandomizerTag>();
