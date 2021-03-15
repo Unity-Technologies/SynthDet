@@ -53,7 +53,7 @@ To check the current summary of the Unity Simulation execution run:
 
 1. Open a command line interface and navigate to the USim CLI for your platform 
 2. Enter the command `usim login auth`. This authorizes your account and logs in.
-3. Enter the command `summarize run-execution <execution id>`
+3. Enter the command `usim summarize run-execution <execution id>`
 
 You should run the command until the Execution Status reads Completed. If you receive an error about the active project, see Unity Simulation Help. 
 
