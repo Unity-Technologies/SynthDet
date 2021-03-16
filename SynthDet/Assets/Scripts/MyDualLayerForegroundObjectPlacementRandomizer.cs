@@ -33,7 +33,7 @@ public class MyDualLayerForegroundObjectPlacementRandomizer : Randomizer
     GameObject m_Container;
     GameObjectOneWayCache m_GameObjectOneWayCache;
 
-    protected override void OnCreate()
+    protected override void OnAwake()
     {
         m_SpawnedObjects = new List<GameObject>();
         m_Container = new GameObject("Foreground Objects");

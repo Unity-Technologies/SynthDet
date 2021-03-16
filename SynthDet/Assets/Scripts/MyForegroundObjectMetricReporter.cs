@@ -21,7 +21,7 @@ public class MyForegroundObjectMetricReporter : Randomizer
     public IdLabelConfig labelConfigForObjectPlacementMetrics;
     Dictionary<GameObject, Labeling> m_LabelingComponentsCache;
 
-    protected override void OnCreate()
+    protected override void OnAwake()
     {
         m_ForegroundObjectPlacementMetricDefinition = DatasetCapture.RegisterMetricDefinition("Per Frame Foreground Object Placement Info", $"Reports the world position, scale, rotation, and label id of objects carrying a {nameof(MyForegroundObjectMetricReporterTag)} component.", new Guid(k_LayerOneForegroundObjectPlacementInfoMetricGuid));
         m_LabelingComponentsCache = new Dictionary<GameObject, Labeling>();

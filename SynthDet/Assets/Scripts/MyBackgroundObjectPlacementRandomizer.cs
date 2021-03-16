@@ -41,7 +41,7 @@ public class MyBackgroundObjectPlacementRandomizer : Randomizer
     GameObject m_Container;
     GameObjectOneWayCache m_GameObjectOneWayCache;
 
-    protected override void OnCreate()
+    protected override void OnAwake()
     {
         m_Container = new GameObject("Background Distractors");
         m_Container.transform.parent = scenario.transform;

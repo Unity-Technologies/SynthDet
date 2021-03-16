@@ -14,7 +14,7 @@ public class MyLightingInfoMetricReporter : Randomizer
     const string k_LightingInfoMetricGuid = "939248EE-668A-4E98-8E79-E7909F034A47";
     MetricDefinition m_LightingInfoMetricDefinition;
 
-    protected override void OnCreate()
+    protected override void OnAwake()
     {
         m_LightingInfoMetricDefinition = DatasetCapture.RegisterMetricDefinition("Per Frame Lighting Info", $"Reports the enabled state, intensity, colour, and rotation of lights carrying a {nameof(MyLightingInfoMetricReporterTag)} component.", new Guid(k_LightingInfoMetricGuid));
     }

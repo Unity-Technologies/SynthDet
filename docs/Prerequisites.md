@@ -2,7 +2,7 @@
 
 ## Essentials
 
-1. Download and install the latest version of **[Unity 2020.2](https://unity3d.com/get-unity/download)**   
+1. Download and install the latest version of **[Unity 2020.3](https://unity3d.com/get-unity/download)**   
 2. Use the commands below to clone the [SynthDet repository](https://github.com/Unity-Technologies/SynthDet) and initialize the LFS (large file storage) submodules:
 ```bash
 git lfs install

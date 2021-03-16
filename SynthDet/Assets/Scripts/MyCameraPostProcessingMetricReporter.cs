@@ -18,7 +18,7 @@ public class MyCameraPostProcessingMetricReporter : Randomizer
     MetricDefinition m_CameraPostProcessingMetricDefinition;
     Dictionary<GameObject, Volume> m_PostProcessingVolumeCache;
 
-    protected override void OnCreate()
+    protected override void OnAwake()
     {
         m_CameraPostProcessingMetricDefinition = DatasetCapture.RegisterMetricDefinition("Per Frame Camera Post Processing Info", $"Reports post-processing effects of cameras (or other objects with a Volume) carrying a {nameof(MyCameraPostProcessingMetricReporter)} component.", new Guid(k_CameraPostProcessingMetricGuid));
         m_PostProcessingVolumeCache = new Dictionary<GameObject, Volume>();
