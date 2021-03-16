@@ -1,49 +1,46 @@
-# Getting started with SynthDet
+# Setting up the SynthDet Unity project
 
-These workflow steps describe the process of using the sample SynthDet project to create a synthetic dataset of grocery products and explore statistics on that dataset. 
+These workflow steps describe the process of using the sample SynthDet project to create a synthetic dataset of grocery products.
 
-<img src="images/Synthetic Data pipeline-SynthDet local.png" align="middle"/>
+<p align="center">
+<img src="images/Synthetic Data pipeline-SynthDet local.png"/>
+</p>
 
 ## Workflow
 
 ### Step 1: Open the SynthDet sample project
 
 1. Open the Unity Hub
-2. Click **Add** and select the (repo root)/SynthDet folder
-3. Select the project to open it
-4. In the Unity Editor's Project window, find the **Scenes** folder and open the **MainScene** 
+2. Click ***Add*** and select the `(repo root)/SynthDet` folder
 
-<img src="images/MainScene.PNG" align="middle"/>
+The project will now be listed in Unity Hub. If you see a warning regarding Unity version, make sure you have the listed Unity version installed before proceeding.
 
-### Step 2: Generating data locally 
-1. With **MainScene** open, press the Play button. The sample project quickly generates a collection of random images, which you can see in the Game view. 
-    <img src="images/PlayBttn.PNG" align="middle"/>
-2. The MainScene continues for about one minute, then exits Play mode. Allow the scene to run until it exits Play mode.
+3. In Unity Editor's ***Project*** window, find the **Scenes** folder and open the **SynthDet** Scene.
+   
+<p align="center">
+<img src="images/SynthDetScene.PNG" width = "500"/>
+</p>
+
+### Step 2: Generate data locally 
+1. With the `SynthDet` Scene open, press the the **▷** (play) button located at the top middle section of the editor to run your simulation. The sample project quickly generates a collection of random images, which you can see in the ***Game*** view. 
+
+<p align="center">
+    <img src="images/play.PNG" width = "400"/>
+</p>
+
+2. The `SynthDet` Scene continues for about one minute, then exits Play mode. Allow the Scene to run until it exits Play mode.
+
 3. To view the dataset of generated data, navigate to the following location on your computer:
     - macOS: `~/Library/Application Support/UnityTechnologies/SynthDet`
     - Linux: `$XDG_CONFIG_HOME/unity3d/UnityTechnologies/SynthDet`
     - Windows: `%userprofile%\AppData\LocalLow\UnityTechnologies\SynthDet`
 
-<img src="images/dataset.png" align="middle"/>
+The image below is a sample RGB frame generated with SynthDet:
 
-### Step 3: View statistics using datasetinsights
-Once the data is generated locally, you can use`datasetinsights`  to show dataset statistics in a Jupyter notebook via Docker.
+<p align="center">
+<img src="images/dataset.png" width = "900"/>
+</p>
 
-1. Use the following command to run the `datasetinsights` docker image from DockerHub:
+You can now visualize the statistics of your dataset using a Jupyter notebook that we have prepared for SynthDet. 
 
-```docker run -p 8888:8888 -v "<Synthetic Data File Path>":/data -t unitytechnologies/datasetinsights:latest```
-
-Replace `<Synthetic Data File Path>` with the path to the local datasets (listed in step 2.3).
-
-> If you experience issues with Docker on Windows, see [the Docker documentation](Docker.md).
-
-2. Open Jupyter. To do this, open a web browser and navigate to http://localhost:8888
-   
-    <img src="images/jupyterFolder.PNG" align="middle"/>
-
-3. In Jupyter, navigate to `datasetinsights/notebooks` 
-4. Open the notebook called SynthDet_Statistics.ipynb
-
-    <img src="images/theaNotebook.PNG" align="middle"/>
-
-5. Follow the instructions in SynthDet_Statistics.ipynb to compute dataset statistics
+**[Continue to instructions for using the SynthDet Statistics Jupyter notebook](NotebookInstructions.md)**

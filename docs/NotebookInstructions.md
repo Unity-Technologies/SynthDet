@@ -1,11 +1,11 @@
 SynthDet Statistics Jupyter Notebook
 ====================================
 
-This example notebook demonstrates how to use the [Dataset Insights](https://github.com/Unity-Technologies/datasetinsights) Python package to load and analyze synthetic datasets generated with the SynthDet project, which utilizes the Unity [Perception package](https://github.com/Unity-Technologies/com.unity.perception). this notebook includes statistics and visualizations for Labelers included in the Perception package, as well as additional metrics that are specific to SynthDet.
+This example notebook demonstrates how to use the [Dataset Insights](https://github.com/Unity-Technologies/datasetinsights) Python package to load and analyze synthetic datasets generated with the SynthDet project, which utilizes the Unity [Perception package](https://github.com/Unity-Technologies/com.unity.perception). This notebook includes statistics and visualizations for Labelers (ground-truth generators) included in the Perception package, as well as additional metrics that are specific to SynthDet.
 
 ## Instructions
 
-* Install Conda if not already installed. We recommend [Miniconda](https://docs.conda.io/en/latest/miniconda.html).
+* If you do not have Conda installed on your computer, install Conda. We recommend [Miniconda](https://docs.conda.io/en/latest/miniconda.html).
 
 * Once Conda is installed: 
   * On Mac OS, open a new terminal window.
@@ -48,4 +48,13 @@ jupyter notebook
 * Once you are in the notebook. Make sure that the kernel is set to `synthdet_env`. (Kernel -> Change kernel)
   * The notebook may ask you to set this environment when you first open it.
 
+* You will now see a file explorer in Jupyter:
+<p align="center">
+<img src="images/jupyterFolder.PNG"/>
+</p> 
+
+* Click `SynthDet_Statistics.ipynb` to open the notebook.
+
 * Follow the instructions in the notebook to run the code cells and visualize statistics for your SynthDet dataset.
+
+**[Continue to instructions for running SynthDet on Unity Simulation](RunningSynthDetCloud.md)**
