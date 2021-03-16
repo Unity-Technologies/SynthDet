@@ -5,12 +5,12 @@ using UnityEngine.Perception.Randomization.Randomizers.SampleRandomizers;
 using UnityEngine.Perception.Randomization.Scenarios;
 using BackgroundObjectPlacementRandomizer = SynthDet.Randomizers.BackgroundObjectPlacementRandomizer;
 
-namespace SynthDet.MenuItems
+namespace SynthDet
 {
-    public static class SynthDetCreateScenarioMenuItem
+    public static class MenuItems
     {
-        [MenuItem("SynthDet/Create Scenario")]
-        static void CreateScenario()
+        [MenuItem("SynthDet/Create Default Scenario")]
+        static void CreateDefaultScenario()
         {
             var scenarioObj = new GameObject("Scenario");
 
