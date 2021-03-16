@@ -31,7 +31,7 @@ Once the data is generated locally, you can use`datasetinsights`  to show datase
 
 1. Use the following command to run the `datasetinsights` docker image from DockerHub:
 
-```docker run -p 8888:8888 -v "<Synthetic Data File Path>":/data -t unitytechnologies/datasetinsights:latest```
+```docker run -p 8888:8888 -v "<Synthetic Data File Path>":/data -t unitytechnologies/datasetinsights:0.2.0```
 
 Replace `<Synthetic Data File Path>` with the path to the local datasets (listed in step 2.3).
 
