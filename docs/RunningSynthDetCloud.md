@@ -67,7 +67,7 @@ This downloads a CSV file that contains links to the generated data. You can use
 
 1. Use the following command to run the `datasetinsights` docker image from DockerHub using the following command:
 
-```docker run -p 8888:8888 -v $HOME/data:/data -t unitytechnologies/datasetinsights:latest```
+```docker run -p 8888:8888 -v $HOME/data:/data -t unitytechnologies/datasetinsights:0.2.0```
 
 Replace `$HOME/data` with the path you want to download the dataset to.
 
