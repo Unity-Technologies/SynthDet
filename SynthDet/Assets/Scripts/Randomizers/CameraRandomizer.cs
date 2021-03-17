@@ -19,8 +19,7 @@ namespace SynthDet.Randomizers
         public FloatParameter blurParameter = new FloatParameter { value = new UniformSampler(0f, 4f) };
         public FloatParameter contrastParameter = new FloatParameter { value = new UniformSampler(-10f, 10f) };
         public FloatParameter saturationParameter = new FloatParameter { value = new UniformSampler(-10f, 10f) };
-        public FloatParameter grainAmountParameter = new FloatParameter { value = new ConstantSampler(0f) };
-    
+
         protected override void OnIterationStart()
         {
             var tags = tagManager.Query<CameraRandomizerTag>();
