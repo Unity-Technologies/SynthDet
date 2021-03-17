@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Perception.Randomization.Randomizers.SampleRandomizers;
 using UnityEngine.Perception.Randomization.Scenarios;
 using BackgroundObjectPlacementRandomizer = SynthDet.Randomizers.BackgroundObjectPlacementRandomizer;
+using ForegroundObjectPlacementRandomizer = SynthDet.Randomizers.ForegroundObjectPlacementRandomizer;
 
 namespace SynthDet
 {
@@ -22,7 +23,7 @@ namespace SynthDet
             scenario.AddRandomizer(new ForegroundOccluderScaleRandomizer());
             scenario.AddRandomizer(new TextureRandomizer());
             scenario.AddRandomizer(new HueOffsetRandomizer());
-            scenario.AddRandomizer(new DualLayerForegroundObjectPlacementRandomizer());
+            scenario.AddRandomizer(new ForegroundObjectPlacementRandomizer());
             scenario.AddRandomizer(new RotationRandomizer());
             scenario.AddRandomizer(new LightRandomizer());
             scenario.AddRandomizer(new ForegroundScaleRandomizer());
