@@ -44,12 +44,10 @@ namespace SynthDet.Randomizers
                     m_PostProcessingVolumeCache.Add(taggedObject, volume);
                 }
 
-                var vignette = (Vignette)volume.profile.components.Find(comp => comp is Vignette);
                 var colorAdjustments = (ColorAdjustments)volume.profile.components.Find(comp => comp is ColorAdjustments);
                 var depthOfField = (DepthOfField)volume.profile.components.Find(comp => comp is DepthOfField);
                 infos.Add(new MyVolumeInfo()
                 {
-                    vignetteIntensity = vignette.intensity.value,
                     saturation = colorAdjustments.saturation.value,
                     contrast = colorAdjustments.contrast.value,
                     gaussianDofStart = depthOfField.gaussianStart.value,
@@ -63,7 +61,6 @@ namespace SynthDet.Randomizers
     
         struct MyVolumeInfo
         {
-            public float vignetteIntensity;
             public float saturation;
             public float contrast;
             public float gaussianDofStart;

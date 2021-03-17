@@ -45,13 +45,6 @@ namespace SynthDet.Randomizers
                         val = saturationParameter.Sample();
                         colorAdjust.saturation.value = val;
                     }
-                
-                    var grain = (FilmGrain) volume.profile.components.Find(comp => comp is FilmGrain);
-                    if (grain)
-                    {
-                        var val = grainAmountParameter.Sample();
-                        grain.intensity.value = Mathf.Clamp(val, 0,1);
-                    }
                 }
             }
         }
