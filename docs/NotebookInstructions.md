@@ -3,7 +3,7 @@ SynthDet Statistics Jupyter Notebook
 
 This example notebook demonstrates how to use the [Dataset Insights](https://github.com/Unity-Technologies/datasetinsights) Python package to load and analyze synthetic datasets generated with the SynthDet project, which utilizes the Unity [Perception package](https://github.com/Unity-Technologies/com.unity.perception). This notebook includes statistics and visualizations for Labelers (ground-truth generators) included in the Perception package, as well as additional metrics that are specific to SynthDet.
 
-## Instructions
+## Workflow
 
 * If you do not have Conda installed on your computer, install Conda. We recommend [Miniconda](https://docs.conda.io/en/latest/miniconda.html).
 
@@ -11,7 +11,7 @@ This example notebook demonstrates how to use the [Dataset Insights](https://git
   * On Mac OS, open a new terminal window.
   * On Windows, you will need to open either Anaconda Prompt or Anaconda Powershell Prompt. These can be found in the Start menu.
 
-* Create a virtual environment using Conda, and name it `synthdet_env`:
+* Create a virtual environment named `synthdet_env` using Conda, and activate it:
 
 ```bash
 conda create -n synthdet_env python=3.7
@@ -30,7 +30,7 @@ pip install datasetinsights
 conda install jupyter
 ```
 
-* You now need to create a kernel for your virtual environment, and add your virtual environment to Jupyter. Install the IPython kernel:
+* You now need to create a kernel for your virtual environment, and add your virtual environment to Jupyter:
 
 ```bash
 conda install -c anaconda ipykernel

@@ -11,16 +11,18 @@ Before following the instructions below, make sure you have:
 
 ## Workflow
 
-To access Unity Simulations in Unity Cloud Services, the project must be connected to Cloud Services and an organization ID. 
+### Step 1: Unity Cloud Project
 
-1. Follow the steps outlined [here](https://docs.unity3d.com/Manual/SettingUpProjectServices.html) to create a Unity Cloud organization and project, and connect your local project to them.
+To access Unity Simulation, the project must be connected to Unity Cloud Services.
 
-### Step 4: Run SynthDet in Unity Simulation
+1. Follow the steps outlined [here](https://docs.unity3d.com/Manual/SettingUpProjectServices.html) to create a Unity Cloud organization and project, and connect your local project to the cloud project.
+
+### Step 2: Run SynthDet in Unity Simulation
 
 1. From the top menu bar in Unity Editor, open _**Window -> Run in Unity Simulation**_.
 
 <p align="center">
-<img src="Images/runinusim.png" width="600"/>
+<img src="images/runinusim.png" width="600"/>
 </p>
 
 Here, you can specify a name for the run, the number of images that will be generated (Iterations), and the number of simulation nodes the work will be distributed across (Instances) for the run. 
@@ -33,10 +35,10 @@ Your project will now be built and then uploaded to Unity Simulation and run. Th
 4. Once the operation is complete, you can find the **Execution ID** of this Unity Simulation run in the **Console** tab and the ***Run in Unity Simulation*** Window: 
 
 <p align="center">
-<img src="Images/build_uploaded.png" width="600"/>
+<img src="images/build_uploaded.png" width="600"/>
 </p>
 
-### Step 5: Monitor status using Unity Simulation CLI
+### Step 3: Monitor status using Unity Simulation CLI
 You can now use the Unity Simulation CLI, which you previously downloaded as part of the prerequisites, to keep track of the run you just initiated.
 
 1. Open a command line interface and navigate to the Unity Simulation CLI for your platform.
@@ -71,7 +73,7 @@ An example output of the above command looks like this:
 
 6. When execution is complete, use the `usim download manifest <execution-id>` command to download the execution's manifest. 
 
-The manifest is a `.csv` formatted file and will be downloaded to the same location from which you execute the above command, which is the `unity_simulation_bundle` folder. This file does **not** include actual data, rather, it includes links to the generated data, including the JSON files, the logs, the images, and so on.
+The manifest is a `.csv` formatted file and will be downloaded to the same location from which you execute the above command. This file does **not** include actual data, rather, it includes links to the generated data, including the JSON files, the logs, the images, and so on.
 
 7. Open the manifest file to check it. Make sure there are links to various types of output and check a few of the links to see if they work.
 
@@ -87,7 +89,7 @@ We have previously learned how to obtain the `run_execution_id` and `project_id`
 
 2. Return to your command-line interface and run the `usim inspect auth` command.
 
-If you receive errors regarding authentication, your token might have timed out. Repeat the login step (`usim login auth`) to login again and fix this issue.
+If you receive errors regarding authentication, your token might have expired. Repeat the login step (`usim login auth`) to login again and fix this issue.
 
 A sample output from `usim inspect auth` will look like below:
 
