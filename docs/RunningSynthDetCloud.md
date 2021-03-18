@@ -11,7 +11,7 @@ Before following the instructions below, make sure you have:
 
 ## Workflow
 
-### Step 1: Unity Cloud Project
+### Step 1: Unity Cloud project
 
 To access Unity Simulation, the project must be connected to Unity Cloud Services.
 

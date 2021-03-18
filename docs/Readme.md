@@ -15,12 +15,12 @@
 * Running your model with a mobile app - [SynthDet Viewer AR App](https://github.com/Unity-Technologies/perception-synthdet-demo-app)
 
 ## How does the SynthDet Unity project work?
-This project utilizes the Unity [Perception](https://github.com/Unity-Technologies/com.unity.perception) package for randomizing the environment and capturing ground-truth on each frame. Randomization includes elements such as lighting, camera post processing, object placement, and background. Visit [this page](SynthDetRandomizations.md) for a brief overview on how ground truth generation and domain randomization are achieved in SynthDet.
+This project utilizes the Unity [Perception](https://github.com/Unity-Technologies/com.unity.perception) package for randomizing the environment and capturing ground-truth on each frame. Randomization includes elements such as lighting, camera post processing, object placement, and background. Visit [this page](UnityProjectOverview.md) for a brief overview on how ground truth generation and domain randomization are achieved in SynthDet.
 
 Furthermore, in order to learn how to create a project like SynthDet from scratch using the Perception package, we recommend you follow the [Perception Tutorial](https://github.com/Unity-Technologies/com.unity.perception/blob/master/com.unity.perception/Documentation~/Tutorial/TUTORIAL.md).
 
 ## Additional documentation
-* [The Randomizers used in SynthDet](HowSynthDetWorks.md)
+* [Overview on how the SynthDet Unity project works](UnityProjectOverview.md)
 * [Unity Perception package](https://github.com/Unity-Technologies/com.unity.perception)
 * [Unity Dataset Insights Python package](https://github.com/Unity-Technologies/datasetinsights)
 * [Background on Unity](BackgroundUnity.md)
