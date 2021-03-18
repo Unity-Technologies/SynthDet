@@ -6,8 +6,7 @@
 ## Project overview
 This project utilizes the Unity [Perception](https://github.com/Unity-Technologies/com.unity.perception) package for randomizing the environment and capturing ground-truth on each frame. Randomization includes elements such as lighting, camera post processing, object placement, and background. Visit [this page](UnityProjectOverview.md) for a brief overview on how ground truth generation and domain randomization are achieved in SynthDet.
 
-## Installation, data generation, and more
-
+## Tutorials
 1. [Prerequisites](Prerequisites.md)
 2. [Setting up the SynthDet Unity project](GettingStartedSynthDet.md)
 3. [Visualizing Dataset Statistics with the SynthDet Statistics Jupyter notebook](NotebookInstructions.md)
