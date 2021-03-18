@@ -18,14 +18,14 @@ The project will now be listed in Unity Hub. If you see a warning regarding Unit
 3. In Unity Editor's ***Project*** window, find the **Scenes** folder and open the **SynthDet** Scene.
    
 <p align="center">
-<img src="images/SynthDetScene.PNG" width = "500"/>
+<img src="images/SynthDetScene.png" width = "500"/>
 </p>
 
 ### Step 2: Generate data locally 
 1. With the `SynthDet` Scene open, press the the **▷** (play) button located at the top middle section of the editor to run your simulation. The sample project quickly generates a collection of random images, which you can see in the ***Game*** view. 
 
 <p align="center">
-    <img src="images/play.PNG" width = "400"/>
+    <img src="images/play.png" width = "400"/>
 </p>
 
 2. The `SynthDet` Scene continues for about one minute, then exits Play mode. Allow the Scene to run until it exits Play mode.

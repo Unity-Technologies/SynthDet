@@ -53,7 +53,7 @@ The `<URL-unity_simulation_bundle.zip>` address can be found at the same page li
 
 #### Linux build support
 
-To use Unity Simulation, your Unity installation needs to have Linux Build Support. If you did not check the related option when installing Unity, you can add the modules now. 
+To use Unity Simulation, your Unity installation needs to have Linux Build Support. If you did not check the related option when installing Unity, you can add the module now. 
 1. In Unity Hub, go the the ***Installs*** tab.
 2. Click on the options menu icon (...) for your desired Unity version, and then click ***Add Modules***.
 3. If the Linux Build Support (Mono) option is already checked, it means you have already installed this module. If not, check the option and click ***Done***.
