@@ -6,16 +6,14 @@
 ## Project overview
 This project utilizes the Unity [Perception](https://github.com/Unity-Technologies/com.unity.perception) package for randomizing the environment and capturing ground-truth on each frame. Randomization includes elements such as lighting, camera post processing, object placement, and background. Visit [this page](UnityProjectOverview.md) for a brief overview on how ground truth generation and domain randomization are achieved in SynthDet.
 
-## Installation & setup
-* [Prerequisites](Prerequisites.md)
+## Installation, data generation, and more
 
-## Getting started with data generation in Unity
-
-* Data generation example project - [Setting up the SynthDet Unity project](GettingStartedSynthDet.md)
-* Visualizing dataset statistics - [Using the SynthDet Statistics Jupyter notebook](NotebookInstructions.md)
-* Scaling up data generation - [Running SynthDet in Unity Simulation](RunningSynthDetCloud.md)
-* Evaluating a dataset - [Dataset Evaluation with Dataset Insights framework](https://datasetinsights.readthedocs.io/en/0.2.5/Evaluation_Tutorial.html)
-* Running your model with a mobile app - [SynthDet Viewer AR App](https://github.com/Unity-Technologies/perception-synthdet-demo-app)
+1. [Prerequisites](Prerequisites.md)
+2. [Setting up the SynthDet Unity project](GettingStartedSynthDet.md)
+3. [Visualizing Dataset Statistics with the SynthDet Statistics Jupyter notebook](NotebookInstructions.md)
+4. [Scaling up data generation by running SynthDet in Unity Simulation](RunningSynthDetCloud.md)
+5. [Dataset evaluation with Dataset Insights framework](https://datasetinsights.readthedocs.io/en/0.2.5/Evaluation_Tutorial.html)
+6. [Running your trained model in the SynthDet Viewer AR App](https://github.com/Unity-Technologies/perception-synthdet-demo-app)
 
 In order to learn how to create a project like SynthDet from scratch using the Perception package, we recommend you follow the [Perception Tutorial](https://github.com/Unity-Technologies/com.unity.perception/blob/master/com.unity.perception/Documentation~/Tutorial/TUTORIAL.md).
 
