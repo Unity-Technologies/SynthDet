@@ -3,6 +3,9 @@
 <img src="images/Synthetic Data pipeline-Perception Workflow.png"/>
 </p>
 
+## Project overview
+This project utilizes the Unity [Perception](https://github.com/Unity-Technologies/com.unity.perception) package for randomizing the environment and capturing ground-truth on each frame. Randomization includes elements such as lighting, camera post processing, object placement, and background. Visit [this page](UnityProjectOverview.md) for a brief overview on how ground truth generation and domain randomization are achieved in SynthDet.
+
 ## Installation & setup
 * [Prerequisites](Prerequisites.md)
 
@@ -14,10 +17,7 @@
 * Evaluating a dataset - [Dataset Evaluation with Dataset Insights framework](https://datasetinsights.readthedocs.io/en/0.2.5/Evaluation_Tutorial.html)
 * Running your model with a mobile app - [SynthDet Viewer AR App](https://github.com/Unity-Technologies/perception-synthdet-demo-app)
 
-## How does the SynthDet Unity project work?
-This project utilizes the Unity [Perception](https://github.com/Unity-Technologies/com.unity.perception) package for randomizing the environment and capturing ground-truth on each frame. Randomization includes elements such as lighting, camera post processing, object placement, and background. Visit [this page](UnityProjectOverview.md) for a brief overview on how ground truth generation and domain randomization are achieved in SynthDet.
-
-Furthermore, in order to learn how to create a project like SynthDet from scratch using the Perception package, we recommend you follow the [Perception Tutorial](https://github.com/Unity-Technologies/com.unity.perception/blob/master/com.unity.perception/Documentation~/Tutorial/TUTORIAL.md).
+In order to learn how to create a project like SynthDet from scratch using the Perception package, we recommend you follow the [Perception Tutorial](https://github.com/Unity-Technologies/com.unity.perception/blob/master/com.unity.perception/Documentation~/Tutorial/TUTORIAL.md).
 
 ## Additional documentation
 * [Overview on how the SynthDet Unity project works](UnityProjectOverview.md)
