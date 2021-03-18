@@ -15,7 +15,7 @@ The Perception package comes with a [randomization](https://github.com/Unity-Tec
 To check out the list of Randomizers used in the SynthDet project, select the `Scenario` GameObject inside the `SynthDet` Scene. The **Inspector** window will then look like this:
 
 <p align="center">
-<img src="Images/randomizers_collapsed.png" width="400"/>
+<img src="images/randomizers_collapsed.png" width="400"/>
 </p>
 
 Besides the list of Randomizers, you also see several properties for the Scenario. The `Random Seed` set here is the seed used for all randomizations that happen throughout the Scenario, in all Randomizers. If you only use the provided randomization toolset for generating random values throughout your project's C# code, you are guaranteed to have identical outputs between simulations that use the same exact Randomizers and `Random Seed` value. Each Scenario comprises a number of Iterations and each Iteration can be run for a number of frames. Randomizers can be scripted to perform operations at different times, including when the simulation first starts, the start or end of each Iteration, or on each frame of each Iteration. `Total Iterations` and `Frames Per Iteration` control how many Iterations the Scenario performs and how many frames each Iteration runs for. 
@@ -23,7 +23,7 @@ Besides the list of Randomizers, you also see several properties for the Scenari
 In the above screenshot, the UI for all Randomizers is collapsed. Most Randomizers come with properties and parameters that you can modify. To modify a Randomizer, you just need to expand its UI by clicking the small triangle icon to the left of its name, like below:
 
 <p align="center">
-<img src="Images/foreground_randomizer.png" width="400"/>
+<img src="images/foreground_randomizer.png" width="400"/>
 </p>
 
 Here is what each Randomizer in SynthDet does:
