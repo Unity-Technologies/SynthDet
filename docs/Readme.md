@@ -14,7 +14,7 @@ This project utilizes the Unity [Perception](https://github.com/Unity-Technologi
 5. [Dataset evaluation with Dataset Insights framework](https://datasetinsights.readthedocs.io/en/0.2.5/Evaluation_Tutorial.html)
 6. [Running your trained model in the SynthDet Viewer AR App](https://github.com/Unity-Technologies/perception-synthdet-demo-app)
 
-In order to learn how to create a project like SynthDet from scratch using the Perception package, we recommend you follow the [Perception Tutorial](https://github.com/Unity-Technologies/com.unity.perception/blob/master/com.unity.perception/Documentation~/Tutorial/TUTORIAL.md).
+In addition to the above, in order to learn how to create a project like SynthDet from scratch using the Perception package, we recommend you follow the [Perception Tutorial](https://github.com/Unity-Technologies/com.unity.perception/blob/master/com.unity.perception/Documentation~/Tutorial/TUTORIAL.md).
 
 ## Additional documentation
 * [Overview on how the SynthDet Unity project works](UnityProjectOverview.md)
