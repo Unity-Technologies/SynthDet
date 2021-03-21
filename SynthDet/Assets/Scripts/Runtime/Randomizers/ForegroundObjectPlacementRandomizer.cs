@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Perception.Randomization.Parameters;
@@ -16,57 +15,32 @@ namespace SynthDet.Randomizers
     [AddRandomizerMenu("Perception/My Foreground Object Placement Randomizer")]
     public class ForegroundObjectPlacementRandomizer : Randomizer
     {
-        List<GameObject> m_SpawnedObjects;
         public int maxObjectCount = 100;
-        
-        public GameObjectParameter prefabs;
-
         public float depth = 3f;
         public FloatParameter separationDistance = new FloatParameter { value = new UniformSampler(0.7f, 1.2f) };
         public Vector2 placementArea = new Vector2(5f, 5f);
 
+        UniformSampler m_PrefabSampler = new UniformSampler();
+        public GameObject[] prefabs = new GameObject[0];
         GameObject m_Container;
         GameObjectOneWayCache m_GameObjectOneWayCache;
 
-        int m_SpawnedCount;
-
-        protected override void OnAwake()
+        /// <inheritdoc/>
+        protected override void OnScenarioStart()
         {
-            m_SpawnedObjects = new List<GameObject>();
+            Debug.Log("Foreground object placement randomizer started");
             m_Container = new GameObject("Foreground Objects");
             var transform = scenario.transform;
             m_Container.transform.parent = transform;
-            m_GameObjectOneWayCache = new GameObjectOneWayCache(m_Container.transform, prefabs.categories.Select(element => element.Item1).ToArray());
+            m_GameObjectOneWayCache = new GameObjectOneWayCache(m_Container.transform, prefabs);
         }
-    
+
         /// <summary>
         /// Generates a foreground layer of objects at the start of each scenario iteration
         /// </summary>
         protected override void OnIterationStart()
         {
-            m_SpawnedObjects.Clear();
             PlaceObjects();
-        }
-
-        void PlaceObjects()
-        {
-            m_SpawnedCount = 0;
-            
-            var seed = SamplerState.NextRandomState();
-            var placementSamples = PoissonDiskSampling.GenerateSamples(
-                placementArea.x, placementArea.y, separationDistance.Sample(), seed);
-            var offset = new Vector3(placementArea.x, placementArea.y, 0) * -0.5f;
-        
-            foreach (var sample in placementSamples)
-            {
-                var instance = m_GameObjectOneWayCache.GetOrInstantiate(prefabs.Sample());
-                instance.transform.position = new Vector3(sample.x, sample.y, depth) + offset;
-                m_SpawnedObjects.Add(instance);
-
-                if (++m_SpawnedCount == maxObjectCount)
-                    break;
-            }
-            placementSamples.Dispose();
         }
 
         /// <summary>
@@ -75,6 +49,31 @@ namespace SynthDet.Randomizers
         protected override void OnIterationEnd()
         {
             m_GameObjectOneWayCache.ResetAllObjects();
+        }
+
+        void PlaceObjects()
+        {
+            var seed = SamplerState.NextRandomState();
+            var placementSamples = PoissonDiskSampling.GenerateSamples(
+                placementArea.x, placementArea.y, separationDistance.Sample(), seed);
+            var offset = new Vector3(placementArea.x, placementArea.y, 0) * -0.5f;
+
+            var spawnedCount = 0;
+            foreach (var sample in placementSamples)
+            {
+                var instance = m_GameObjectOneWayCache.GetOrInstantiate(GetRandomPrefab());
+                instance.transform.position = new Vector3(sample.x, sample.y, depth) + offset;
+
+                if (++spawnedCount == maxObjectCount)
+                    break;
+            }
+
+            placementSamples.Dispose();
+        }
+
+        GameObject GetRandomPrefab()
+        {
+            return prefabs[(int)(m_PrefabSampler.Sample() * prefabs.Length)];
         }
     }
 }

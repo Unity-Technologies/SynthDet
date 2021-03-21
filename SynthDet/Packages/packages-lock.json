@@ -1,5 +1,17 @@
 {
   "dependencies": {
+    "com.unity.addressables": {
+      "version": "1.16.16",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.scriptablebuildpipeline": "1.15.2",
+        "com.unity.modules.assetbundle": "1.0.0",
+        "com.unity.modules.unitywebrequest": "1.0.0",
+        "com.unity.modules.unitywebrequestassetbundle": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.burst": {
       "version": "1.4.6",
       "depth": 1,
@@ -91,9 +103,9 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.perception": {
-      "version": "0.8.0-preview.2",
+      "version": "file:C:/repos/com.unity.perception/com.unity.perception",
       "depth": 0,
-      "source": "registry",
+      "source": "local",
       "dependencies": {
         "com.unity.burst": "1.4.6",
         "com.unity.collections": "0.9.0-preview.6",
@@ -102,8 +114,7 @@
         "com.unity.simulation.capture": "0.0.10-preview.20",
         "com.unity.simulation.client": "0.0.10-preview.10",
         "com.unity.simulation.core": "0.0.10-preview.22"
-      },
-      "url": "https://packages.unity.com"
+      }
     },
     "com.unity.render-pipelines.core": {
       "version": "10.3.2",
@@ -123,6 +134,13 @@
         "com.unity.render-pipelines.core": "10.3.2",
         "com.unity.shadergraph": "10.3.2"
       },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.scriptablebuildpipeline": {
+      "version": "1.15.2",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.searcher": {

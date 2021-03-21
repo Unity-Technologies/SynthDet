@@ -1,4 +1,5 @@
 ﻿using SynthDet.Randomizers;
+using SynthDet.Scenarios;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Perception.Randomization.Randomizers.SampleRandomizers;
@@ -15,7 +16,7 @@ namespace SynthDet
         {
             var scenarioObj = new GameObject("Scenario");
 
-            var scenario = scenarioObj.AddComponent<FixedLengthScenario>();
+            var scenario = scenarioObj.AddComponent<SynthDetScenario>();
             scenario.constants.totalIterations = 1000;
             
             scenario.AddRandomizer(new BackgroundObjectPlacementRandomizer());
