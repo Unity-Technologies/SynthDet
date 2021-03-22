@@ -17,10 +17,10 @@ all_tests:
     flavor: b1.small
   commands:
     - dir
-  triggers:
-    branches:
-      only:
-        - "/.*/"
+  #triggers:
+   # branches:
+    # only:
+        #- "/.*/"
   artifacts:
     logs:
       paths:
