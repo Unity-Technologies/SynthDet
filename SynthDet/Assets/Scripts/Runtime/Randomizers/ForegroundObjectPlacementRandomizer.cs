@@ -28,7 +28,6 @@ namespace SynthDet.Randomizers
         /// <inheritdoc/>
         protected override void OnScenarioStart()
         {
-            Debug.Log("Foreground object placement randomizer started");
             m_Container = new GameObject("Foreground Objects");
             var transform = scenario.transform;
             m_Container.transform.parent = transform;
