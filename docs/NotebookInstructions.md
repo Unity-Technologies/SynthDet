@@ -14,27 +14,14 @@ This example notebook demonstrates how to use the [Dataset Insights](https://git
 * Create a virtual environment named `synthdet_env` using Conda, and activate it:
 
 ```bash
-conda create -n synthdet_env python=3.7
+conda create -n synthdet_env python=3.8
 conda activate synthdet_env
 ```
 
-* Install Dataset Insights:
+* Install datasetinsights package from PyPI:
 
 ```bash
 pip install datasetinsights
-```
-
-* Install Jupyter:
-
-```bash
-conda install jupyter
-```
-
-* You now need to create a kernel for your virtual environment, and add your virtual environment to Jupyter:
-
-```bash
-conda install -c anaconda ipykernel
-python -m ipykernel install --user --name=synthdet_env
 ```
 
 * Navigate to the folder where the `SynthDet_Statistics.ipynb` notebook file is located.
