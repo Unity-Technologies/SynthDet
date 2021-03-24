@@ -7,11 +7,8 @@
 ```
 git lfs install
 git clone https://github.com/Unity-Technologies/SynthDet
-cd SynthDet
-git submodule update --init --recursive
-```
->The submodule in this repository uses HTTPS authentication. If the commands prompts you for a username and password, create a [personal authentication token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line).
 
+```
 The SynthDet repository uses Git LFS for many of the files in the project. To verify that LFS is properly initialized, you can check the behavior of these files in Unity Editor. In the sample project, open the **SynthDet** Scene and enter Play mode. 
 
 * If LFS is correctly initialized, the **SynthDet** Scene should run as normal. 

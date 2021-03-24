@@ -11,7 +11,7 @@ namespace SynthDet.Randomizers
     /// Reports metrics for light intensity, light colour, and rotation for objects that contain a light component and are tagged with <see cref="LightingInfoMetricReporterTag"/>.
     /// </summary>
     [Serializable]
-    [AddRandomizerMenu("Perception/My Lighting Info Metric Reporter")]
+    [AddRandomizerMenu("SynthDet/Lighting Info Metric Reporter")]
     public class LightingInfoMetricReporter : Randomizer
     {
         const string k_LightingInfoMetricGuid = "939248EE-668A-4E98-8E79-E7909F034A47";

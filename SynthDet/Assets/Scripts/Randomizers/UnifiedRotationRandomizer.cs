@@ -11,7 +11,7 @@ namespace SynthDet.Randomizers
     /// Randomizes the rotation of objects tagged with a RotationRandomizerTag
     /// </summary>
     [Serializable]
-    [AddRandomizerMenu("Perception/My Unified Rotation Randomizer")]
+    [AddRandomizerMenu("SynthDet/Unified Rotation Randomizer")]
     public class UnifiedRotationRandomizer : Randomizer
     {
         /// <summary>

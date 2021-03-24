@@ -15,7 +15,7 @@ namespace SynthDet.Randomizers
     /// Reports metrics for rotation, world position, scale, and label id of objects that are tagged with <see cref="ForegroundObjectMetricReporterTag"/>.
     /// </summary>
     [Serializable]
-    [AddRandomizerMenu("Perception/My Foreground Object Metric Reporter")]
+    [AddRandomizerMenu("SynthDet/Foreground Object Metric Reporter")]
     public class ForegroundObjectMetricReporter : Randomizer
     {
         const string k_LayerOneForegroundObjectPlacementInfoMetricGuid = "061E08CC-4428-4926-9933-A6732524B52B";

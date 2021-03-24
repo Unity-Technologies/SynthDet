@@ -13,7 +13,7 @@ namespace SynthDet.Randomizers
     /// Creates a 2D layer of evenly spaced GameObjects from a given list of prefabs
     /// </summary>
     [Serializable]
-    [AddRandomizerMenu("Perception/My Foreground Object Placement Randomizer")]
+    [AddRandomizerMenu("SynthDet/Foreground Object Placement Randomizer")]
     public class ForegroundObjectPlacementRandomizer : Randomizer
     {
         List<GameObject> m_SpawnedObjects;

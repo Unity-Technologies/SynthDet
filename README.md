@@ -6,13 +6,13 @@
 # SynthDet: An end-to-end object detection pipeline using synthetic data  
 [![license badge](https://img.shields.io/badge/license-Apache--2.0-green.svg)](LICENSE.md)
 ## Overview 
-SynthDet is an open source project that demonstrates an end-to-end object detection pipeline using synthetic image data. The project includes all the code and assets for generating a synthetic dataset in Unity. Based on recent [research](#Citation), SynthDet utilizes Unity's [Perception](https://github.com/Unity-Technologies/com.unity.perception) package to generate highly randomized images of 63 common grocery products (example: cereal boxes and candy) and export them along with appropriate labels and annotations (2D bounding boxes). The synthetic dataset generated can then be used to train a deep learning based object detection model.
-This project is geared towards ML practitioners and enthusiasts who are actively exploring synthetic data or just looking to get started. 
+SynthDet is an open source project that demonstrates an end-to-end object detection pipeline using synthetic image data. The project includes all the code and assets for generating a synthetic dataset in Unity. Based on recent [research](#Citation), SynthDet utilizes Unity's [Perception](https://github.com/Unity-Technologies/com.unity.perception) package to generate highly randomized images of 63 common grocery products (example: cereal boxes and candy) and export them along with appropriate labels and annotations (2D bounding boxes). The synthetic dataset generated can then be used to train a deep learning based object detection model. This project is geared towards ML practitioners and enthusiasts who are actively exploring synthetic data or just looking to get started. 
+
 
 ### [Getting started with SynthDet](docs/Readme.md)
 
 ## Components 
-* SynthDet Unity Project - Sample computer vision data generation project using Unity's Perception package
+* SynthDet Unity Project - Sample computer vision data generation project, demonstrating proper integration and usage of the Perception package for environment randomization and ground-truth generation. 
 * 3D Assets - High quality models of 63 commonly found grocery products
 * Unity's [Perception](https://github.com/Unity-Technologies/com.unity.perception) package.
 * Unity's [Dataset Insights](https://github.com/Unity-Technologies/datasetinsights) Python package
@@ -22,14 +22,8 @@ SynthDet was inspired by the following research paper from Google Cloud AI:
 
 Hinterstoisser, S., Pauly, O., Heibel, H., Marek, M., & Bokeloh, M. (2019). [*An Annotation Saved is an Annotation Earned: Using Fully Synthetic Training for Object Instance Detection.* ](https://arxiv.org/pdf/1902.09967.pdf)
 
-## SynthDet Unity Project Development History
-### Current version
-In March 2021, we released a new version of the SynthDet Unity project. In this version, we have rebuilt the project in order to demonstrate proper integration and usage of the latest Perception package, including the new Randomization toolset. Additionally, users will find the code more accessible and extensible, and the UI more usable and intuitive toward customization.
-
-Early experiments with datasets generated using the new project have shown very similar model-training performance to that of the original one.
-
-### Original version
-The original version of the SynthDet Unity project was developed in tandem with the early versions of Unity's Perception package. This project closely followed the synthetic data generation method introduced by the above mentioned Google Cloud AI paper. To access this original project, and for more details on how it was implemented to replicate the research paper, please visit the [SynthDet_Original](https://github.com/Unity-Technologies/SynthDet/tree/SynthDet_Original) branch of this repository. The results reported in our related blog posts were based on this original project.
+## Unity project development
+The original version of the SynthDet Unity project was developed in tandem with the early versions of Unity's Perception package. This project closely followed the synthetic data generation method introduced by the above mentioned Google Cloud AI paper. However, the original project did not use the randomization toolset that was introduced in later versions of the Perception package. To access this original project, and for more details on how it was implemented to replicate the research paper, please visit the [SynthDet_Original](https://github.com/Unity-Technologies/SynthDet/tree/SynthDet_Original) branch of this repository. The results reported in our related blog posts were based on this original project. That said, early experiments with datasets generated using the current version of the project have shown very similar model-training performance to that of the original one.
 
 ## Support
 For general questions or concerns please contact the Unity Computer Vision team at computer-vision@unity3d.com.
