@@ -10,24 +10,28 @@ This example notebook demonstrates how to use the [Dataset Insights](https://git
 * Open a command line and use the following command to download and run the Dataset Insights Docker image, and mount your local folders to it:
 
 ```
-docker run -p 8888:8888 -v <dataset_path>:/data -v <synthdet_notebook_path>:/tmp -t unitytechnologies/datasetinsights:latest
+docker run -p 8888:8888 -v <datasets_path>:/data -v <synthdet_notebook_path>:/tmp -t unitytechnologies/datasetinsights:latest
 ```
 
-In the above command, `<dataset_path>` is the path to the top level folder of the dataset you generated using SynthDet, and `<synthdet_notebook_path>` is the location at which the `SynthDet_Statistics.ipynb` notebook file is located inside your SynthDet repository (`repository_root/Notebooks`). 
+In the above command, `<datasets_path>` is the path to the folder where all locally generated SynthDet datasets are stored, and `<synthdet_notebook_path>` is the location at which the `SynthDet_Statistics.ipynb` notebook file is located inside your SynthDet repository (`repository_root/Notebooks`). 
 
-You can copy the dataset path to clipboard using the _**Copy Path**_ button in the `Perception Camera` UI in the SynthDet Unity project.
 
-An example dataset path on OSX is:
+On OSX, `<datasets_path>` is:
 ```
-/Users/username/Library/Application\ Support/UnityTechnologies/SynthDet/f3763556-355f-4303-9acd-32334fda51aa
+/Users/username/Library/Application\ Support/UnityTechnologies/SynthDet/
 ```
+And on Windows, it is:
+```
+C:\Users\username\AppData\LocalLow\UnityTechnologies\SynthDet
+```
+> :information_source: Remember to replace `username` in the above paths.
 
 > :information_source: If using a Linux/Unix based OS, make sure the spaces in both paths are escaped with backslashes, as shown in the above example.
 
-> :information_source: If you get an error about the format of the command, try the command again **with quotation marks** around the folder mapping arguments, i.e. `"<dataset_path>:/data"`.
+> :information_source: If you get an error about the format of the command, try the command again **with quotation marks** around the folder mapping arguments, i.e. `"<datasets_path>:/data"`.
 
 
-* You will now see a file explorer in Jupyter:
+* After you run the command successfully, you will see a file explorer in Jupyter:
 <p align="center">
 <img src="images/jupyter.PNG"/>
 </p> 
