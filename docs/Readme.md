@@ -9,7 +9,7 @@ This project utilizes the Unity [Perception](https://github.com/Unity-Technologi
 ## Tutorials
 1. [Prerequisites](Prerequisites.md)
 2. [Setting up the SynthDet Unity project](GettingStartedSynthDet.md)
-3. [Visualizing Dataset Statistics with the SynthDet Statistics Jupyter notebook](NotebookInstructions.md)
+3. [Visualizing dataset statistics with the SynthDet Statistics Jupyter notebook](NotebookInstructions.md)
 4. [Scaling up data generation by running SynthDet in Unity Simulation](RunningSynthDetCloud.md)
 5. [Dataset evaluation with the Dataset Insights framework](https://datasetinsights.readthedocs.io/en/0.2.5/Evaluation_Tutorial.html)
 6. [Running your trained model in the SynthDet Viewer AR App](https://github.com/Unity-Technologies/perception-synthdet-demo-app)
