@@ -33,7 +33,7 @@ C:\Users\username\AppData\LocalLow\UnityTechnologies\SynthDet
 
 * After you run the command successfully, you will see a file explorer in Jupyter:
 <p align="center">
-<img src="images/jupyter.PNG"/>
+<img src="images/jupyter.png"/>
 </p> 
 
 * Navigate to the `tmp` folder and click `SynthDet_Statistics.ipynb` to open the notebook.
