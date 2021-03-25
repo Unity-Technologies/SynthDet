@@ -5,55 +5,34 @@ This example notebook demonstrates how to use the [Dataset Insights](https://git
 
 ## Workflow
 
-* If you do not have Conda installed on your computer, install Conda. We recommend [Miniconda](https://docs.conda.io/en/latest/miniconda.html).
+* Make sure [Docker Desktop](https://www.docker.com/products/docker-desktop) is installed.
 
-* Once Conda is installed: 
-  * On Mac OS, open a new terminal window.
-  * On Windows, you will need to open either Anaconda Prompt or Anaconda Powershell Prompt. These can be found in the Start menu.
+* Open a command line and use the following command to download and run the Dataset Insights Docker image, and mount your local folders to it:
 
-* Create a virtual environment named `synthdet_env` using Conda, and activate it:
-
-```bash
-conda create -n synthdet_env python=3.7
-conda activate synthdet_env
+```
+docker run -p 8888:8888 -v <dataset_path>:/data -v <synthdet_notebook_path>:/tmp -t unitytechnologies/datasetinsights:latest
 ```
 
-* Install Dataset Insights:
+In the above command, `<dataset_path>` is the path to the top level folder of the dataset you generated using SynthDet, and `<synthdet_notebook_path>` is the location at which the `SynthDet_Statistics.ipynb` notebook file is located inside your SynthDet repository (`repository_root/Notebooks`). 
 
-```bash
-pip install datasetinsights
+You can copy the dataset path to clipboard using the _**Copy Path**_ button in the `Perception Camera` UI in the SynthDet Unity project.
+
+An example dataset path on OSX is:
+```
+/Users/username/Library/Application\ Support/UnityTechnologies/SynthDet/f3763556-355f-4303-9acd-32334fda51aa
 ```
 
-* Install Jupyter:
+> :information_source: If using a Linux/Unix based OS, make sure the spaces in both paths are escaped with backslashes, as shown in the above example.
 
-```bash
-conda install jupyter
-```
+> :information_source: If you get an error about the format of the command, try the command again **with quotation marks** around the folder mapping arguments, i.e. `"<dataset_path>:/data"`.
 
-* You now need to create a kernel for your virtual environment, and add your virtual environment to Jupyter:
-
-```bash
-conda install -c anaconda ipykernel
-python -m ipykernel install --user --name=synthdet_env
-```
-
-* Navigate to the folder where the `SynthDet_Statistics.ipynb` notebook file is located.
-  
-* You now can open the notebook using the command:
-
-```bash
-jupyter notebook
-```
-
-* Once you are in the notebook. Make sure that the kernel is set to `synthdet_env`. (Kernel -> Change kernel)
-  * The notebook may ask you to set this environment when you first open it.
 
 * You will now see a file explorer in Jupyter:
 <p align="center">
-<img src="images/jupyterFolder.PNG"/>
+<img src="images/jupyter.PNG"/>
 </p> 
 
-* Click `SynthDet_Statistics.ipynb` to open the notebook.
+* Navigate to the `tmp` folder and click `SynthDet_Statistics.ipynb` to open the notebook.
 
 * Follow the instructions in the notebook to run the code cells and visualize statistics for your SynthDet dataset.
 

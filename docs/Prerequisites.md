@@ -26,7 +26,7 @@ This should re-initialize LFS.
 ## Additional Requirements
 
 ### For using Dataset Insights
-In order to use the provided SynthDet Statistics Jupyter notebook to visualize statistics for your datasets, you will need to install Conda. We recommend [Miniconda](https://docs.conda.io/en/latest/miniconda.html).
+Install [Docker Desktop](https://www.docker.com/products/docker-desktop) in order to use the provided SynthDet Statistics Jupyter notebook to visualize statistics for your datasets.
 
 
 ### For running in Unity Simulation
