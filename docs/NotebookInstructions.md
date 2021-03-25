@@ -31,7 +31,7 @@ C:\Users\username\AppData\LocalLow\UnityTechnologies\SynthDet
 > :information_source: If you get an error about the format of the command, try the command again **with quotation marks** around the folder mapping arguments, i.e. `"<datasets_path>:/data"`.
 
 
-* After you run the command successfully, you will see a file explorer in Jupyter:
+* After you run the command successfully, open a browser window and navigate to `localhost:8888`. You will see a file explorer in Jupyter:
 <p align="center">
 <img src="images/jupyter.png"/>
 </p> 
