@@ -7,7 +7,6 @@
 ```
 git lfs install
 git clone https://github.com/Unity-Technologies/SynthDet
-
 ```
 The SynthDet repository uses Git LFS for many of the files in the project. To verify that LFS is properly initialized, you can check the behavior of these files in Unity Editor. In the sample project, open the **SynthDet** Scene and enter Play mode. 
 
