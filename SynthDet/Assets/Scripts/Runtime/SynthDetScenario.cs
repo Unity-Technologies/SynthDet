@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using SynthDet.Randomizers;
+using SynthDet.RandomizerTags;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
+using UnityEngine.Perception.GroundTruth;
 using UnityEngine.Perception.Randomization.Scenarios;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
@@ -89,7 +92,7 @@ namespace SynthDet.Scenarios
                 foreach (var key in handle.Result.Keys)
                 {
                     if (!key.ToString().Contains(".prefab"))
-                        return;
+                        continue;
                     
                     m_NumPrefabsToLoad++;
                     Addressables.LoadAssetAsync<GameObject>(key).Completed += prefabHandle =>
@@ -108,7 +111,7 @@ namespace SynthDet.Scenarios
                 }
             }
         }
-        
+
         enum AssetLoadingStatus
         {
             Complete,

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+using SynthDet.RandomizerTags;
 using UnityEngine;
+using UnityEngine.Perception.GroundTruth;
 using UnityEngine.Perception.Randomization.Parameters;
 using UnityEngine.Perception.Randomization.Randomizers;
 using UnityEngine.Perception.Randomization.Randomizers.Utilities;
@@ -31,6 +33,13 @@ namespace SynthDet.Randomizers
             m_Container = new GameObject("Foreground Objects");
             var transform = scenario.transform;
             m_Container.transform.parent = transform;
+
+            foreach (var prefab in prefabs)
+            {
+                ConfigureLabeling(prefab);
+                ConfigureRandomizerTags(prefab);
+            }
+            
             m_GameObjectOneWayCache = new GameObjectOneWayCache(m_Container.transform, prefabs);
         }
 
@@ -66,7 +75,6 @@ namespace SynthDet.Randomizers
                 if (++spawnedCount == maxObjectCount)
                     break;
             }
-
             placementSamples.Dispose();
         }
 
@@ -74,6 +82,21 @@ namespace SynthDet.Randomizers
         {
             return prefabs[(int)(m_PrefabSampler.Sample() * prefabs.Length)];
         }
+        
+        void ConfigureRandomizerTags(GameObject gObj)
+        {
+            Utilities.GetOrAddComponent<ForegroundObjectMetricReporterTag>(gObj);
+            Utilities.GetOrAddComponent<UnifiedRotationRandomizerTag>(gObj);
+            Utilities.GetOrAddComponent<ForegroundScaleRandomizerTag>(gObj);
+        }
+        
+        public static void ConfigureLabeling(GameObject gObj)
+        {
+            var labeling = Utilities.GetOrAddComponent<Labeling>(gObj);
+            labeling.labels.Clear();
+            labeling.labels.Add(gObj.name);
+        }
+
     }
 }
 
