@@ -5,10 +5,13 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.Perception.Randomization.Scenarios;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement.ResourceLocations;
 
 namespace SynthDet.Scenarios
 {
+    /// <summary>
+    /// This scenario enables addressable asset bundles to be loaded from a remote host before starting the simulation.
+    /// The prefabs loaded from these bundles are added to the <see cref="ForegroundObjectPlacementRandomizer"/>.
+    /// </summary>
     [AddComponentMenu("SynthDet/SynthDet Scenario")]
     public class SynthDetScenario : FixedLengthScenario
     {
@@ -71,18 +74,12 @@ namespace SynthDet.Scenarios
         protected override void OnAwake()
         {
             base.OnAwake();
-            Addressables.InternalIdTransformFunc = location =>
-            {
-                if (m_BundleToUrlMap.ContainsKey(location.PrimaryKey))
-                    return m_BundleToUrlMap[location.PrimaryKey];
-                return location.InternalId;
-            };
+            Addressables.InternalIdTransformFunc = location => m_BundleToUrlMap.ContainsKey(location.PrimaryKey)
+                ? m_BundleToUrlMap[location.PrimaryKey] : location.InternalId;
             
             m_CatalogHandles = new AsyncOperationHandle<IResourceLocator>[m_CatalogUrls.Count];
-            for(var i = 0 ; i < m_CatalogUrls.Count; i++) 
-            {
+            for(var i = 0 ; i < m_CatalogUrls.Count; i++)
                 m_CatalogHandles[i] = Addressables.LoadContentCatalogAsync(m_CatalogUrls[i], false);
-            }
         }
 
         void LoadPrefabs()
@@ -91,26 +88,27 @@ namespace SynthDet.Scenarios
             {
                 foreach (var key in handle.Result.Keys)
                 {
-                    if (key.ToString().Contains(".prefab"))
+                    if (!key.ToString().Contains(".prefab"))
+                        return;
+                    
+                    m_NumPrefabsToLoad++;
+                    Addressables.LoadAssetAsync<GameObject>(key).Completed += prefabHandle =>
                     {
-                        m_NumPrefabsToLoad++;
-                        Addressables.LoadAssetAsync<GameObject>(key).Completed += handle =>
+                        if (prefabHandle.Status == AsyncOperationStatus.Failed)
                         {
-                            if (handle.Status == AsyncOperationStatus.Failed)
-                            {
-                                Debug.LogError($"Failed to load prefab from key '{key}'");
-                                m_LoadingStatus = AssetLoadingStatus.Failed;
-                                return;
-                            }
-                            lock (m_Prefabs)
-                            {
-                                m_Prefabs.Add(handle.Result);
-                            }
-                        };
-                    }
+                            Debug.LogError($"Failed to load prefab from key '{key}'");
+                            m_LoadingStatus = AssetLoadingStatus.Failed;
+                            return;
+                        }
+                        lock (m_Prefabs)
+                        {
+                            m_Prefabs.Add(prefabHandle.Result);
+                        }
+                    };
                 }
             }
         }
+        
         enum AssetLoadingStatus
         {
             Complete,

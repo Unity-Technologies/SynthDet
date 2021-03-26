@@ -96,7 +96,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.package-validation-suite": {
-      "version": "0.17.0-preview",
+      "version": "0.19.3-preview",
       "depth": 0,
       "source": "registry",
       "dependencies": {
