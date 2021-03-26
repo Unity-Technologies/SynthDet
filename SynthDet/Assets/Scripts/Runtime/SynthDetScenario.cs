@@ -5,6 +5,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.Perception.Randomization.Scenarios;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceLocations;
 
 namespace SynthDet.Scenarios
 {
@@ -14,11 +15,7 @@ namespace SynthDet.Scenarios
         int m_NumPrefabsToLoad;
         List<GameObject> m_Prefabs = new List<GameObject>();
         AssetLoadingStatus m_LoadingStatus = AssetLoadingStatus.LoadingCatalog;
-        AsyncOperationHandle<IResourceLocator> m_CatalogHandle;
-        Dictionary<string, string> m_BundleUrlMap = new Dictionary<string, string>
-        {
-            {"defaultlocalgroup_assets_all_4bedd9ba8c2c5396f3eba5a4c2ba13e1.bundle", "https://storage.googleapis.com/steven-addressables-tests/StandaloneWindows64/defaultlocalgroup_assets_all_4bedd9ba8c2c5396f3eba5a4c2ba13e1.bundle?Expires=1616400659&GoogleAccessId=bhram-test-usc1-taquito%40unity-ml-bhram-test.iam.gserviceaccount.com&Signature=eBRPIFoqBCr6dVE%2Ff%2BfAaz9moFebc0X3hk7TbPPkeoLL8i2f9m2MPgGYJcVSbupPtTpaQVo99lLkgGGXKCYGpXyTRKW9lmll5QfTeDdCT4vMHvlp8VOIZWL%2FypqjBt%2FAgy3zChnig13a9Z6X%2Bpc%2BqYY26%2B5y8H7Odftx6vGt8F1%2BvyLIkPdwApisvC%2FsMl9UjX1JjRA9wky%2FbU2jA%2BQqFq9Sr4S1yw9zm6E2G8B9KS8gvvtllL0UrC%2Bdj8PWWjvJMMlh4qBxwr2KyJf03QkhECeT8iR%2F6gOCak8UDxLDquT8Z61dr4L%2BOdBQT43w14mSl%2FKkpYo0kdgQyMG551keZA%3D%3D"}
-        };
+        AsyncOperationHandle<IResourceLocator>[] m_CatalogHandles;
         
         /// <inheritdoc/>
         protected override bool isScenarioReadyToStart
@@ -31,19 +28,24 @@ namespace SynthDet.Scenarios
                         return true;
                     case AssetLoadingStatus.LoadingCatalog:
                     {
-                        if (!m_CatalogHandle.IsDone)
-                            return false;
+                        foreach (var handle in m_CatalogHandles)
+                        {
+                            if (!handle.IsDone)
+                                return false;
+                        }
                         
-                        if (m_CatalogHandle.Status == AsyncOperationStatus.Succeeded)
+                        foreach (var handle in m_CatalogHandles)
                         {
-                            LoadPrefabs();
-                            m_LoadingStatus = AssetLoadingStatus.LoadingPrefabs;
+                            if (handle.Status != AsyncOperationStatus.Succeeded)
+                            {
+                                Debug.LogError("Catalog download failed");
+                                m_LoadingStatus = AssetLoadingStatus.Failed;
+                                return false;
+                            }
                         }
-                        else
-                        {
-                            Debug.LogError("Catalog download failed");
-                            m_LoadingStatus = AssetLoadingStatus.Failed;
-                        }
+                        
+                        LoadPrefabs();
+                        m_LoadingStatus = AssetLoadingStatus.LoadingPrefabs;
                         return false;
                     }
                     case AssetLoadingStatus.LoadingPrefabs:
@@ -71,37 +73,44 @@ namespace SynthDet.Scenarios
             base.OnAwake();
             Addressables.InternalIdTransformFunc = location =>
             {
-                if (m_BundleUrlMap.ContainsKey(location.PrimaryKey))
-                    return m_BundleUrlMap[location.PrimaryKey];
+                if (m_BundleToUrlMap.ContainsKey(location.PrimaryKey))
+                    return m_BundleToUrlMap[location.PrimaryKey];
                 return location.InternalId;
             };
-            m_CatalogHandle = Addressables.LoadContentCatalogAsync(AddressablesConfiguration.signedCatalogUrl, false);
+            
+            m_CatalogHandles = new AsyncOperationHandle<IResourceLocator>[m_CatalogUrls.Count];
+            for(var i = 0 ; i < m_CatalogUrls.Count; i++) 
+            {
+                m_CatalogHandles[i] = Addressables.LoadContentCatalogAsync(m_CatalogUrls[i], false);
+            }
         }
 
         void LoadPrefabs()
         {
-            foreach (var key in m_CatalogHandle.Result.Keys)
+            foreach (var handle in m_CatalogHandles)
             {
-                if (key.ToString().Contains(".prefab"))
+                foreach (var key in handle.Result.Keys)
                 {
-                    m_NumPrefabsToLoad++;
-                    Addressables.LoadAssetAsync<GameObject>(key).Completed += handle =>
+                    if (key.ToString().Contains(".prefab"))
                     {
-                        if (handle.Status == AsyncOperationStatus.Failed)
+                        m_NumPrefabsToLoad++;
+                        Addressables.LoadAssetAsync<GameObject>(key).Completed += handle =>
                         {
-                            Debug.LogError($"Failed to load prefab from key '{key}'");
-                            m_LoadingStatus = AssetLoadingStatus.Failed;
-                            return;
-                        }
-                        lock (m_Prefabs)
-                        {
-                            m_Prefabs.Add(handle.Result);
-                        }
-                    };
+                            if (handle.Status == AsyncOperationStatus.Failed)
+                            {
+                                Debug.LogError($"Failed to load prefab from key '{key}'");
+                                m_LoadingStatus = AssetLoadingStatus.Failed;
+                                return;
+                            }
+                            lock (m_Prefabs)
+                            {
+                                m_Prefabs.Add(handle.Result);
+                            }
+                        };
+                    }
                 }
             }
         }
-        
         enum AssetLoadingStatus
         {
             Complete,
