@@ -8,7 +8,7 @@ using UnityEngine.Perception.Randomization.Samplers;
 namespace SynthDet.Randomizers
 {
     [Serializable]
-    [AddRandomizerMenu("Perception/My Foreground Scale Randomizer")]
+    [AddRandomizerMenu("SynthDet/Foreground Scale Randomizer")]
     public class ForegroundScaleRandomizer : Randomizer
     {
         public FloatParameter scale = new FloatParameter { value = new UniformSampler(4f, 8f) };

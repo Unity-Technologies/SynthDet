@@ -13,7 +13,7 @@ namespace SynthDet.Randomizers
     /// Reports post processing metrics for object that contain a post-processing volume component and are tagged with <see cref="CameraPostProcessingMetricReporter"/>. 
     /// </summary>
     [Serializable]
-    [AddRandomizerMenu("SynthDet/My Camera Post-processing Metric Reporter")]
+    [AddRandomizerMenu("SynthDet/Camera Post-processing Metric Reporter")]
     public class CameraPostProcessingMetricReporter : Randomizer
     {
         const string k_CameraPostProcessingMetricGuid = "a4b2253c-0eb2-4a90-9b20-6e77f1d13286";
