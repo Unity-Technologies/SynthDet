@@ -44,7 +44,7 @@ namespace SynthDet.Randomizers
                 ConfigureRandomizerTags(prefab);
             }
 
-            SetupLabelConfig(labelings);
+            SetupLabelConfigs(labelings);
 
             m_GameObjectOneWayCache = new GameObjectOneWayCache(m_Container.transform, prefabs);
         }
@@ -105,7 +105,7 @@ namespace SynthDet.Randomizers
             return labeling;
         }
 
-        void SetupLabelConfig(List<Labeling> labelings)
+        void SetupLabelConfigs(List<Labeling> labelings)
         {
             var perceptionCamera = Object.FindObjectOfType<PerceptionCamera>();
 
