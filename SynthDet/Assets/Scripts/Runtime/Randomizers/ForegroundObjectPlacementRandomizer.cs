@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using SynthDet.RandomizerTags;
 using UnityEngine;
 using UnityEngine.Perception.GroundTruth;
@@ -7,6 +9,7 @@ using UnityEngine.Perception.Randomization.Parameters;
 using UnityEngine.Perception.Randomization.Randomizers;
 using UnityEngine.Perception.Randomization.Randomizers.Utilities;
 using UnityEngine.Perception.Randomization.Samplers;
+using Object = UnityEngine.Object;
 
 namespace SynthDet.Randomizers
 {
@@ -34,12 +37,15 @@ namespace SynthDet.Randomizers
             var transform = scenario.transform;
             m_Container.transform.parent = transform;
 
+            var labelings = new List<Labeling>();
             foreach (var prefab in prefabs)
             {
-                ConfigureLabeling(prefab);
+                labelings.Add(ConfigureLabeling(prefab));
                 ConfigureRandomizerTags(prefab);
             }
-            
+
+            SetupLabelConfig(labelings);
+
             m_GameObjectOneWayCache = new GameObjectOneWayCache(m_Container.transform, prefabs);
         }
 
@@ -75,6 +81,7 @@ namespace SynthDet.Randomizers
                 if (++spawnedCount == maxObjectCount)
                     break;
             }
+
             placementSamples.Dispose();
         }
 
@@ -82,21 +89,84 @@ namespace SynthDet.Randomizers
         {
             return prefabs[(int)(m_PrefabSampler.Sample() * prefabs.Length)];
         }
-        
+
         void ConfigureRandomizerTags(GameObject gObj)
         {
             Utilities.GetOrAddComponent<ForegroundObjectMetricReporterTag>(gObj);
             Utilities.GetOrAddComponent<UnifiedRotationRandomizerTag>(gObj);
             Utilities.GetOrAddComponent<ForegroundScaleRandomizerTag>(gObj);
         }
-        
-        public static void ConfigureLabeling(GameObject gObj)
+
+        public static Labeling ConfigureLabeling(GameObject gObj)
         {
             var labeling = Utilities.GetOrAddComponent<Labeling>(gObj);
             labeling.labels.Clear();
             labeling.labels.Add(gObj.name);
+            return labeling;
         }
 
+        void SetupLabelConfig(List<Labeling> labelings)
+        {
+            var perceptionCamera = Object.FindObjectOfType<PerceptionCamera>();
+
+            var idLabelConfig = ScriptableObject.CreateInstance<IdLabelConfig>();
+
+            idLabelConfig.autoAssignIds = true;
+            idLabelConfig.startingLabelId = StartingLabelId.One;
+
+            var idLabelEntries = new List<IdLabelEntry>();
+            for (var i = 0; i < labelings.Count; i++)
+            {
+                idLabelEntries.Add(new IdLabelEntry
+                {
+                    id = i,
+                    label = labelings[i].labels[0]
+                });
+            }
+            idLabelConfig.Init(idLabelEntries);
+
+            var semanticLabelConfig = ScriptableObject.CreateInstance<SemanticSegmentationLabelConfig>();
+            var semanticLabelEntries = new List<SemanticSegmentationLabelEntry>();
+            for (var i = 0; i < labelings.Count; i++)
+            {
+                semanticLabelEntries.Add(new SemanticSegmentationLabelEntry()
+                {
+                    label = labelings[i].labels[0]
+                });
+            }
+            semanticLabelConfig.Init(semanticLabelEntries);
+
+            foreach (var labeler in perceptionCamera.labelers)
+            {
+                switch (labeler)
+                {
+                    case BoundingBox2DLabeler boundingBox2DLabeler:
+                        boundingBox2DLabeler.idLabelConfig = idLabelConfig;
+                        break;
+                    case BoundingBox3DLabeler boundingBox3DLabeler:
+                        boundingBox3DLabeler.idLabelConfig = idLabelConfig;
+                        break;
+                    case ObjectCountLabeler objectCountLabeler:
+                        objectCountLabeler.labelConfig.autoAssignIds = idLabelConfig.autoAssignIds;
+                        objectCountLabeler.labelConfig.startingLabelId = idLabelConfig.startingLabelId;
+                        objectCountLabeler.labelConfig.Init(idLabelEntries);
+                        break;
+                    case RenderedObjectInfoLabeler renderedObjectInfoLabeler:
+                        renderedObjectInfoLabeler.idLabelConfig = idLabelConfig;
+                        break;
+                    case KeypointLabeler keypointLabeler:
+                        keypointLabeler.idLabelConfig = idLabelConfig;
+                        break;
+                    case InstanceSegmentationLabeler instanceSegmentationLabeler:
+                        instanceSegmentationLabeler.idLabelConfig = idLabelConfig;
+                        break;
+                    case SemanticSegmentationLabeler semanticSegmentationLabeler:
+                        semanticSegmentationLabeler.labelConfig = semanticLabelConfig;
+                        break;
+                }
+                
+                labeler.Init(perceptionCamera);
+            }
+        }
     }
 }
-
