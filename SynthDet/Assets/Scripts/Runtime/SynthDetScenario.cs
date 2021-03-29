@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using SynthDet.Randomizers;
-using SynthDet.RandomizerTags;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.Perception.GroundTruth;
 using UnityEngine.Perception.Randomization.Parameters;
-using UnityEngine.Perception.Randomization.Samplers;
 using UnityEngine.Perception.Randomization.Scenarios;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
@@ -24,6 +22,8 @@ namespace SynthDet.Scenarios
         List<GameObject> m_Prefabs = new List<GameObject>();
         AssetLoadingStatus m_LoadingStatus = AssetLoadingStatus.LoadingCatalog;
         AsyncOperationHandle<IResourceLocator>[] m_CatalogHandles;
+
+        List<string> m_LabelStringsForAutoLabelConfig = new List<string>();
 
         /// <inheritdoc/>
         protected override bool isScenarioReadyToStart
@@ -52,7 +52,7 @@ namespace SynthDet.Scenarios
                             }
                         }
                         
-                        LoadPrefabs();
+                        LoadAndLabelPrefabs();
                         m_LoadingStatus = AssetLoadingStatus.LoadingPrefabs;
                         return false;
                     }
@@ -62,6 +62,7 @@ namespace SynthDet.Scenarios
                         {
                             if (m_Prefabs.Count < m_NumPrefabsToLoad)
                                 return false;
+                            SetupLabelConfigs();
                             var randomizer = GetRandomizer<ForegroundObjectPlacementRandomizer>();
                             m_Prefabs.Sort((prefab1, prefab2) => prefab1.name.CompareTo(prefab2.name));
                             randomizer.prefabs = m_Prefabs.ToArray();
@@ -87,7 +88,7 @@ namespace SynthDet.Scenarios
                 m_CatalogHandles[i] = Addressables.LoadContentCatalogAsync(m_CatalogUrls[i], false);
         }
 
-        void LoadPrefabs()
+        void LoadAndLabelPrefabs()
         {
             foreach (var handle in m_CatalogHandles)
             {
@@ -107,6 +108,7 @@ namespace SynthDet.Scenarios
                         }
                         lock (m_Prefabs)
                         {
+                            ConfigureLabeling(prefabHandle.Result);
                             m_Prefabs.Add(prefabHandle.Result);
                         }
                     };
@@ -121,30 +123,17 @@ namespace SynthDet.Scenarios
             LoadingPrefabs,
             Failed
         }
+
+        void ConfigureLabeling(GameObject gObj)
+        {
+            var labeling = Utilities.GetOrAddComponent<Labeling>(gObj);
+            labeling.labels.Clear();
+            labeling.labels.Add(gObj.name);
+            if(!m_LabelStringsForAutoLabelConfig.Contains(labeling.labels[0]))
+                m_LabelStringsForAutoLabelConfig.Add(labeling.labels[0]);
+        }
         
-        /// <inheritdoc/>
-        protected override void OnUpdate()
-        {
-            if (m_PerceptionCamera && currentIterationFrame == constants.framesPerIteration - 1
-            && currentIteration > 1)
-            {
-                //skip first iteration for capturing because labelers are not yet initialized. They are currently initialized at the end of the first iteration.
-                //TO DO: Make scheduling more robust in order to capture first iteration too
-                m_PerceptionCamera.RequestCapture();
-            }
-        }
-
-        /// <inheritdoc/>
-        protected override void OnIterationEnd()
-        {
-            if (currentIteration == constants.instanceCount + 1)
-            {
-                //it is the penultimate frame of the first iteration, so all placement randomizers have woken up and labeled their prefabs by now
-                SetupLabelConfigs();
-            }
-        }
-
-        static void SetupLabelConfigs()
+        void SetupLabelConfigs()
         {
             var perceptionCamera = FindObjectOfType<PerceptionCamera>();
 
@@ -153,26 +142,16 @@ namespace SynthDet.Scenarios
             idLabelConfig.autoAssignIds = true;
             idLabelConfig.startingLabelId = StartingLabelId.One;
 
-            var stringList = LabelManager.singleton.LabelStringsForAutoLabelConfig;
-
-            var idLabelEntries = new List<IdLabelEntry>();
-            for (var i = 0; i < stringList.Count; i++)
-            {
-                idLabelEntries.Add(new IdLabelEntry
-                {
-                    id = i,
-                    label = stringList[i]
-                });
-            }
+            var idLabelEntries = m_LabelStringsForAutoLabelConfig.Select((t, i) => new IdLabelEntry { id = i, label = t }).ToList();
             idLabelConfig.Init(idLabelEntries);
 
             var semanticLabelConfig = ScriptableObject.CreateInstance<SemanticSegmentationLabelConfig>();
             var semanticLabelEntries = new List<SemanticSegmentationLabelEntry>();
-            for (var i = 0; i < stringList.Count; i++)
+            for (var i = 0; i < m_LabelStringsForAutoLabelConfig.Count; i++)
             {
                 semanticLabelEntries.Add(new SemanticSegmentationLabelEntry()
                 {
-                    label = stringList[i],
+                    label = m_LabelStringsForAutoLabelConfig[i],
                     color = GetUniqueSemanticSegmentationColor()
                 });
             }
@@ -218,7 +197,6 @@ namespace SynthDet.Scenarios
         static ColorRgbParameter s_SemanticColorParameter = new ColorRgbParameter();
         static Color GetUniqueSemanticSegmentationColor()
         {
-            var seed = SamplerState.NextRandomState();
             var sampledColor = s_SemanticColorParameter.Sample();
             var maxTries = 1000;
             var count = 0;

@@ -39,7 +39,6 @@ namespace SynthDet.Randomizers
             
             foreach (var prefab in prefabs)
             {
-                ConfigureLabeling(prefab);
                 ConfigureRandomizerTags(prefab);
             }
 
@@ -92,15 +91,6 @@ namespace SynthDet.Randomizers
             Utilities.GetOrAddComponent<ForegroundObjectMetricReporterTag>(gObj);
             Utilities.GetOrAddComponent<UnifiedRotationRandomizerTag>(gObj);
             Utilities.GetOrAddComponent<ForegroundScaleRandomizerTag>(gObj);
-        }
-
-        public static Labeling ConfigureLabeling(GameObject gObj)
-        {
-            var labeling = Utilities.GetOrAddComponent<Labeling>(gObj);
-            labeling.labels.Clear();
-            labeling.labels.Add(gObj.name);
-            LabelManager.singleton.AddLabelStringToAutoLabelConfigList(labeling.labels[0]);
-            return labeling;
         }
     }
 }
