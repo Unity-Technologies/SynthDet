@@ -36,15 +36,12 @@ namespace SynthDet.Randomizers
             m_Container = new GameObject("Foreground Objects");
             var transform = scenario.transform;
             m_Container.transform.parent = transform;
-
-            var labelings = new List<Labeling>();
+            
             foreach (var prefab in prefabs)
             {
-                labelings.Add(ConfigureLabeling(prefab));
+                ConfigureLabeling(prefab);
                 ConfigureRandomizerTags(prefab);
             }
-
-            SetupLabelConfigs(labelings);
 
             m_GameObjectOneWayCache = new GameObjectOneWayCache(m_Container.transform, prefabs);
         }
@@ -102,71 +99,8 @@ namespace SynthDet.Randomizers
             var labeling = Utilities.GetOrAddComponent<Labeling>(gObj);
             labeling.labels.Clear();
             labeling.labels.Add(gObj.name);
+            LabelManager.singleton.AddLabelStringToAutoLabelConfigList(labeling.labels[0]);
             return labeling;
-        }
-
-        void SetupLabelConfigs(List<Labeling> labelings)
-        {
-            var perceptionCamera = Object.FindObjectOfType<PerceptionCamera>();
-
-            var idLabelConfig = ScriptableObject.CreateInstance<IdLabelConfig>();
-
-            idLabelConfig.autoAssignIds = true;
-            idLabelConfig.startingLabelId = StartingLabelId.One;
-
-            var idLabelEntries = new List<IdLabelEntry>();
-            for (var i = 0; i < labelings.Count; i++)
-            {
-                idLabelEntries.Add(new IdLabelEntry
-                {
-                    id = i,
-                    label = labelings[i].labels[0]
-                });
-            }
-            idLabelConfig.Init(idLabelEntries);
-
-            var semanticLabelConfig = ScriptableObject.CreateInstance<SemanticSegmentationLabelConfig>();
-            var semanticLabelEntries = new List<SemanticSegmentationLabelEntry>();
-            for (var i = 0; i < labelings.Count; i++)
-            {
-                semanticLabelEntries.Add(new SemanticSegmentationLabelEntry()
-                {
-                    label = labelings[i].labels[0]
-                });
-            }
-            semanticLabelConfig.Init(semanticLabelEntries);
-
-            foreach (var labeler in perceptionCamera.labelers)
-            {
-                switch (labeler)
-                {
-                    case BoundingBox2DLabeler boundingBox2DLabeler:
-                        boundingBox2DLabeler.idLabelConfig = idLabelConfig;
-                        break;
-                    case BoundingBox3DLabeler boundingBox3DLabeler:
-                        boundingBox3DLabeler.idLabelConfig = idLabelConfig;
-                        break;
-                    case ObjectCountLabeler objectCountLabeler:
-                        objectCountLabeler.labelConfig.autoAssignIds = idLabelConfig.autoAssignIds;
-                        objectCountLabeler.labelConfig.startingLabelId = idLabelConfig.startingLabelId;
-                        objectCountLabeler.labelConfig.Init(idLabelEntries);
-                        break;
-                    case RenderedObjectInfoLabeler renderedObjectInfoLabeler:
-                        renderedObjectInfoLabeler.idLabelConfig = idLabelConfig;
-                        break;
-                    case KeypointLabeler keypointLabeler:
-                        keypointLabeler.idLabelConfig = idLabelConfig;
-                        break;
-                    case InstanceSegmentationLabeler instanceSegmentationLabeler:
-                        instanceSegmentationLabeler.idLabelConfig = idLabelConfig;
-                        break;
-                    case SemanticSegmentationLabeler semanticSegmentationLabeler:
-                        semanticSegmentationLabeler.labelConfig = semanticLabelConfig;
-                        break;
-                }
-                
-                labeler.Init(perceptionCamera);
-            }
         }
     }
 }
