@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using SynthDet.Randomizers;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
+using UnityEngine.Perception.GroundTruth;
+using UnityEngine.Perception.Randomization.Parameters;
 using UnityEngine.Perception.Randomization.Scenarios;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
@@ -19,7 +22,9 @@ namespace SynthDet.Scenarios
         List<GameObject> m_Prefabs = new List<GameObject>();
         AssetLoadingStatus m_LoadingStatus = AssetLoadingStatus.LoadingCatalog;
         AsyncOperationHandle<IResourceLocator>[] m_CatalogHandles;
-        
+
+        List<string> m_LabelStringsForAutoLabelConfig = new List<string>();
+
         /// <inheritdoc/>
         protected override bool isScenarioReadyToStart
         {
@@ -47,7 +52,7 @@ namespace SynthDet.Scenarios
                             }
                         }
                         
-                        LoadPrefabs();
+                        LoadAndLabelPrefabs();
                         m_LoadingStatus = AssetLoadingStatus.LoadingPrefabs;
                         return false;
                     }
@@ -57,6 +62,7 @@ namespace SynthDet.Scenarios
                         {
                             if (m_Prefabs.Count < m_NumPrefabsToLoad)
                                 return false;
+                            SetupLabelConfigs();
                             var randomizer = GetRandomizer<ForegroundObjectPlacementRandomizer>();
                             m_Prefabs.Sort((prefab1, prefab2) => prefab1.name.CompareTo(prefab2.name));
                             randomizer.prefabs = m_Prefabs.ToArray();
@@ -82,14 +88,14 @@ namespace SynthDet.Scenarios
                 m_CatalogHandles[i] = Addressables.LoadContentCatalogAsync(m_CatalogUrls[i], false);
         }
 
-        void LoadPrefabs()
+        void LoadAndLabelPrefabs()
         {
             foreach (var handle in m_CatalogHandles)
             {
                 foreach (var key in handle.Result.Keys)
                 {
                     if (!key.ToString().Contains(".prefab"))
-                        return;
+                        continue;
                     
                     m_NumPrefabsToLoad++;
                     Addressables.LoadAssetAsync<GameObject>(key).Completed += prefabHandle =>
@@ -102,19 +108,108 @@ namespace SynthDet.Scenarios
                         }
                         lock (m_Prefabs)
                         {
+                            ConfigureLabeling(prefabHandle.Result);
                             m_Prefabs.Add(prefabHandle.Result);
                         }
                     };
                 }
             }
         }
-        
+
         enum AssetLoadingStatus
         {
             Complete,
             LoadingCatalog,
             LoadingPrefabs,
             Failed
+        }
+
+        void ConfigureLabeling(GameObject gObj)
+        {
+            var labeling = Utilities.GetOrAddComponent<Labeling>(gObj);
+            labeling.labels.Clear();
+            labeling.labels.Add(gObj.name);
+            if(!m_LabelStringsForAutoLabelConfig.Contains(labeling.labels[0]))
+                m_LabelStringsForAutoLabelConfig.Add(labeling.labels[0]);
+        }
+        
+        void SetupLabelConfigs()
+        {
+            var perceptionCamera = FindObjectOfType<PerceptionCamera>();
+
+            var idLabelConfig = ScriptableObject.CreateInstance<IdLabelConfig>();
+
+            idLabelConfig.autoAssignIds = true;
+            idLabelConfig.startingLabelId = StartingLabelId.One;
+
+            var idLabelEntries = m_LabelStringsForAutoLabelConfig.Select((t, i) => new IdLabelEntry { id = i, label = t }).ToList();
+            idLabelConfig.Init(idLabelEntries);
+
+            var semanticLabelConfig = ScriptableObject.CreateInstance<SemanticSegmentationLabelConfig>();
+            var semanticLabelEntries = new List<SemanticSegmentationLabelEntry>();
+            for (var i = 0; i < m_LabelStringsForAutoLabelConfig.Count; i++)
+            {
+                semanticLabelEntries.Add(new SemanticSegmentationLabelEntry()
+                {
+                    label = m_LabelStringsForAutoLabelConfig[i],
+                    color = GetUniqueSemanticSegmentationColor()
+                });
+            }
+            semanticLabelConfig.Init(semanticLabelEntries);
+
+            foreach (var labeler in perceptionCamera.labelers)
+            {
+                if (!labeler.enabled)
+                    continue;
+
+                switch (labeler)
+                {
+                    case BoundingBox2DLabeler boundingBox2DLabeler:
+                        boundingBox2DLabeler.idLabelConfig = idLabelConfig;
+                        break;
+                    case BoundingBox3DLabeler boundingBox3DLabeler:
+                        boundingBox3DLabeler.idLabelConfig = idLabelConfig;
+                        break;
+                    case ObjectCountLabeler objectCountLabeler:
+                        objectCountLabeler.labelConfig.autoAssignIds = idLabelConfig.autoAssignIds;
+                        objectCountLabeler.labelConfig.startingLabelId = idLabelConfig.startingLabelId;
+                        objectCountLabeler.labelConfig.Init(idLabelEntries);
+                        break;
+                    case RenderedObjectInfoLabeler renderedObjectInfoLabeler:
+                        renderedObjectInfoLabeler.idLabelConfig = idLabelConfig;
+                        break;
+                    case KeypointLabeler keypointLabeler:
+                        keypointLabeler.idLabelConfig = idLabelConfig;
+                        break;
+                    case InstanceSegmentationLabeler instanceSegmentationLabeler:
+                        instanceSegmentationLabeler.idLabelConfig = idLabelConfig;
+                        break;
+                    case SemanticSegmentationLabeler semanticSegmentationLabeler:
+                        semanticSegmentationLabeler.labelConfig = semanticLabelConfig;
+                        break;
+                }
+
+                labeler.Init(perceptionCamera);
+            }
+        }
+
+        static HashSet<Color> s_ColorsAlreadyUsed = new HashSet<Color>();
+        static ColorRgbParameter s_SemanticColorParameter = new ColorRgbParameter();
+        static Color GetUniqueSemanticSegmentationColor()
+        {
+            var sampledColor = s_SemanticColorParameter.Sample();
+            var maxTries = 1000;
+            var count = 0;
+
+            while (s_ColorsAlreadyUsed.Contains(sampledColor) && count <= maxTries)
+            {
+                count++;
+                sampledColor = s_SemanticColorParameter.Sample();
+                Debug.LogError("Failed to find unique semantic segmentation color for a label.");
+            }
+
+            s_ColorsAlreadyUsed.Add(sampledColor);
+            return sampledColor;
         }
     }
 }

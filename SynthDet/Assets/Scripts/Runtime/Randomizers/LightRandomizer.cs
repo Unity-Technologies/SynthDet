@@ -8,7 +8,7 @@ using UnityEngine.Perception.Randomization.Samplers;
 namespace SynthDet.Randomizers
 {
     [Serializable]
-    [AddRandomizerMenu("Perception/My Light Randomizer")]
+    [AddRandomizerMenu("SynthDet/Light Randomizer")]
     public class LightRandomizer : Randomizer
     {
         public FloatParameter lightIntensityParameter = new FloatParameter { value = new UniformSampler(0f, 1f) };

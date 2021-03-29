@@ -12,7 +12,7 @@ namespace SynthDet.Randomizers
     /// Creates multiple layers of evenly distributed but randomly placed objects
     /// </summary>
     [Serializable]
-    [AddRandomizerMenu("SynthDet/My Background Object Placement Randomizer")]
+    [AddRandomizerMenu("SynthDet/Background Object Placement Randomizer")]
     public class BackgroundObjectPlacementRandomizer : Randomizer
     {
         /// <summary>

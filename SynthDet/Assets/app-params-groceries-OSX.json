@@ -1,0 +1,13 @@
+{
+  "contents" : {
+    "catalogs" : [{
+      "catalogUrl" : "https://storage.googleapis.com/steven-addressables-tests/StandaloneOSX/catalog_2021.03.26.22.33.12.json",
+      "catalogName" : "catalog_2021.03.26.22.33.12.json",
+      "bundles" : [{
+        "name" :"defaultlocalgroup_assets_all_02b676d077b8d653d795b4d6c3bb0f9f.bundle",
+        "url" : "https://storage.googleapis.com/steven-addressables-tests/StandaloneOSX/defaultlocalgroup_assets_all_02b676d077b8d653d795b4d6c3bb0f9f.bundle"
+      }],
+      "placeholder" : "__placeholder__"
+    }]
+  }
+}

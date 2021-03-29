@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
+using SynthDet.RandomizerTags;
 using UnityEngine;
+using UnityEngine.Perception.GroundTruth;
 using UnityEngine.Perception.Randomization.Parameters;
 using UnityEngine.Perception.Randomization.Randomizers;
 using UnityEngine.Perception.Randomization.Randomizers.Utilities;
 using UnityEngine.Perception.Randomization.Samplers;
+using Object = UnityEngine.Object;
 
 namespace SynthDet.Randomizers
 {
@@ -12,7 +17,7 @@ namespace SynthDet.Randomizers
     /// Creates a 2D layer of evenly spaced GameObjects from a given list of prefabs
     /// </summary>
     [Serializable]
-    [AddRandomizerMenu("Perception/My Foreground Object Placement Randomizer")]
+    [AddRandomizerMenu("SynthDet/Foreground Object Placement Randomizer")]
     public class ForegroundObjectPlacementRandomizer : Randomizer
     {
         public int maxObjectCount = 100;
@@ -31,6 +36,12 @@ namespace SynthDet.Randomizers
             m_Container = new GameObject("Foreground Objects");
             var transform = scenario.transform;
             m_Container.transform.parent = transform;
+            
+            foreach (var prefab in prefabs)
+            {
+                ConfigureRandomizerTags(prefab);
+            }
+
             m_GameObjectOneWayCache = new GameObjectOneWayCache(m_Container.transform, prefabs);
         }
 
@@ -74,6 +85,12 @@ namespace SynthDet.Randomizers
         {
             return prefabs[(int)(m_PrefabSampler.Sample() * prefabs.Length)];
         }
+
+        void ConfigureRandomizerTags(GameObject gObj)
+        {
+            Utilities.GetOrAddComponent<ForegroundObjectMetricReporterTag>(gObj);
+            Utilities.GetOrAddComponent<UnifiedRotationRandomizerTag>(gObj);
+            Utilities.GetOrAddComponent<ForegroundScaleRandomizerTag>(gObj);
+        }
     }
 }
-

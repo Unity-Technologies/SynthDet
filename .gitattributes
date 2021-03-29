@@ -79,5 +79,5 @@ meta] text !filter !merge !diff
 *.cs text !filter !merge !diff
 *.meta text !filter !merge !diff
 *.raw filter=lfs diff=lfs merge=lfs -text
-*.ipynb filter=lfs diff=lfs merge=lfs -text
+*.ipynb text !filter !merge !diff
 *.estimator filter=lfs diff=lfs merge=lfs -text
