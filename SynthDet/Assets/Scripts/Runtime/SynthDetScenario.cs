@@ -129,12 +129,15 @@ namespace SynthDet.Scenarios
             var labeling = Utilities.GetOrAddComponent<Labeling>(gObj);
             labeling.labels.Clear();
             labeling.labels.Add(gObj.name);
+            Debug.Log($"Adding label to {gObj.name}");
             if(!m_LabelStringsForAutoLabelConfig.Contains(labeling.labels[0]))
                 m_LabelStringsForAutoLabelConfig.Add(labeling.labels[0]);
         }
         
         void SetupLabelConfigs()
         {
+            Debug.Log("Setting up label configs");
+            
             var perceptionCamera = FindObjectOfType<PerceptionCamera>();
 
             var idLabelConfig = ScriptableObject.CreateInstance<IdLabelConfig>();
@@ -144,6 +147,12 @@ namespace SynthDet.Scenarios
 
             var idLabelEntries = m_LabelStringsForAutoLabelConfig.Select((t, i) => new IdLabelEntry { id = i, label = t }).ToList();
             idLabelConfig.Init(idLabelEntries);
+            
+            Debug.Log("ID label config created. There are " + idLabelConfig.labelEntries.Count + ". The label list: \n");
+            foreach (var label in idLabelConfig.labelEntries)
+            {
+                Debug.Log(label.label + "\n");
+            }
 
             var semanticLabelConfig = ScriptableObject.CreateInstance<SemanticSegmentationLabelConfig>();
             var semanticLabelEntries = new List<SemanticSegmentationLabelEntry>();
@@ -166,6 +175,7 @@ namespace SynthDet.Scenarios
                 {
                     case BoundingBox2DLabeler boundingBox2DLabeler:
                         boundingBox2DLabeler.idLabelConfig = idLabelConfig;
+                        Debug.Log("Set 2D bbox label config");
                         break;
                     case BoundingBox3DLabeler boundingBox3DLabeler:
                         boundingBox3DLabeler.idLabelConfig = idLabelConfig;
@@ -174,9 +184,11 @@ namespace SynthDet.Scenarios
                         objectCountLabeler.labelConfig.autoAssignIds = idLabelConfig.autoAssignIds;
                         objectCountLabeler.labelConfig.startingLabelId = idLabelConfig.startingLabelId;
                         objectCountLabeler.labelConfig.Init(idLabelEntries);
+                        Debug.Log("Set object count label config");
                         break;
                     case RenderedObjectInfoLabeler renderedObjectInfoLabeler:
                         renderedObjectInfoLabeler.idLabelConfig = idLabelConfig;
+                        Debug.Log("Set rendered object info label config");
                         break;
                     case KeypointLabeler keypointLabeler:
                         keypointLabeler.idLabelConfig = idLabelConfig;
