@@ -1,14 +1,14 @@
 {
   "constants": {
     "framesPerIteration": 1,
-    "totalIterations": 10000,
+    "totalIterations": 1000,
     "instanceCount": 1,
     "instanceIndex": 0,
     "randomSeed": 539662031
   },
   "randomizers": {
     "groups": {
-      "MyBackgroundObjectPlacementRandomizer": {
+      "BackgroundObjectPlacementRandomizer": {
         "metadata": {
           "name": "",
           "description": ""
@@ -49,7 +49,59 @@
           }
         }
       },
-      "MyForegroundOccluderPlacementRandomizer": {
+      "ForegroundObjectPlacementRandomizer": {
+        "metadata": {
+          "name": "",
+          "description": ""
+        },
+        "items": {
+          "maxObjectCount": {
+            "scalar": {
+              "metadata": {
+                "name": "",
+                "description": ""
+              },
+              "value": {
+                "num": 100.0
+              }
+            }
+          },
+          "depth": {
+            "scalar": {
+              "metadata": {
+                "name": "",
+                "description": ""
+              },
+              "value": {
+                "num": 3.0
+              }
+            }
+          },
+          "separationDistance": {
+            "param": {
+              "metadata": {
+                "name": "",
+                "description": ""
+              },
+              "items": {
+                "value": {
+                  "samplerOptions": {
+                    "metadata": {
+                      "name": "",
+                      "description": ""
+                    },
+                    "uniform": {
+                      "min": 0.699999988079071,
+                      "max": 1.2000000476837158
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ForegroundOccluderPlacementRandomizer": {
         "metadata": {
           "name": "",
           "description": ""
@@ -90,7 +142,7 @@
           }
         }
       },
-      "MyForegroundOccluderScaleRandomizer": {
+      "ForegroundOccluderScaleRandomizer": {
         "metadata": {
           "name": "",
           "description": ""
@@ -112,6 +164,36 @@
                     "uniform": {
                       "min": 0.5,
                       "max": 6.0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ForegroundScaleRandomizer": {
+        "metadata": {
+          "name": "",
+          "description": ""
+        },
+        "items": {
+          "scale": {
+            "param": {
+              "metadata": {
+                "name": "",
+                "description": ""
+              },
+              "items": {
+                "value": {
+                  "samplerOptions": {
+                    "metadata": {
+                      "name": "",
+                      "description": ""
+                    },
+                    "uniform": {
+                      "min": 4.0,
+                      "max": 8.0
                     }
                   }
                 }
@@ -142,102 +224,6 @@
                     "uniform": {
                       "min": -180.0,
                       "max": 180.0
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MyDualLayerForegroundObjectPlacementRandomizer": {
-        "metadata": {
-          "name": "",
-          "description": ""
-        },
-        "items": {
-          "maxObjectCount": {
-            "scalar": {
-              "metadata": {
-                "name": "",
-                "description": ""
-              },
-              "value": {
-                "num": 100.0
-              }
-            }
-          },
-          "dualLayer": {
-            "scalar": {
-              "metadata": {
-                "name": "",
-                "description": ""
-              },
-              "value": {
-                "bool": false
-              }
-            }
-          },
-          "layerOneDepth": {
-            "scalar": {
-              "metadata": {
-                "name": "",
-                "description": ""
-              },
-              "value": {
-                "num": 3.0
-              }
-            }
-          },
-          "layerOneSeparationDistance": {
-            "param": {
-              "metadata": {
-                "name": "",
-                "description": ""
-              },
-              "items": {
-                "value": {
-                  "samplerOptions": {
-                    "metadata": {
-                      "name": "",
-                      "description": ""
-                    },
-                    "uniform": {
-                      "min": 0.699999988079071,
-                      "max": 1.2000000476837158
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "layerTwoDepth": {
-            "scalar": {
-              "metadata": {
-                "name": "",
-                "description": ""
-              },
-              "value": {
-                "num": 6.0
-              }
-            }
-          },
-          "layerTwoSeparationDistance": {
-            "param": {
-              "metadata": {
-                "name": "",
-                "description": ""
-              },
-              "items": {
-                "value": {
-                  "samplerOptions": {
-                    "metadata": {
-                      "name": "",
-                      "description": ""
-                    },
-                    "uniform": {
-                      "min": 0.0,
-                      "max": 1.0
                     }
                   }
                 }
@@ -300,7 +286,61 @@
           }
         }
       },
-      "MyLightRandomizer": {
+      "UnifiedRotationRandomizer": {
+        "metadata": {
+          "name": "",
+          "description": ""
+        },
+        "items": {
+          "rotation": {
+            "param": {
+              "metadata": {
+                "name": "",
+                "description": ""
+              },
+              "items": {
+                "x": {
+                  "samplerOptions": {
+                    "metadata": {
+                      "name": "",
+                      "description": ""
+                    },
+                    "uniform": {
+                      "min": 0.0,
+                      "max": 360.0
+                    }
+                  }
+                },
+                "y": {
+                  "samplerOptions": {
+                    "metadata": {
+                      "name": "",
+                      "description": ""
+                    },
+                    "uniform": {
+                      "min": 0.0,
+                      "max": 360.0
+                    }
+                  }
+                },
+                "z": {
+                  "samplerOptions": {
+                    "metadata": {
+                      "name": "",
+                      "description": ""
+                    },
+                    "uniform": {
+                      "min": 0.0,
+                      "max": 360.0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "LightRandomizer": {
         "metadata": {
           "name": "",
           "description": ""
@@ -409,37 +449,7 @@
           }
         }
       },
-      "MyForegroundScaleRandomizer": {
-        "metadata": {
-          "name": "",
-          "description": ""
-        },
-        "items": {
-          "scale": {
-            "param": {
-              "metadata": {
-                "name": "",
-                "description": ""
-              },
-              "items": {
-                "value": {
-                  "samplerOptions": {
-                    "metadata": {
-                      "name": "",
-                      "description": ""
-                    },
-                    "uniform": {
-                      "min": 4.0,
-                      "max": 8.0
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MyCameraRandomizer": {
+      "CameraRandomizer": {
         "metadata": {
           "name": "",
           "description": ""
@@ -505,82 +515,6 @@
                     "uniform": {
                       "min": -10.0,
                       "max": 10.0
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "grainAmountParameter": {
-            "param": {
-              "metadata": {
-                "name": "",
-                "description": ""
-              },
-              "items": {
-                "value": {
-                  "samplerOptions": {
-                    "metadata": {
-                      "name": "",
-                      "description": ""
-                    },
-                    "uniform": {
-                      "min": 0.0,
-                      "max": 0.0
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "MyUnifiedRotationRandomizer": {
-        "metadata": {
-          "name": "",
-          "description": ""
-        },
-        "items": {
-          "rotation": {
-            "param": {
-              "metadata": {
-                "name": "",
-                "description": ""
-              },
-              "items": {
-                "x": {
-                  "samplerOptions": {
-                    "metadata": {
-                      "name": "",
-                      "description": ""
-                    },
-                    "uniform": {
-                      "min": 0.0,
-                      "max": 360.0
-                    }
-                  }
-                },
-                "y": {
-                  "samplerOptions": {
-                    "metadata": {
-                      "name": "",
-                      "description": ""
-                    },
-                    "uniform": {
-                      "min": 0.0,
-                      "max": 360.0
-                    }
-                  }
-                },
-                "z": {
-                  "samplerOptions": {
-                    "metadata": {
-                      "name": "",
-                      "description": ""
-                    },
-                    "uniform": {
-                      "min": 0.0,
-                      "max": 360.0
                     }
                   }
                 }
