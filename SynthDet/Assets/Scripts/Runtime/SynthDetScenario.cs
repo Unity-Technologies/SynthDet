@@ -70,6 +70,11 @@ namespace SynthDet.Scenarios
                             return true;
                         }
                     }
+                    case AssetLoadingStatus.Failed:
+                    {
+                        Quit();
+                        return false;
+                    }
                     default:
                         return false;
                 }
@@ -80,8 +85,12 @@ namespace SynthDet.Scenarios
         protected override void OnAwake()
         {
             base.OnAwake();
-            Addressables.InternalIdTransformFunc = location => m_BundleToUrlMap.ContainsKey(location.PrimaryKey)
-                ? m_BundleToUrlMap[location.PrimaryKey] : location.InternalId;
+            Addressables.InternalIdTransformFunc = location =>
+            {
+                return m_BundleToUrlMap.ContainsKey(location.PrimaryKey)
+                    ? m_BundleToUrlMap[location.PrimaryKey]
+                    : location.InternalId;
+            };
             
             m_CatalogHandles = new AsyncOperationHandle<IResourceLocator>[m_CatalogUrls.Count];
             for(var i = 0 ; i < m_CatalogUrls.Count; i++)
