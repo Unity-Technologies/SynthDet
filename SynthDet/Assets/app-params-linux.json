@@ -1,0 +1,12 @@
+﻿{
+  "contents" : {
+    "catalogs" : [{
+      "catalogUrl" : "https://storage.googleapis.com/steven-addressables-tests/StandaloneLinux64/catalog_2021.03.30.16.26.00.json",
+      "catalogName" : "catalog_2021.03.30.16.26.00.json",
+      "bundles" : [{
+        "name" :"defaultlocalgroup_assets_all_49dcb6c4147bf05294b6dc13898fc9fd.bundle",
+        "url" : "https://storage.googleapis.com/steven-addressables-tests/StandaloneLinux64/defaultlocalgroup_assets_all_49dcb6c4147bf05294b6dc13898fc9fd.bundle"
+      }]
+    }]
+  }
+}

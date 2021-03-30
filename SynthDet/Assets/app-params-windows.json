@@ -1,0 +1,12 @@
+{
+  "contents" : {
+    "catalogs" : [{
+      "catalogUrl" : "https://storage.googleapis.com/steven-addressables-tests/StandaloneWindows64/catalog_2021.03.29.20.32.36.json",
+      "catalogName" : "catalog_2021.03.29.20.32.36.json",
+      "bundles" : [{
+        "name" :"defaultlocalgroup_assets_all_06c1fd7999a3850dae991ed73291ea26.bundle",
+        "url" : "https://storage.googleapis.com/steven-addressables-tests/StandaloneWindows64/defaultlocalgroup_assets_all_06c1fd7999a3850dae991ed73291ea26.bundle"
+      }]
+    }]
+  }
+}
