@@ -141,6 +141,7 @@ namespace SynthDet.Scenarios
                         lock (m_Prefabs)
                         {
                             ConfigureLabeling(prefabHandle.Result);
+                            prefabHandle.Result.layer = LayerMask.NameToLayer("Foreground");
                             m_Prefabs.Add(prefabHandle.Result);
                         }
                     };
