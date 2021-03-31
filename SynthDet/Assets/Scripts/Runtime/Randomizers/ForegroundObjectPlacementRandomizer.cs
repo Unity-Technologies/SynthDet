@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
 using SynthDet.RandomizerTags;
+using Unity.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Perception.GroundTruth;
 using UnityEngine.Perception.Randomization.Parameters;
@@ -30,6 +32,8 @@ namespace SynthDet.Randomizers
         GameObject m_Container;
         GameObjectOneWayCache m_GameObjectOneWayCache;
 
+        private NativeArray<Bounds> m_ObjectBounds;
+
         /// <inheritdoc/>
         protected override void OnScenarioStart()
         {
@@ -41,6 +45,8 @@ namespace SynthDet.Randomizers
             {
                 ConfigureRandomizerTags(prefab);
             }
+
+            m_ObjectBounds = ComputeObjectBounds(prefabs);
 
             m_GameObjectOneWayCache = new GameObjectOneWayCache(m_Container.transform, prefabs);
         }
@@ -72,7 +78,17 @@ namespace SynthDet.Randomizers
             foreach (var sample in placementSamples)
             {
                 var instance = m_GameObjectOneWayCache.GetOrInstantiate(GetRandomPrefab());
-                instance.transform.position = new Vector3(sample.x, sample.y, depth) + offset;
+
+                instance.transform.localPosition = Vector3.zero;
+                instance.transform.localScale = Vector3.one;
+                instance.transform.localRotation = Quaternion.identity;
+                var bounds = ComputeBounds(instance);
+                
+                instance.transform.localPosition = new Vector3(sample.x, sample.y, depth) + offset - bounds.center;
+                var scale = instance.transform.localScale;
+                var magnitude = bounds.extents.magnitude;
+                scale.Scale(new Vector3(1/magnitude, 1/magnitude, 1/magnitude));
+                instance.transform.localScale = scale;
 
                 if (++spawnedCount == maxObjectCount)
                     break;
@@ -80,6 +96,55 @@ namespace SynthDet.Randomizers
 
             placementSamples.Dispose();
         }
+        
+        static NativeArray<Bounds> ComputeObjectBounds(GameObject[] prefabs)
+        {
+            var objectBounds = new NativeArray<Bounds>(prefabs.Length, Allocator.TempJob);
+            for (int i = 0; i < prefabs.Length; i++)
+            {
+                var bounds = ComputeBounds(prefabs[i]);
+                //assume objects will be aligned at origin
+                bounds.center = Vector3.zero;
+                objectBounds[i] = bounds;
+            }
+
+            return objectBounds;
+        }
+        
+        public static Bounds ComputeBounds(GameObject gameObject)
+        {
+            var bounds = ComputeBoundsUnchecked(gameObject);
+            if (!bounds.IsValid)
+                throw new ArgumentException($"GameObject {gameObject.name} must have a MeshFilter in its hierarchy.");
+
+            var result = new Bounds();
+            result.SetMinMax(bounds.Min, bounds.Max);
+            return result;
+        }
+
+        static SynthDetMinMaxAABB ComputeBoundsUnchecked(GameObject gameObject)
+        {
+            SynthDetMinMaxAABB aabb = new SynthDetMinMaxAABB(
+                new float3(float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity), 
+                new float3(float.NegativeInfinity, float.NegativeInfinity, float.NegativeInfinity));
+            var meshFilter = gameObject.GetComponent<MeshFilter>();
+            if (meshFilter != null)
+            {
+                var bounds = meshFilter.sharedMesh.bounds;
+                aabb = SynthDetMinMaxAABB.CreateFromCenterAndExtents(bounds.center, bounds.extents);
+            }
+
+            var transform = gameObject.transform;
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                var childAabb = ComputeBoundsUnchecked(transform.GetChild(i).gameObject);
+                aabb.Encapsulate(childAabb);
+            }
+
+            aabb = SynthDetMinMaxAABB.Transform(float4x4.TRS(transform.localPosition, transform.localRotation, transform.localScale), aabb);
+            return aabb;
+        }
+        
 
         GameObject GetRandomPrefab()
         {

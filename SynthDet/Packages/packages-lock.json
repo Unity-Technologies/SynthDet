@@ -74,7 +74,7 @@
     },
     "com.unity.mathematics": {
       "version": "1.2.1",
-      "depth": 2,
+      "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -105,7 +105,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.perception": {
-      "version": "file:C:/repos/com.unity.perception/com.unity.perception",
+      "version": "file:C:/srchome/com.unity.perception2/com.unity.perception",
       "depth": 0,
       "source": "local",
       "dependencies": {
