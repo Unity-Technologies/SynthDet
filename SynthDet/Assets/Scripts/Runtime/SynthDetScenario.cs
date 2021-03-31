@@ -8,6 +8,7 @@ using UnityEngine.Perception.GroundTruth;
 using UnityEngine.Perception.Randomization.Parameters;
 using UnityEngine.Perception.Randomization.Scenarios;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceLocations;
 
 namespace SynthDet.Scenarios
 {
@@ -81,20 +82,42 @@ namespace SynthDet.Scenarios
             }
         }
 
-        /// <inheritdoc/>
         protected override void OnAwake()
         {
             base.OnAwake();
-            Addressables.InternalIdTransformFunc = location =>
+
+            Caching.ClearCache();
+
+            string InternalIdTransformFunc(IResourceLocation location)
             {
-                return m_BundleToUrlMap.ContainsKey(location.PrimaryKey)
+                var internalId = m_BundleToUrlMap.ContainsKey(location.PrimaryKey)
                     ? m_BundleToUrlMap[location.PrimaryKey]
                     : location.InternalId;
-            };
+                
+                Debug.Log($"InternalIdTransformFunc. Old: {location.InternalId} New: {internalId}");
+                return internalId;
+            }
+
+            Addressables.InternalIdTransformFunc = InternalIdTransformFunc;
+
+            // Addressables.InternalIdTransformFunc = TransformFunc;
             
             m_CatalogHandles = new AsyncOperationHandle<IResourceLocator>[m_CatalogUrls.Count];
             for(var i = 0 ; i < m_CatalogUrls.Count; i++)
                 m_CatalogHandles[i] = Addressables.LoadContentCatalogAsync(m_CatalogUrls[i], false);
+        }
+        
+        string TransformFunc(IResourceLocation location)
+        {
+            Debug.Log(location.InternalId);
+            if (location.InternalId.Contains("catalog") && location.InternalId.Contains(".json"))
+                return location.InternalId;
+            if (location.InternalId.Contains("__placeholder__") && location.InternalId.Contains("_assets_all_")) //"doorgroup6_assets_all_ef13245136c2b5bec4ea18ac92071dca.bundle"))
+                return location.InternalId.Replace("__placeholder__/foreground_group_assets_all_0c7829f95130438cde35283652f1fd3f.bundle", "https://storage.googleapis.com/addressables-synthdet/e2e/newe2e/foreground_group_assets_all_0c7829f95130438cde35283652f1fd3f.bundle");
+            if (location.InternalId.Contains("__placeholder__") && location.InternalId.Contains("_unitybuiltinshaders_"))
+                //"doorgroup6_unitybuiltinshaders_fb3cc65dc055f6c5ef84d30de128788a.bundle"))
+                return location.InternalId.Replace("__placeholder__/foreground_group_unitybuiltinshaders_51bd82438b9ab720fa52c2dbd163e111.bundle","https://storage.googleapis.com/addressables-synthdet/e2e/newe2e/foreground_group_unitybuiltinshaders_51bd82438b9ab720fa52c2dbd163e111.bundle");
+            return location.InternalId;
         }
 
         void LoadAndLabelPrefabs()

@@ -31,22 +31,27 @@ namespace SynthDet.Randomizers
         public GameObject[] prefabs = new GameObject[0];
         GameObject m_Container;
         GameObjectOneWayCache m_GameObjectOneWayCache;
-
-        private NativeArray<Bounds> m_ObjectBounds;
-
+        
         /// <inheritdoc/>
         protected override void OnScenarioStart()
         {
             m_Container = new GameObject("Foreground Objects");
             var transform = scenario.transform;
             m_Container.transform.parent = transform;
+
+            prefabs = prefabs.Where(p =>
+            {
+                var isValid = ComputeBoundsUnchecked(p).IsValid;
+                if (!isValid)
+                    Debug.LogError($"Object {p} does not contain a mesh");
+                
+                return isValid;
+            }).ToArray();
             
             foreach (var prefab in prefabs)
             {
                 ConfigureRandomizerTags(prefab);
             }
-
-            m_ObjectBounds = ComputeObjectBounds(prefabs);
 
             m_GameObjectOneWayCache = new GameObjectOneWayCache(m_Container.transform, prefabs);
         }
