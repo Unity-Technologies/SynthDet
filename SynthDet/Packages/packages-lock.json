@@ -105,7 +105,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.perception": {
-      "version": "file:C:/srchome/com.unity.perception2/com.unity.perception",
+      "version": "file:../../com.unity.perception/com.unity.perception",
       "depth": 0,
       "source": "local",
       "dependencies": {
