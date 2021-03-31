@@ -11,6 +11,7 @@ using UnityEngine.Perception.Randomization.Parameters;
 using UnityEngine.Perception.Randomization.Randomizers;
 using UnityEngine.Perception.Randomization.Randomizers.Utilities;
 using UnityEngine.Perception.Randomization.Samplers;
+using UnityEngine.Perception.Randomization.Scenarios;
 using Object = UnityEngine.Object;
 
 namespace SynthDet.Randomizers
@@ -47,6 +48,16 @@ namespace SynthDet.Randomizers
                 
                 return isValid;
             }).ToArray();
+
+            if (prefabs.Length == 0)
+            {
+                Debug.LogError("No objects in ForegroundObjectPlacementRandomizer");
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.ExitPlaymode();
+#else
+                Application.Quit();
+#endif
+            }
             
             foreach (var prefab in prefabs)
             {
