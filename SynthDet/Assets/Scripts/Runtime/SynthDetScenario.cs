@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using SynthDet.Randomizers;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -10,6 +9,7 @@ using UnityEngine.Perception.GroundTruth;
 using UnityEngine.Perception.Randomization.Parameters;
 using UnityEngine.Perception.Randomization.Scenarios;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using Debug = UnityEngine.Debug;
 
 namespace SynthDet.Scenarios
 {
@@ -23,25 +23,26 @@ namespace SynthDet.Scenarios
         static HashSet<Color> s_ColorsAlreadyUsed = new HashSet<Color>();
         static ColorRgbParameter s_SemanticColorParameter = new ColorRgbParameter();
         
-        AssetLoadingStatus m_LoadingStatus = AssetLoadingStatus.InProgress;
         List<string> m_LabelStringsForAutoLabelConfig = new List<string>();
-
-        /// <inheritdoc/>
-        protected override bool isScenarioReadyToStart
-        {
-            get
-            {
-                if (m_LoadingStatus == AssetLoadingStatus.Complete)
-                    return true;
-                if (m_LoadingStatus == AssetLoadingStatus.Failed)
-                    Quit();
-                return false;
-            }
-        }
 
         protected override void OnAwake()
         {
             base.OnAwake();
+            try
+            {
+                LoadAssets();
+            }
+            catch (Exception)
+            {
+                Quit();
+                throw;
+            }
+        }
+
+        void LoadAssets()
+        {
+            if (m_CatalogUrls.Count == 0)
+                throw new Exception("No content catalogs specified to load");
 
             // Map bundle urls from app-param to addressables resource locations.
             // This mapping enables dynamically assigned urls to be used for remote bundle locations.
@@ -49,35 +50,36 @@ namespace SynthDet.Scenarios
                 ? m_BundleToUrlMap[location.PrimaryKey]
                 : location.InternalId;
             
-            LoadCatalogs();
+            var catalogs = LoadCatalogs();
+            LoadAndLabelPrefabs(catalogs);
         }
 
-        async void LoadCatalogs()
+        List<IResourceLocator> LoadCatalogs()
         {
+            // Clear addressables cache to ensure that we are loading asset bundles from their remote locations
+            Caching.ClearCache();
+            
             // Begin loading the remote content catalogs included in the app-param
             var catalogHandles = new List<AsyncOperationHandle<IResourceLocator>>();
             foreach (var url in m_CatalogUrls)
             {
-                var catalogHandle = Addressables.LoadContentCatalogAsync(url, false);
+                var catalogHandle = Addressables.LoadContentCatalogAsync(url);
                 catalogHandles.Add(catalogHandle);
             }
-
-            await Task.WhenAll(catalogHandles.Select(handle => handle.Task));
-
-            var allSucceeded = catalogHandles.All(handle => handle.Status == AsyncOperationStatus.Succeeded);
-            if (allSucceeded)
+            
+            // Wait for catalogs to load
+            for (var i = 0; i < catalogHandles.Count; i++)
             {
-                var catalogs = catalogHandles.Select(completedHandle => completedHandle.Result);
-                LoadAndLabelPrefabs(catalogs);
+                var handle = catalogHandles[i];
+                handle.WaitForCompletion();
+                if (handle.Status != AsyncOperationStatus.Succeeded)
+                    throw new Exception($"Catalog failed to load from URL {m_CatalogUrls[i]}");
             }
-            else
-            {
-                Debug.LogError("Catalogs failed to load");
-                m_LoadingStatus = AssetLoadingStatus.Failed;
-            }
+
+            return catalogHandles.Select(handle => handle.Result).ToList();
         }
         
-        void LoadAndLabelPrefabs(IEnumerable<IResourceLocator> catalogs)
+        void LoadAndLabelPrefabs(List<IResourceLocator> catalogs)
         {
             // Gather only the prefab keys from the remote catalogs
             var prefabKeys = new List<string>();
@@ -93,29 +95,22 @@ namespace SynthDet.Scenarios
             
             // Load all the prefabs from the remote catalogs, label them, and finally assign
             // them to the ForegroundObjectPlacementRandomizer.
-            Addressables.LoadAssetsAsync<GameObject>(
-                prefabKeys, null, Addressables.MergeMode.Union, false).Completed += handle =>
-            {
-                if (handle.Status == AsyncOperationStatus.Succeeded)
-                {
-                    SetupLabelConfigs();
-                
-                    var prefabsList = new List<GameObject>(handle.Result);
-                    prefabsList.Sort((prefab1, prefab2) => prefab1.name.CompareTo(prefab2.name));
-                    foreach (var prefab in prefabsList)
-                        ConfigureLabeling(prefab);
-                
-                    var randomizer = GetRandomizer<ForegroundObjectPlacementRandomizer>();
-                    randomizer.prefabs = prefabsList.ToArray();
-                
-                    m_LoadingStatus = AssetLoadingStatus.Complete;
-                }
-                else
-                {
-                    Debug.LogError("Prefabs failed to load");
-                    m_LoadingStatus = AssetLoadingStatus.Failed;
-                }
-            };
+            var handle = Addressables.LoadAssetsAsync<GameObject>(
+                prefabKeys, null, Addressables.MergeMode.Union);
+            handle.WaitForCompletion();
+            if (handle.Status != AsyncOperationStatus.Succeeded)
+                throw new Exception("Prefabs failed to load from content catalogs");
+
+            // Sort prefabs and configure labeling
+            SetupLabelConfigs();
+            var prefabsList = new List<GameObject>(handle.Result);
+            prefabsList.Sort((prefab1, prefab2) => prefab1.name.CompareTo(prefab2.name));
+            foreach (var prefab in prefabsList)
+                ConfigureLabeling(prefab);
+            
+            // Inject the loaded prefabs into the ForegroundObjectPlacementRandomizer
+            var randomizer = GetRandomizer<ForegroundObjectPlacementRandomizer>();
+            randomizer.prefabs = prefabsList.ToArray();
         }
 
         void ConfigureLabeling(GameObject gObj)
@@ -202,13 +197,6 @@ namespace SynthDet.Scenarios
 
             s_ColorsAlreadyUsed.Add(sampledColor);
             return sampledColor;
-        }
-        
-        enum AssetLoadingStatus
-        {
-            InProgress,
-            Complete,
-            Failed
         }
     }
 }
