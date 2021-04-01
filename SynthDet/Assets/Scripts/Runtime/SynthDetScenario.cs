@@ -24,6 +24,11 @@ namespace SynthDet.Scenarios
         static ColorRgbParameter s_SemanticColorParameter = new ColorRgbParameter();
         
         List<string> m_LabelStringsForAutoLabelConfig = new List<string>();
+        
+        /// <summary>
+        /// Skip the first frame since the simulation capture package cannot capture it.
+        /// </summary>
+        protected override bool isScenarioReadyToStart => Time.frameCount != 1;
 
         protected override void OnAwake()
         {
