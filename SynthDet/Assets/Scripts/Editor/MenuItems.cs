@@ -1,13 +1,7 @@
 ﻿using System;
-using SynthDet.Randomizers;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.Perception.Randomization.Randomizers.SampleRandomizers;
-using UnityEngine.Perception.Randomization.Scenarios;
-using UnityEngine.SceneManagement;
-using BackgroundObjectPlacementRandomizer = SynthDet.Randomizers.BackgroundObjectPlacementRandomizer;
-using ForegroundObjectPlacementRandomizer = SynthDet.Randomizers.ForegroundObjectPlacementRandomizer;
 
 namespace SynthDet
 {
