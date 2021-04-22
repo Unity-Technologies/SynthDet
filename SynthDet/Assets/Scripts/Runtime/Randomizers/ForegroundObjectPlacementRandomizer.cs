@@ -61,10 +61,21 @@ namespace SynthDet.Randomizers
             
             foreach (var prefab in prefabs)
             {
+                ConfigureLayerRecursive(prefab);
                 ConfigureRandomizerTags(prefab);
             }
 
             m_GameObjectOneWayCache = new GameObjectOneWayCache(m_Container.transform, prefabs);
+        }
+
+        private static void ConfigureLayerRecursive(GameObject prefab)
+        {
+            prefab.layer = LayerMask.NameToLayer("Foreground");
+            for (int i = 0; i < prefab.transform.childCount; i++)
+            {
+                var child = prefab.transform.GetChild(i).gameObject;
+                ConfigureLayerRecursive(child);
+            }
         }
 
         /// <summary>

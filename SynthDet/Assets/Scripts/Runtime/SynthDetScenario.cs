@@ -115,7 +115,7 @@ namespace SynthDet.Scenarios
             
             // Inject the loaded prefabs into the ForegroundObjectPlacementRandomizer
             var randomizer = GetRandomizer<ForegroundObjectPlacementRandomizer>();
-            randomizer.prefabs = prefabsList.ToArray();
+            randomizer.prefabs = randomizer.prefabs.Concat(prefabsList).ToArray();
         }
 
         void ConfigureLabeling(GameObject gObj)
