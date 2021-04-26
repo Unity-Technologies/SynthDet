@@ -22,23 +22,26 @@ namespace SynthDet.Randomizers
         MetricDefinition m_ForegroundObjectPlacementMetricDefinition;
         public IdLabelConfig labelConfigForObjectPlacementMetrics;
         Dictionary<GameObject, Labeling> m_LabelingComponentsCache;
-
-        protected override void OnCreate()
-        {
-            m_ForegroundObjectPlacementMetricDefinition = DatasetCapture.RegisterMetricDefinition("Per Frame Foreground Object Placement Info", $"Reports the world position, scale, rotation, and label id of objects carrying a {nameof(ForegroundObjectMetricReporterTag)} component.", new Guid(k_LayerOneForegroundObjectPlacementInfoMetricGuid));
-            m_LabelingComponentsCache = new Dictionary<GameObject, Labeling>();
-            if (labelConfigForObjectPlacementMetrics == null)
-            {
-                var perceptionCamera = Object.FindObjectOfType<PerceptionCamera>();
-                if (perceptionCamera && perceptionCamera.labelers.Count > 0 && perceptionCamera.labelers[0] is BoundingBox2DLabeler boundingBox2DLabeler)
-                {
-                    labelConfigForObjectPlacementMetrics = boundingBox2DLabeler.idLabelConfig;
-                }
-            }
-        }
+        bool initialized;
+        
     
         protected override void OnUpdate()
         {
+            if (!initialized)
+            {
+                m_ForegroundObjectPlacementMetricDefinition = DatasetCapture.RegisterMetricDefinition("Per Frame Foreground Object Placement Info", $"Reports the world position, scale, rotation, and label id of objects carrying a {nameof(ForegroundObjectMetricReporterTag)} component.", new Guid(k_LayerOneForegroundObjectPlacementInfoMetricGuid));
+                m_LabelingComponentsCache = new Dictionary<GameObject, Labeling>();
+                if (labelConfigForObjectPlacementMetrics == null)
+                {
+                    var perceptionCamera = Object.FindObjectOfType<PerceptionCamera>();
+                    if (perceptionCamera && perceptionCamera.labelers.Count > 0 && perceptionCamera.labelers[0] is BoundingBox2DLabeler boundingBox2DLabeler)
+                    {
+                        labelConfigForObjectPlacementMetrics = boundingBox2DLabeler.idLabelConfig;
+                    }
+                }
+
+                initialized = true;
+            }
             var tags = tagManager.Query<ForegroundObjectMetricReporterTag>();
             ReportMetrics(tags);
         }

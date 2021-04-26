@@ -16,14 +16,16 @@ namespace SynthDet.Randomizers
     {
         const string k_LightingInfoMetricGuid = "939248EE-668A-4E98-8E79-E7909F034A47";
         MetricDefinition m_LightingInfoMetricDefinition;
-
-        protected override void OnCreate()
-        {
-            m_LightingInfoMetricDefinition = DatasetCapture.RegisterMetricDefinition("Per Frame Lighting Info", $"Reports the enabled state, intensity, colour, and rotation of lights carrying a {nameof(LightingInfoMetricReporterTag)} component.", new Guid(k_LightingInfoMetricGuid));
-        }
+        bool initialized;
     
         protected override void OnUpdate()
         {
+            if (!initialized)
+            {
+                m_LightingInfoMetricDefinition = DatasetCapture.RegisterMetricDefinition("Per Frame Lighting Info", $"Reports the enabled state, intensity, colour, and rotation of lights carrying a {nameof(LightingInfoMetricReporterTag)} component.", new Guid(k_LightingInfoMetricGuid));
+
+                initialized = true;
+            }
             var tags = tagManager.Query<LightingInfoMetricReporterTag>();
             ReportMetrics(tags);
         }

@@ -19,15 +19,17 @@ namespace SynthDet.Randomizers
         const string k_CameraPostProcessingMetricGuid = "a4b2253c-0eb2-4a90-9b20-6e77f1d13286";
         MetricDefinition m_CameraPostProcessingMetricDefinition;
         Dictionary<GameObject, Volume> m_PostProcessingVolumeCache;
-
-        protected override void OnCreate()
-        {
-            m_CameraPostProcessingMetricDefinition = DatasetCapture.RegisterMetricDefinition("Per Frame Camera Post Processing Info", $"Reports post-processing effects of cameras (or other objects with a Volume) carrying a {nameof(CameraPostProcessingMetricReporter)} component.", new Guid(k_CameraPostProcessingMetricGuid));
-            m_PostProcessingVolumeCache = new Dictionary<GameObject, Volume>();
-        }
-    
+        bool initialized;
+        
         protected override void OnUpdate()
         {
+            if (!initialized)
+            {
+                m_CameraPostProcessingMetricDefinition = DatasetCapture.RegisterMetricDefinition("Per Frame Camera Post Processing Info", $"Reports post-processing effects of cameras (or other objects with a Volume) carrying a {nameof(CameraPostProcessingMetricReporter)} component.", new Guid(k_CameraPostProcessingMetricGuid));
+                m_PostProcessingVolumeCache = new Dictionary<GameObject, Volume>();
+                initialized = true;
+            }
+            
             var tags = tagManager.Query<CameraPostProcessingMetricReporterTag>();
             ReportMetrics(tags);
         }
