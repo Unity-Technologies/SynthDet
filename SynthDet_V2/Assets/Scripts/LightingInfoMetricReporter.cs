@@ -30,7 +30,7 @@ namespace SynthDet.Randomizers
             ReportMetrics(tags);
         }
 
-        void ReportMetrics(IEnumerable<GameObject> tags)
+        void ReportMetrics(IEnumerable<RandomizerTag> tags)
         {
             var infos = new List<MyLightInfo>();
             foreach (var tag in tags)
