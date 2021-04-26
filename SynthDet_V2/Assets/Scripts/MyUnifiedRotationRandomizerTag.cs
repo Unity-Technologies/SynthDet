@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.Perception.Randomization.Randomizers;
+using UnityEngine.Experimental.Perception.Randomization.Randomizers;
 
 /// <summary>
 /// Used in conjunction with a RotationRandomizer to vary the rotation of GameObjects

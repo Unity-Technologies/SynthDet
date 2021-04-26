@@ -1,7 +1,6 @@
 using UnityEngine;
-using UnityEngine.Perception.Randomization.Randomizers;
+using UnityEngine.Experimental.Perception.Randomization.Randomizers;
 
-[RequireComponent(typeof(Light))]
 [AddComponentMenu("Perception/RandomizerTags/MyLightSwitcherTag")]
 public class MyLightSwitcherTag : RandomizerTag
 {
@@ -9,6 +8,9 @@ public class MyLightSwitcherTag : RandomizerTag
     public void Act(float rawInput)
     {
         var light = gameObject.GetComponent<Light>();
-        light.enabled = rawInput < enabledProbability;
+        if (light)
+        {
+            light.enabled = rawInput < enabledProbability;
+        }
     }
 }

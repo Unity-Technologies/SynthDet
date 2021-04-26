@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.Perception.Randomization.Randomizers;
+using UnityEngine.Experimental.Perception.Randomization.Randomizers;
 
 [RequireComponent(typeof(Camera))]
 [AddComponentMenu("Perception/RandomizerTags/My Camera Randomizer Tag")]

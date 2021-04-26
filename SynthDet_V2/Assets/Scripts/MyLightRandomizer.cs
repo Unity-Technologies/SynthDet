@@ -1,7 +1,8 @@
 using System;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.Perception.Randomization.Parameters;
-using UnityEngine.Perception.Randomization.Randomizers;
+using UnityEngine.Experimental.Perception.Randomization.Parameters;
+using UnityEngine.Experimental.Perception.Randomization.Randomizers;
 
 [Serializable]
 
@@ -13,18 +14,30 @@ public class MyLightRandomizer : Randomizer
     public FloatParameter auxParameter;
     protected override void OnIterationStart()
     {
-        var randomizerTags = tagManager.Query<MyLightRandomizerTag>();
-        foreach (var tag in randomizerTags)
+        var taggedObjects = tagManager.Query<MyLightRandomizerTag>();
+        foreach (var taggedObject in taggedObjects)
         {
-            var light = tag.GetComponent<Light>();
-            light.color = lightColorParameter.Sample();
-            tag.SetIntensity(lightIntensityParameter.Sample());
+            var light = taggedObject.GetComponent<Light>();
+            if (light)
+            {                
+                light.color = lightColorParameter.Sample();
+            }
+
+            var tag = taggedObject.GetComponent<MyLightRandomizerTag>();
+            if (tag)
+            {
+                tag.SetIntensity(lightIntensityParameter.Sample());
+            }
         }
         
-        var switcherTags = tagManager.Query<MyLightSwitcherTag>();
-        foreach (var tag in switcherTags)
+        taggedObjects = tagManager.Query<MyLightSwitcherTag>();
+        foreach (var taggedObject in taggedObjects)
         {
-            tag.Act(auxParameter.Sample());
+            var tag = taggedObject.GetComponent<MyLightSwitcherTag>();
+            if (tag)
+            {
+                tag.Act(auxParameter.Sample());
+            }
         }
     }
 }

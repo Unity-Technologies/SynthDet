@@ -1,7 +1,6 @@
 using UnityEngine;
-using UnityEngine.Perception.Randomization.Randomizers;
+using UnityEngine.Experimental.Perception.Randomization.Randomizers;
 
-[RequireComponent(typeof(Light))]
 [AddComponentMenu("Perception/RandomizerTags/MyLightRandomizerTag")]
 public class MyLightRandomizerTag : RandomizerTag
 {
@@ -11,7 +10,10 @@ public class MyLightRandomizerTag : RandomizerTag
     public void SetIntensity(float rawIntensity)
     {
         var light = gameObject.GetComponent<Light>();
-        var scaledIntensity = rawIntensity * (maxIntensity - minIntensity) + minIntensity;
-        light.intensity = scaledIntensity;
+        if (light)
+        {
+            var scaledIntensity = rawIntensity * (maxIntensity - minIntensity) + minIntensity;
+            light.intensity = scaledIntensity;
+        }
     }
 }

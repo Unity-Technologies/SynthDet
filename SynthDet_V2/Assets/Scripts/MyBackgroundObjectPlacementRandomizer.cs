@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Perception.Randomization.Parameters;
-using UnityEngine.Perception.Randomization.Randomizers;
-using UnityEngine.Perception.Randomization.Randomizers.Utilities;
-using UnityEngine.Perception.Randomization.Samplers;
+using UnityEngine.Experimental.Perception.Randomization.Parameters;
+using UnityEngine.Experimental.Perception.Randomization.Randomizers;
+using UnityEngine.Experimental.Perception.Randomization.Randomizers.SampleRandomizers;
 
 /// <summary>
 /// Creates multiple layers of evenly distributed but randomly placed objects
@@ -56,7 +55,7 @@ public class MyBackgroundObjectPlacementRandomizer : Randomizer
     {
         for (var i = 0; i < layerCount; i++)
         {
-            var seed = SamplerState.NextRandomState();
+            var seed = scenario.GenerateRandomSeedFromIndex(i);
             var placementSamples = PoissonDiskSampling.GenerateSamples(
                 placementArea.x, placementArea.y, separationDistance, seed);
             var offset = new Vector3(placementArea.x, placementArea.y, 0f) * -0.5f;

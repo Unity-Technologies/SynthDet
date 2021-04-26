@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.Perception.Randomization.Randomizers;
+using UnityEngine.Experimental.Perception.Randomization.Randomizers;
 
 [AddComponentMenu("Perception/RandomizerTags/MyForegroundOccluderScaleRandomizerTag")]
 public class MyForegroundOccluderScaleRandomizerTag : RandomizerTag { }

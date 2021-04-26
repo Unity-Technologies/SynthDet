@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
+using UnityEngine.Experimental.Perception.Randomization.Parameters;
+using UnityEngine.Experimental.Perception.Randomization.Randomizers;
 using UnityEngine;
-using UnityEngine.Perception.Randomization.Parameters;
-using UnityEngine.Perception.Randomization.Randomizers;
-using UnityEngine.Perception.Randomization.Randomizers.Utilities;
-using UnityEngine.Perception.Randomization.Samplers;
+using UnityEngine.Experimental.Perception.Randomization.Randomizers.SampleRandomizers;
 
 /// <summary>
 /// Creates a 2D layer of of evenly spaced GameObjects from a given list of prefabs
@@ -50,7 +49,7 @@ public class MyForegroundOccluderPlacementRandomizer : Randomizer
     /// </summary>
     protected override void OnIterationStart()
     {
-        var seed = SamplerState.NextRandomState();
+        var seed = scenario.GenerateRandomSeed();
         var placementSamples = PoissonDiskSampling.GenerateSamples(
             placementArea.x, placementArea.y, occluderSeparationDistance.Sample(), seed);
         var offset = new Vector3(placementArea.x, placementArea.y, 0f) * -0.5f;

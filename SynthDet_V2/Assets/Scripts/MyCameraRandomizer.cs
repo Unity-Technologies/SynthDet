@@ -1,9 +1,11 @@
 using System;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.Perception.Randomization.Randomizers;
+using UnityEngine.Experimental.Perception.Randomization.Randomizers;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using FloatParameter = UnityEngine.Perception.Randomization.Parameters.FloatParameter;
+using FloatParameter = UnityEngine.Experimental.Perception.Randomization.Parameters.FloatParameter;
 
 [Serializable]
 
@@ -17,10 +19,10 @@ public class MyCameraRandomizer : Randomizer
     
     protected override void OnIterationStart()
     {
-        var tags = tagManager.Query<MyCameraRandomizerTag>();
-        foreach (var tag in tags)
+        var taggedObjects = tagManager.Query<MyCameraRandomizerTag>();
+        foreach (var taggedObject in taggedObjects)
         {
-            var volume = tag.gameObject.GetComponent<Volume>();
+            var volume = taggedObject.GetComponent<Volume>();
             if (volume && volume.profile)
             {
                 var dof = (DepthOfField) volume.profile.components.Find(comp => comp is DepthOfField);
