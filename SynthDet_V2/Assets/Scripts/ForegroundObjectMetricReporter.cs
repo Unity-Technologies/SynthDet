@@ -51,6 +51,10 @@ namespace SynthDet.Randomizers
             var objectStates = new JArray();
             foreach (var tag in tags)
             {
+                if (Math.Abs(tag.gameObject.transform.position.x - GameObjectOneWayCache.outOfViewX) < 0.001)
+                {
+                    continue;
+                } 
                 var taggedObject = tag.gameObject;
                 if (!m_LabelingComponentsCache.TryGetValue(taggedObject, out var labeling))
                 {

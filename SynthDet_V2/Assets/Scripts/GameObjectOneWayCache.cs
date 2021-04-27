@@ -18,6 +18,7 @@ public class GameObjectOneWayCache
     List<GameObject>[] m_InstantiatedObjects;
     int[] m_NumObjectsActive;
     int NumObjectsInCache { get; set; }
+    public const float outOfViewX = 10000;
     public int NumObjectsActive { get; private set; }
 
     public GameObjectOneWayCache(Transform parent, GameObject[] prefabs)
@@ -73,7 +74,7 @@ public class GameObjectOneWayCache
                 foreach (var obj in m_InstantiatedObjects[i])
                 {
                     // Position outside the frame
-                    obj.transform.localPosition = new Vector3(10000, 0, 0);
+                    obj.transform.localPosition = new Vector3(outOfViewX, 0, 0);
                 }
             }
         }
