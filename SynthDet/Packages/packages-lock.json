@@ -143,11 +143,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.simulation.capture": {
-      "version": "0.0.10-preview.20",
-      "depth": 1,
+      "version": "0.0.10-preview.22",
+      "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.simulation.core": "0.0.10-preview.22"
+        "com.unity.simulation.core": "0.0.10-preview.23"
       },
       "url": "https://packages.unity.com"
     },
@@ -159,7 +159,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.simulation.core": {
-      "version": "0.0.10-preview.22",
+      "version": "0.0.10-preview.23",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
