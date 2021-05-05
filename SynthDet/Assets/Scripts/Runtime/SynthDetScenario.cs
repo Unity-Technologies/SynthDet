@@ -105,13 +105,14 @@ namespace SynthDet.Scenarios
             handle.WaitForCompletion();
             if (handle.Status != AsyncOperationStatus.Succeeded)
                 throw new Exception("Prefabs failed to load from content catalogs");
-
-            // Sort prefabs and configure labeling
-            SetupLabelConfigs();
+           
             var prefabsList = new List<GameObject>(handle.Result);
             prefabsList.Sort((prefab1, prefab2) => prefab1.name.CompareTo(prefab2.name));
             foreach (var prefab in prefabsList)
                 ConfigureLabeling(prefab);
+            
+            // Sort prefabs and configure labeling
+            SetupLabelConfigs();
             
             // Inject the loaded prefabs into the ForegroundObjectPlacementRandomizer
             var randomizer = GetRandomizer<ForegroundObjectPlacementRandomizer>();
