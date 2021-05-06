@@ -18,7 +18,7 @@ namespace SynthDet.Randomizers
             var tags = tagManager.Query<ForegroundScaleRandomizerTag>();
             foreach (var tag in tags)
             {
-                tag.transform.localScale = Vector3.one * scale.Sample();
+                tag.transform.localScale *= scale.Sample();
             }
         }
     }
