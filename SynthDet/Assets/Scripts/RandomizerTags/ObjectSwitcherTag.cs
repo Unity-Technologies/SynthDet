@@ -8,5 +8,6 @@ namespace SynthDet.RandomizerTags
     public class ObjectSwitcherTag : RandomizerTag
     {
         public int num;
+        public GameObject[] objects;
     }
 }
