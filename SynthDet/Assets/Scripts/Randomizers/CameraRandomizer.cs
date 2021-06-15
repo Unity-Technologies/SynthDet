@@ -19,6 +19,9 @@ namespace SynthDet.Randomizers
         public FloatParameter blurParameter = new FloatParameter { value = new UniformSampler(0f, 4f) };
         public FloatParameter contrastParameter = new FloatParameter { value = new UniformSampler(-10f, 10f) };
         public FloatParameter saturationParameter = new FloatParameter { value = new UniformSampler(-10f, 10f) };
+        
+        
+        public FloatParameter focalLenghtParameter = new FloatParameter { value = new UniformSampler(1f, 190f) };
 
         protected override void OnIterationStart()
         {
@@ -31,8 +34,19 @@ namespace SynthDet.Randomizers
                     var dof = (DepthOfField) volume.profile.components.Find(comp => comp is DepthOfField);
                     if (dof)
                     {
-                        var val = blurParameter.Sample();
-                        dof.gaussianStart.value = val;
+                        switch (dof.mode.value)
+                        {
+                            case DepthOfFieldMode.Gaussian:
+                            {
+                                var val = blurParameter.Sample();
+                                dof.gaussianStart.value = val;
+                                break;
+                            }
+                            case DepthOfFieldMode.Bokeh:
+                                //for stage2.4
+                                dof.focalLength.value = focalLenghtParameter.Sample();
+                                break;
+                        }
                     }
 
                     var colorAdjust = (ColorAdjustments) volume.profile.components.Find(comp => comp is ColorAdjustments);
