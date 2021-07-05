@@ -50,9 +50,9 @@ If you find this package useful, consider citing it using:
 
 [Synthetic data: Simulating myriad possibilities to train robust machine learning models](https://blogs.unity3d.com/2020/05/01/synthetic-data-simulating-myriad-possibilities-to-train-robust-machine-learning-models/)
 
-[Use Unity’s computer vision tools to generate and analyze synthetic data at scale to train your ML models](https://blogs.unity3d.com/2020/06/10/use-unitys-computer-vision-tools-to-generate-and-analyze-synthetic-data-at-scale-to-train-your-ml-models/)
+[Use Unity’s computer vision tools to generate and analyze synthetic data at scale to train your ML models](https://blogs.unity3d.com/2020/06/10/use-unitys-perception-tools-to-generate-and-analyze-synthetic-data-at-scale-to-train-your-ml-models/)
 
-[Training a performant object detection ML model on synthetic data using Unity computer vision tools](https://blogs.unity3d.com/2020/09/17/training-a-performant-object-detection-ml-model-on-synthetic-data-using-unity-computer-vision-tools/)
+[Training a performant object detection ML model on synthetic data using Unity computer vision tools](https://blogs.unity3d.com/2020/09/17/training-a-performant-object-detection-ml-model-on-synthetic-data-using-unity-perception-tools/)
 
 ## License
 [Apache License 2.0](LICENSE.md)
