@@ -96,15 +96,16 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.perception": {
-      "version": "file:C:/Dev/perception/com.unity.perception/com.unity.perception",
+      "version": "1.0.0-preview.1",
       "depth": 0,
-      "source": "local",
+      "source": "registry",
       "dependencies": {
         "com.unity.burst": "1.7.3",
         "com.unity.collections": "1.2.4",
         "com.unity.nuget.newtonsoft-json": "3.0.2",
         "com.unity.render-pipelines.core": "12.1.7"
-      }
+      },
+      "url": "https://artifactory.prd.cds.internal.unity3d.com/artifactory/api/npm/upm-candidates"
     },
     "com.unity.performance.profile-analyzer": {
       "version": "1.1.1",
