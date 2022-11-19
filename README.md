@@ -15,7 +15,27 @@ SynthDet is an open source project that demonstrates an end-to-end object detect
 * SynthDet Unity Project - Sample computer vision data generation project, demonstrating proper integration and usage of the Perception package for environment randomization and ground-truth generation. 
 * 3D Assets - High quality models of 63 commonly found grocery products
 * Unity's [Perception](https://github.com/Unity-Technologies/com.unity.perception) package.
-* Unity's [Dataset Insights](https://github.com/Unity-Technologies/datasetinsights) Python package
+
+## Unity Project overview
+This project utilizes the Unity [Perception](https://github.com/Unity-Technologies/com.unity.perception) package for randomizing the environment and capturing ground-truth on each frame. Randomization includes elements such as lighting, camera post processing, object placement, and background. 
+
+[Visit the Unity project documentation page](UnityProjectOverview.md) for a brief overview on how ground truth generation and domain randomization are achieved in SynthDet.
+
+## Tutorials
+* [Setting up the SynthDet Unity project](docs/GettingStartedSynthDet.md)
+* [Analyzing datasets with Pysolotools](https://github.com/Unity-Technologies/com.unity.perception/tree/main/com.unity.perception/Documentation~/Tutorial/pysolotools.md)
+* [Visualizing a dataset with Voxel51 Viewer](https://github.com/Unity-Technologies/com.unity.perception/tree/main/com.unity.perception/Documentation~/Tutorial/pysolotools-fiftyone.md)
+* [Converting to COCO](https://github.com/Unity-Technologies/com.unity.perception/tree/main/com.unity.perception/Documentation~/Tutorial/convert_to_coco.md)
+
+In addition to the above, in order to learn how to create a project like SynthDet from scratch using the Perception package, we recommend you follow the [Perception Tutorial](https://github.com/Unity-Technologies/com.unity.perception/tree/main/com.unity.perception/Documentation~/Tutorial/TUTORIAL.md).
+
+## Additional documentation
+* [The real world groceries dataset](docs/UnityGroceriesReal.md)
+* [Creating your own 3D assets](docs/CreatingAssets.md)
+* [Overview on how the SynthDet Unity project works](docs/UnityProjectOverview.md)
+* [Unity Perception package](https://github.com/Unity-Technologies/com.unity.perception)
+* [Background on Unity](docs/BackgroundUnity.md)
+
 
 ## Inspiration
 SynthDet was inspired by the following research paper from Google Cloud AI:  
@@ -31,7 +51,7 @@ For general questions or concerns please contact the Unity Computer Vision team 
 For feedback, bugs, or other issues please file a GitHub issue and the Unity Computer Vision team will investigate the issue as soon as possible.
 
 ## Citation
-If you find this package useful, consider citing it using:
+If you find this project useful, consider citing it using:
 
 ```
 @misc{synthdet2020,

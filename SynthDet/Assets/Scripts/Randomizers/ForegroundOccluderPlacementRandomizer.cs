@@ -3,8 +3,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Perception.Randomization.Parameters;
 using UnityEngine.Perception.Randomization.Randomizers;
-using UnityEngine.Perception.Randomization.Randomizers.Utilities;
+
 using UnityEngine.Perception.Randomization.Samplers;
+using UnityEngine.Perception.Randomization.Utilities;
 
 namespace SynthDet.Randomizers
 {
@@ -33,7 +34,7 @@ namespace SynthDet.Randomizers
         /// <summary>
         /// The list of prefabs sample and randomly place
         /// </summary>
-        public GameObjectParameter prefabs;
+        public CategoricalParameter<GameObject> prefabs;
 
         GameObject m_Container;
         GameObjectOneWayCache m_GameObjectOneWayCache;
@@ -43,10 +44,10 @@ namespace SynthDet.Randomizers
             m_Container = new GameObject("Foreground Occluders");
             var transform = scenario.transform;
             m_Container.transform.parent = transform;
-            m_GameObjectOneWayCache = new GameObjectOneWayCache(m_Container.transform, prefabs.categories.Select(element => element.Item1).ToArray());
+            m_GameObjectOneWayCache = new GameObjectOneWayCache(
+                m_Container.transform, prefabs.categories.Select(element => element.Item1).ToArray(), this);
         }
-    
-    
+
         /// <summary>
         /// Generates a foreground layer of objects at the start of each scenario iteration
         /// </summary>
@@ -62,9 +63,10 @@ namespace SynthDet.Randomizers
                 var instance = m_GameObjectOneWayCache.GetOrInstantiate(prefabs.Sample());
                 instance.transform.position = new Vector3(sample.x, sample.y, depth) + offset;
             }
+            
             placementSamples.Dispose();
         }
-
+        
         /// <summary>
         /// Deletes generated foreground objects after each scenario iteration is complete
         /// </summary>

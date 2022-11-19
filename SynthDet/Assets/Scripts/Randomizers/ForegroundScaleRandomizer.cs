@@ -8,17 +8,18 @@ using UnityEngine.Perception.Randomization.Samplers;
 namespace SynthDet.Randomizers
 {
     [Serializable]
-    [AddRandomizerMenu("SynthDet/Foreground Scale Randomizer")]
+    [AddRandomizerMenu("SynthDet/Foreground Scale Randomizer for Objects With Normalized Bounds")]
     public class ForegroundScaleRandomizer : Randomizer
     {
-        public FloatParameter scale = new FloatParameter { value = new UniformSampler(4f, 8f) };
+        public FloatParameter scale = new FloatParameter { value = new UniformSampler(0.15f, 0.60f) };
 
         protected override void OnIterationStart()
         {
             var tags = tagManager.Query<ForegroundScaleRandomizerTag>();
+            
             foreach (var tag in tags)
             {
-                tag.transform.localScale = Vector3.one * scale.Sample();
+                tag.transform.localScale *= scale.Sample();
             }
         }
     }

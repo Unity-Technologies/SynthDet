@@ -3,8 +3,8 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Perception.Randomization.Parameters;
 using UnityEngine.Perception.Randomization.Randomizers;
-using UnityEngine.Perception.Randomization.Randomizers.Utilities;
 using UnityEngine.Perception.Randomization.Samplers;
+using UnityEngine.Perception.Randomization.Utilities;
 
 namespace SynthDet.Randomizers
 {
@@ -38,7 +38,7 @@ namespace SynthDet.Randomizers
         /// <summary>
         /// A categorical parameter for sampling random prefabs to place
         /// </summary>
-        public GameObjectParameter prefabs;
+        public CategoricalParameter<GameObject> prefabs;
 
         GameObject m_Container;
         GameObjectOneWayCache m_GameObjectOneWayCache;
@@ -48,7 +48,7 @@ namespace SynthDet.Randomizers
             m_Container = new GameObject("Background Distractors");
             m_Container.transform.parent = scenario.transform;
             m_GameObjectOneWayCache = new GameObjectOneWayCache(m_Container.transform,
-                prefabs.categories.Select((element) => element.Item1).ToArray());
+                prefabs.categories.Select((element) => element.Item1).ToArray(), this);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace SynthDet.Randomizers
                 placementSamples.Dispose();
             }
         }
-
+        
         /// <summary>
         /// Deletes generated background objects after each scenario iteration is complete
         /// </summary>
