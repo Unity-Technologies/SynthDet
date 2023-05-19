@@ -3,6 +3,10 @@
 <img src="docs/images/banner.PNG" align="middle"/>
 </p>
 
+# Branch description
+Added Rigidbody component and Collision to prefabs. Edited file ForegroundObjectPlacementRandomizer.cs (removed Normalization and added item spawn by range on all axes)
+
+
 # SynthDet: An end-to-end object detection pipeline using synthetic data  
 [![license badge](https://img.shields.io/badge/license-Apache--2.0-green.svg)](LICENSE.md)
 ## Overview 
