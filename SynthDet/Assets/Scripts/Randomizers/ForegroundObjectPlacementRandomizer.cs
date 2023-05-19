@@ -19,21 +19,18 @@ namespace SynthDet.Randomizers
     [AddRandomizerMenu("SynthDet/Foreground Object Placement Randomizer")]
     public class ForegroundObjectPlacementRandomizer : Randomizer
     {
-        public int maxObjectCount = 100;
+        public int maxObjectCount = 10;
         
         public AssetSource<GameObject> foregroundAssets;
         GameObject[] m_ProcessedAssetInstances;
         IntegerParameter m_ObjectIndexParameter = new IntegerParameter();
 
-        public float depth = 3f;
-        public FloatParameter separationDistance = new FloatParameter { value = new UniformSampler(0.7f, 1.2f) };
-        public Vector2 placementArea = new Vector2(5f, 5f);
+        public UniformSampler separationByX = new UniformSampler(1f, 3f);
+        public UniformSampler separationByY = new UniformSampler(1f, 3f);
+        public UniformSampler separationByZ = new UniformSampler(1f, 3f);
 
         GameObject m_Container;
         GameObjectOneWayCache m_GameObjectOneWayCache;
-
-        [Tooltip("Enable this to normalize mesh sizes across all included objects, so that they all have a similar size before any further scale adjustments are applied during randomization. Note that this flag greatly influences the size of the objects on the screen, so any scale randomization will need to be adjusted based on the state of this flag.")]
-        public bool normalizeObjectBounds = false;
         
         protected override void OnScenarioStart()
         {
@@ -65,40 +62,24 @@ namespace SynthDet.Randomizers
 
         void PlaceObjects()
         {
-            var spawnedCount = 0;
-            var seed = SamplerState.NextRandomState();
-            var placementSamples = PoissonDiskSampling.GenerateSamples(
-                placementArea.x, placementArea.y, separationDistance.Sample(), seed);
-            var offset = new Vector3(placementArea.x, placementArea.y, 0) * -0.5f;
+            // Spawn up to N(totalObjects) Objects
+            System.Random rnd = new System.Random();
+            var countList = Enumerable.Range(1, maxObjectCount).Select(x => x).ToList();
+            int totalObjects = countList[rnd.Next(countList.Count)];
         
-            foreach (var sample in placementSamples)
+            for (int i = 0; i < totalObjects; i++)
             {
                 var index = Math.Min(m_ProcessedAssetInstances.Length, m_ObjectIndexParameter.Sample());
                 var prefab = m_ProcessedAssetInstances[index];
                 var instance = m_GameObjectOneWayCache.GetOrInstantiate(prefab);
 
-                if (normalizeObjectBounds)
-                {
-                    instance.transform.localPosition = Vector3.zero;
-                    instance.transform.localScale = Vector3.one;
-                    instance.transform.localRotation = Quaternion.identity;
-                    var bounds = ComputeBounds(instance);
-                
-                    instance.transform.localPosition = new Vector3(sample.x, sample.y, depth) + offset - bounds.center;
-                    var scale = instance.transform.localScale;
-                    var magnitude = bounds.extents.magnitude;
-                    scale.Scale(new Vector3(1/magnitude, 1/magnitude, 1/magnitude));
-                    instance.transform.localScale = scale;
-                }
-                else
-                {
-                    instance.transform.position = new Vector3(sample.x, sample.y, depth) + offset;    
-                }
-                
-                if (++spawnedCount == maxObjectCount)
-                    break;
+                instance.transform.localPosition = Vector3.zero;
+                instance.transform.localRotation = Quaternion.identity;
+                instance.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
+
+                var bounds = ComputeBounds(instance);
+                instance.transform.localPosition = new Vector3(separationByX.Sample(), separationByY.Sample(), separationByZ.Sample());
             }
-            placementSamples.Dispose();
         }
 
         /// <summary>
