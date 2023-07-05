@@ -19,7 +19,7 @@ SynthDet is an open source project that demonstrates an end-to-end object detect
 ## Unity Project overview
 This project utilizes the Unity [Perception](https://github.com/Unity-Technologies/com.unity.perception) package for randomizing the environment and capturing ground-truth on each frame. Randomization includes elements such as lighting, camera post processing, object placement, and background. 
 
-[Visit the Unity project documentation page](UnityProjectOverview.md) for a brief overview on how ground truth generation and domain randomization are achieved in SynthDet.
+[Visit the Unity project documentation page](docs/UnityProjectOverview.md) for a brief overview on how ground truth generation and domain randomization are achieved in SynthDet.
 
 ## Tutorials
 * [Setting up the SynthDet Unity project](docs/GettingStartedSynthDet.md)
