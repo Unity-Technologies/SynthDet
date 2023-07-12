@@ -1,0 +1,13 @@
+#
+# Wavefront material file
+# Created in RealityCapture
+# Engine version v1.2.0.17385
+#
+
+newmtl mesh_Model_6_u1_v1
+Ka 1 1 1
+Kd 1 1 1
+d 1
+Ns 0
+illum 1
+map_Kd mesh_Model_6_u1_v1.jpg

@@ -1,0 +1,101 @@
+#
+# Wavefront material file
+# Created in RealityCapture
+# Engine version v1.2.1.116300
+#
+
+newmtl Freeman_Alley_in_NYC_u1_v1
+Ka 1 1 1
+Kd 1 1 1
+d 1
+Ns 0
+illum 1
+map_Kd Freeman_Alley_in_NYC_u1_v1_diffuse.jpg
+
+newmtl Freeman_Alley_in_NYC_u2_v1
+Ka 1 1 1
+Kd 1 1 1
+d 1
+Ns 0
+illum 1
+map_Kd Freeman_Alley_in_NYC_u2_v1_diffuse.jpg
+
+newmtl Freeman_Alley_in_NYC_u3_v1
+Ka 1 1 1
+Kd 1 1 1
+d 1
+Ns 0
+illum 1
+map_Kd Freeman_Alley_in_NYC_u3_v1_diffuse.jpg
+
+newmtl Freeman_Alley_in_NYC_u4_v1
+Ka 1 1 1
+Kd 1 1 1
+d 1
+Ns 0
+illum 1
+map_Kd Freeman_Alley_in_NYC_u4_v1_diffuse.jpg
+
+newmtl Freeman_Alley_in_NYC_u1_v2
+Ka 1 1 1
+Kd 1 1 1
+d 1
+Ns 0
+illum 1
+map_Kd Freeman_Alley_in_NYC_u1_v2_diffuse.jpg
+
+newmtl Freeman_Alley_in_NYC_u2_v2
+Ka 1 1 1
+Kd 1 1 1
+d 1
+Ns 0
+illum 1
+map_Kd Freeman_Alley_in_NYC_u2_v2_diffuse.jpg
+
+newmtl Freeman_Alley_in_NYC_u3_v2
+Ka 1 1 1
+Kd 1 1 1
+d 1
+Ns 0
+illum 1
+map_Kd Freeman_Alley_in_NYC_u3_v2_diffuse.jpg
+
+newmtl Freeman_Alley_in_NYC_u4_v2
+Ka 1 1 1
+Kd 1 1 1
+d 1
+Ns 0
+illum 1
+map_Kd Freeman_Alley_in_NYC_u4_v2_diffuse.jpg
+
+newmtl Freeman_Alley_in_NYC_u1_v3
+Ka 1 1 1
+Kd 1 1 1
+d 1
+Ns 0
+illum 1
+map_Kd Freeman_Alley_in_NYC_u1_v3_diffuse.jpg
+
+newmtl Freeman_Alley_in_NYC_u2_v3
+Ka 1 1 1
+Kd 1 1 1
+d 1
+Ns 0
+illum 1
+map_Kd Freeman_Alley_in_NYC_u2_v3_diffuse.jpg
+
+newmtl Freeman_Alley_in_NYC_u3_v3
+Ka 1 1 1
+Kd 1 1 1
+d 1
+Ns 0
+illum 1
+map_Kd Freeman_Alley_in_NYC_u3_v3_diffuse.jpg
+
+newmtl Freeman_Alley_in_NYC_u4_v3
+Ka 1 1 1
+Kd 1 1 1
+d 1
+Ns 0
+illum 1
+map_Kd Freeman_Alley_in_NYC_u4_v3_diffuse.jpg
