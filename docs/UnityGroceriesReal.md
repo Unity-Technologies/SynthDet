@@ -1,6 +1,6 @@
 # UnityGroceries-Real Dataset
 
-As part of this project, we collected a real world dataset containing 1267 images of the 63 target grocery items. This dataset is primarily used to assess the real-world performance of models trained on synthetic data with a model trained on real data. This dataset can be downloaded [here](https://storage.googleapis.com/datasetinsights/data/groceries/v3.zip).
+As part of this project, we collected a real world dataset containing 1267 images of the 63 target grocery items. This dataset is primarily used to assess the real-world performance of models trained on synthetic data with a model trained on real data.
 
 ## Dataset Collection
 
